@@ -1,0 +1,54 @@
+.user-profile {
+    $user-min-width: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #292b2f;
+    .user {
+        display: flex;
+        align-items: center;
+        margin: 10px 0 10px 8px;
+        border-radius: 4px;
+        min-width: $user-min-width;
+        cursor: pointer;
+        &:hover {
+            background-color: #4e505899;
+        }
+        .message-item-image {
+            margin-right: 8px;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .user-name {
+                color: #fff;
+            }
+            .user-discriminator {
+                color: #c7c9cb;
+            }
+        }
+    }
+    .interactions {
+        width: calc(100% - $user-min-width);
+        .list-icon {
+            display: flex;
+            justify-content: space-around;
+            .item-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                width: 32px;
+                height: 32px;
+                color: #c7c9cb;
+                list-style: none;
+                &:hover {
+                    color: hsl(210 calc(1 * 9.1%) 87.1 /1);
+                    background-color: #4e505899;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+}
