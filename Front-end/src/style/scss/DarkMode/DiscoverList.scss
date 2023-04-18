@@ -1,0 +1,64 @@
+.discover-list {
+    flex: 5;
+    background-color: #36393f;
+    height: 100%;
+    margin-top: 12px;
+    .back-splash {
+        position: relative;
+        width: inherit;
+        margin: -32px 32px -130px 32px;
+        svg {
+            width: 100%;
+        }
+        .header {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 560px;
+            color: #fff;
+            line-height: 33px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            .title {
+                font-weight: 700;
+                font-size: 25.058px;
+            }
+            .description {
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .explore-communities {
+                width: 560px;
+                height: 40px;
+                display: flex;
+                background-color: #fff;
+                border-radius: 3px;
+                align-items: center;
+                &:focus-within {
+                    outline: 3px solid #bcb2f8;
+                }
+                input {
+                    flex: 11;
+                    color: #95989d;
+                    font-size: 18px;
+                    padding: 8px;
+                    outline: none;
+                    border: none;
+                }
+                svg {
+                    flex: 1;
+                }
+            }
+        }
+    }
+    .servers-list {
+        .title {
+            font-weight: 700;
+            font-size: 20.8832px;
+            line-height: 27px;
+            letter-spacing: -0.045em;
+        }
+    }
+}

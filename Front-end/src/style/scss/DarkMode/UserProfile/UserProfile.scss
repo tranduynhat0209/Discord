@@ -1,5 +1,9 @@
 .user-profile {
     $user-min-width: 120px;
+    width: 240px;
+    position: absolute;
+    bottom: 0;
+    left: 60;
     display: flex;
     justify-content: space-between;
     align-items: center;
