@@ -1,7 +1,7 @@
 import { Entity, ChannelTypes, InviteTypes, MessageTypes, UserTypes } from './entity.types';
 
 export declare namespace WS {
-  export interface To {
+  export interface ListenParams {
     /** Create a channel in a guild. */
     'CHANNEL_CREATE': Params.ChannelCreate;
     /** Delete a channel in a guild. */
@@ -61,7 +61,7 @@ export declare namespace WS {
   }
 
   /** WS Args are what is received from the websocket. */
-  export interface From {
+  export interface EmitParams {
     /** Called when a guild channel is created. */
     'CHANNEL_CREATE': Args.ChannelCreate;
     /** Called when a guild channel is deleted. */
