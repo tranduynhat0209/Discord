@@ -1,0 +1,105 @@
+.top-nav {
+    display: flex;
+    align-items: center;
+    height: 58px;
+    border-bottom: 1px solid #232527;
+    background-color: #2b2d31;
+    .conversation {
+        height: 100%;
+        flex: 1;
+        .nav-search {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: 10px;
+            .nav-search-input {
+                padding: 5px 10px 6px;
+                background-color: #1e1f22;
+                color: #949ba4;
+                border: none;
+                cursor: pointer;
+                font-weight: 500;
+                font-size: 14.5714px;
+                line-height: 17px;
+                border-radius: 3px;
+            }
+        }
+    }
+    .navigation {
+        flex: 5;
+        background-color: #36393f;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-left: 18px;
+            margin-right: 20px;
+            .navbar-left {
+                display: flex;
+                align-items: center;
+                button {
+                    margin-right: 20px;
+                    background-color: inherit;
+                    cursor: pointer;
+                    border: none;
+                    padding: 3px 7px;
+                    color: #fff;
+                    border-radius: 3px;
+                    &:first-child {
+                        display: flex;
+                        position: relative;
+                        align-items: center;
+                        background-color: #43444b;
+                        cursor: default;
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            width: 1px;
+                            height: 24px;
+                            background: #42454a;
+                            border-radius: 1px;
+                            top: -1px;
+                            left: 94px;
+                        }
+                    }
+                    &:not(&:last-child) {
+                        &:hover {
+                            background-color: #43444b;
+                        }
+                    }
+                    &:last-child {
+                        background-color: #3ba55d;
+                    }
+                }
+            }
+            .navbar-right {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 0px;
+                gap: 16px;
+                svg {
+                    cursor: pointer;
+                }
+                .new-group {
+                    margin-right: 12px;
+                    position: relative;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        display: block;
+                        width: 1px;
+                        height: 24px;
+                        border-radius: 1px;
+                        top: 0;
+                        left: 36px;
+                        background-color: #42454a;
+                    }
+                }
+            }
+        }
+    }
+}
