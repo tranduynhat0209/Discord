@@ -33,7 +33,7 @@ export default function Backsplash() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    <g clip-path="url(#clip0_607_22711)">
+                    <g clipPath="url(#clip0_607_22711)">
                         <path
                             d="M1545 0H-1.45062V483.452H1545V0Z"
                             fill="url(#paint0_linear_607_22711)"
@@ -1809,9 +1809,9 @@ export default function Backsplash() {
                         <path
                             d="M1375.91 321.924C1377.38 320.415 1379.33 319.464 1381.43 319.233"
                             stroke="#2B2F33"
-                            stroke-width="3.02648"
-                            stroke-miterlimit="10"
-                            stroke-linecap="round"
+                            strokeWidth="3.02648"
+                            strokeMiterlimit="10"
+                            strokeLinecap="round"
                         />
                         <path
                             d="M1359.48 324.248C1359.16 324.232 1358.86 324.101 1358.62 323.881C1358.11 323.312 1357.49 322.856 1356.79 322.539C1356.1 322.224 1355.34 322.056 1354.57 322.047C1354.25 321.992 1353.95 321.831 1353.73 321.587C1353.51 321.343 1353.37 321.031 1353.35 320.701C1353.38 320.366 1353.54 320.055 1353.78 319.829C1354.03 319.602 1354.36 319.477 1354.7 319.479C1356.82 319.572 1358.83 320.443 1360.34 321.925C1360.48 322.03 1360.59 322.165 1360.67 322.317C1360.76 322.471 1360.8 322.641 1360.82 322.814C1360.83 322.988 1360.8 323.162 1360.74 323.325C1360.68 323.487 1360.58 323.635 1360.46 323.759C1360.21 324.042 1359.86 324.217 1359.48 324.248Z"
@@ -2039,9 +2039,9 @@ export default function Backsplash() {
                             y2="555.509"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#4E1BF5" />
-                            <stop offset="0.58" stop-color="#5E4EEE" />
-                            <stop offset="0.92" stop-color="#6668EB" />
+                            <stop stopColor="#4E1BF5" />
+                            <stop offset="0.58" stopColor="#5E4EEE" />
+                            <stop offset="0.92" stopColor="#6668EB" />
                         </linearGradient>
                         <linearGradient
                             id="paint1_linear_607_22711"
@@ -2051,8 +2051,8 @@ export default function Backsplash() {
                             y2="14.5078"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#5521FF" />
-                            <stop offset="1" stop-color="#4B1AEB" />
+                            <stop stopColor="#5521FF" />
+                            <stop offset="1" stopColor="#4B1AEB" />
                         </linearGradient>
                         <linearGradient
                             id="paint2_linear_607_22711"
@@ -2062,10 +2062,10 @@ export default function Backsplash() {
                             y2="422.211"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#5625F7" />
-                            <stop offset="0.3" stop-color="#5930F9" />
-                            <stop offset="0.81" stop-color="#624DFD" />
-                            <stop offset="1" stop-color="#6659FF" />
+                            <stop stopColor="#5625F7" />
+                            <stop offset="0.3" stopColor="#5930F9" />
+                            <stop offset="0.81" stopColor="#624DFD" />
+                            <stop offset="1" stopColor="#6659FF" />
                         </linearGradient>
                         <linearGradient
                             id="paint3_linear_607_22711"
@@ -2075,8 +2075,8 @@ export default function Backsplash() {
                             y2="261.318"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#5323F5" />
-                            <stop offset="1" stop-color="#5946F5" />
+                            <stop stopColor="#5323F5" />
+                            <stop offset="1" stopColor="#5946F5" />
                         </linearGradient>
                         <linearGradient
                             id="paint4_linear_607_22711"
@@ -2086,8 +2086,8 @@ export default function Backsplash() {
                             y2="88.351"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#5323F5" />
-                            <stop offset="1" stop-color="#5330F5" />
+                            <stop stopColor="#5323F5" />
+                            <stop offset="1" stopColor="#5330F5" />
                         </linearGradient>
                         <linearGradient
                             id="paint5_linear_607_22711"
@@ -2097,8 +2097,8 @@ export default function Backsplash() {
                             y2="25586.7"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#5323F5" />
-                            <stop offset="1" stop-color="#5330F5" />
+                            <stop stopColor="#5323F5" />
+                            <stop offset="1" stopColor="#5330F5" />
                         </linearGradient>
                         <linearGradient
                             id="paint6_linear_607_22711"
@@ -2108,8 +2108,8 @@ export default function Backsplash() {
                             y2="187.886"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop offset="0.03" stop-color="white" />
-                            <stop offset="1" stop-color="#CCBDFF" />
+                            <stop offset="0.03" stopColor="white" />
+                            <stop offset="1" stopColor="#CCBDFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint7_linear_607_22711"
@@ -2119,8 +2119,8 @@ export default function Backsplash() {
                             y2="482.014"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="white" />
-                            <stop offset="1" stop-color="#CCBDFF" />
+                            <stop stopColor="white" />
+                            <stop offset="1" stopColor="#CCBDFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint8_linear_607_22711"
@@ -2130,8 +2130,8 @@ export default function Backsplash() {
                             y2="296.038"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#6238EB" />
-                            <stop offset="1" stop-color="#80FBFF" />
+                            <stop stopColor="#6238EB" />
+                            <stop offset="1" stopColor="#80FBFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint9_linear_607_22711"
@@ -2141,8 +2141,8 @@ export default function Backsplash() {
                             y2="232.252"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop offset="0.03" stop-color="white" />
-                            <stop offset="1" stop-color="#CCBDFF" />
+                            <stop offset="0.03" stopColor="white" />
+                            <stop offset="1" stopColor="#CCBDFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint10_linear_607_22711"
@@ -2152,8 +2152,8 @@ export default function Backsplash() {
                             y2="422.575"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="white" />
-                            <stop offset="1" stop-color="#CCBDFF" />
+                            <stop stopColor="white" />
+                            <stop offset="1" stopColor="#CCBDFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint11_linear_607_22711"
@@ -2163,8 +2163,8 @@ export default function Backsplash() {
                             y2="315.324"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="white" />
-                            <stop offset="1" stop-color="#CCBDFF" />
+                            <stop stopColor="white" />
+                            <stop offset="1" stopColor="#CCBDFF" />
                         </linearGradient>
                         <linearGradient
                             id="paint12_linear_607_22711"
@@ -2174,8 +2174,8 @@ export default function Backsplash() {
                             y2="249.817"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop offset="0.26" stop-color="#56BAD6" />
-                            <stop offset="1" stop-color="#348CB5" />
+                            <stop offset="0.26" stopColor="#56BAD6" />
+                            <stop offset="1" stopColor="#348CB5" />
                         </linearGradient>
                         <linearGradient
                             id="paint13_linear_607_22711"
@@ -2185,8 +2185,8 @@ export default function Backsplash() {
                             y2="283.937"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#9E2FAD" />
-                            <stop offset="1" stop-color="#922DA8" />
+                            <stop stopColor="#9E2FAD" />
+                            <stop offset="1" stopColor="#922DA8" />
                         </linearGradient>
                         <linearGradient
                             id="paint14_linear_607_22711"
@@ -2196,8 +2196,8 @@ export default function Backsplash() {
                             y2="310.099"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#9E2FAD" />
-                            <stop offset="1" stop-color="#AE3DC6" />
+                            <stop stopColor="#9E2FAD" />
+                            <stop offset="1" stopColor="#AE3DC6" />
                         </linearGradient>
                         <linearGradient
                             id="paint15_linear_607_22711"
@@ -2207,8 +2207,8 @@ export default function Backsplash() {
                             y2="11292"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#9E2FAD" />
-                            <stop offset="1" stop-color="#AE3DC6" />
+                            <stop stopColor="#9E2FAD" />
+                            <stop offset="1" stopColor="#AE3DC6" />
                         </linearGradient>
                         <linearGradient
                             id="paint16_linear_607_22711"
@@ -2218,8 +2218,8 @@ export default function Backsplash() {
                             y2="11564.3"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#9E2FAD" />
-                            <stop offset="1" stop-color="#AE3DC6" />
+                            <stop stopColor="#9E2FAD" />
+                            <stop offset="1" stopColor="#AE3DC6" />
                         </linearGradient>
                         <linearGradient
                             id="paint17_linear_607_22711"
@@ -2229,8 +2229,8 @@ export default function Backsplash() {
                             y2="297.931"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#9E2FAD" />
-                            <stop offset="1" stop-color="#B84DCF" />
+                            <stop stopColor="#9E2FAD" />
+                            <stop offset="1" stopColor="#B84DCF" />
                         </linearGradient>
                         <clipPath id="clip0_607_22711">
                             <rect
