@@ -6,7 +6,7 @@ export default function Backsplash() {
             <div className="header">
                 <h1 className="title">Find your community on Discord</h1>
                 <h2 className="description">
-                    From gaming, to music, to learning, there’s a place for you.
+                    From gaming, to music, to learning, there's a place for you.
                 </h2>
                 <div className="explore-communities">
                     <input type="text" placeholder="Explore communities" />

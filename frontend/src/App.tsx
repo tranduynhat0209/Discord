@@ -1,13 +1,17 @@
 import React from "react";
-import "./App.scss";
+import { BrowserRouter } from "react-router-dom";
+import { ReactDOM } from "react";
 
+import "./App.scss";
 import DarkMode from "./components/Home/DarkMode/DarkMode";
 
 function App() {
     return (
-        <div className="App">
-            <DarkMode />
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                <DarkMode />
+            </div>
+        </BrowserRouter>
     );
 }
 

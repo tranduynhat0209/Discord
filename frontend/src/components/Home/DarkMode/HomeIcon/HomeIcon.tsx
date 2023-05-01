@@ -5,10 +5,12 @@ import "../../../../style/scss/DarkMode/HomeIcon/HomeIcon.scss";
 
 function HomeIcon() {
     return (
-        <div className="home">
-            <img className="logo main-logo" src={logo} alt="logo" />
-            <ServerList />
-        </div>
+        <>
+            <div className="home">
+                <img className="logo main-logo" src={logo} alt="logo" />
+                <ServerList />
+            </div>
+        </>
     );
 }
 
