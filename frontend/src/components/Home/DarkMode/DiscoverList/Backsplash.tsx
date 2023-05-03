@@ -1,15 +1,24 @@
 import React from "react";
 
-export default function Backsplash() {
+export default function Backsplash({ ...props }) {
     return (
         <div className="back-splash">
             <div className="header">
-                <h1 className="title">Find your community on Discord</h1>
+                <h1 className="title">
+                    {`Tìm những cộng đồng dành cho bạn trên Discord`}
+                </h1>
                 <h2 className="description">
                     From gaming, to music, to learning, there's a place for you.
                 </h2>
                 <div className="explore-communities">
-                    <input type="text" placeholder="Explore communities" />
+                    <input
+                        type="text"
+                        placeholder={
+                            props.titleSearch
+                                ? `Khám phá ${props.titleSearch}`
+                                : ""
+                        }
+                    />
 
                     <svg
                         width="20"

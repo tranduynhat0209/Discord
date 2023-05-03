@@ -13,35 +13,86 @@ import "../../../style/scss/DarkMode/DarkMode.scss";
 
 export default function DarkMode() {
     return (
-        <Routes>
-            <Route
-                path="/"
-                element={
-                    <>
-                        <HomeIcon />
+        <div className="dark-mode">
+            <HomeIcon />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                <UserProfile />
+                                <DiscoverList titleSearch="các cộng đồng" />
+                            </main>
+                        </>
+                    }
+                >
+                    {/* <HomeIcon /> */}
+                    {/* <TopbarNavigation /> */}
+                    {/* <DirectMessagesAndNavigation /> */}
+                    {/* <Content /> */}
+                </Route>
+                <Route
+                    path="/gaming"
+                    element={
                         <main className="main-chat">
                             <DiscoverCategories />
                             <UserProfile />
-                            <DiscoverList />
+                            <DiscoverList titleSearch="Khám phá máy chủ gaming" />
                         </main>
-                    </>
-                }
-            >
-                {/* <HomeIcon /> */}
-                {/* <TopbarNavigation /> */}
-                {/* <DirectMessagesAndNavigation /> */}
-                {/* <Content /> */}
-            </Route>
-            <Route
-                path="/mc"
-                element={
-                    <main className="main-chat">
-                        <DiscoverCategories />
-                        <UserProfile />
-                        <DiscoverList />
-                    </main>
-                }
-            ></Route>
-        </Routes>
+                    }
+                ></Route>
+                <Route
+                    path="/amnhac"
+                    element={
+                        <main className="main-chat">
+                            <DiscoverCategories />
+                            <UserProfile />
+                            <DiscoverList titleSearch="Khám phá máy chủ âm nhạc" />
+                        </main>
+                    }
+                ></Route>
+                <Route
+                    path="/giaoduc"
+                    element={
+                        <main className="main-chat">
+                            <DiscoverCategories />
+                            <UserProfile />
+                            <DiscoverList titleSearch="Khám phá máy chủ giáo dục" />
+                        </main>
+                    }
+                ></Route>
+                <Route
+                    path="/khoahoc&congnghe"
+                    element={
+                        <main className="main-chat">
+                            <DiscoverCategories />
+                            <UserProfile />
+                            <DiscoverList titleSearch="Khám phá máy chủ Khoa Học & Công Nghệ" />
+                        </main>
+                    }
+                ></Route>
+                <Route
+                    path="/giaitri"
+                    element={
+                        <main className="main-chat">
+                            <DiscoverCategories />
+                            <UserProfile />
+                            <DiscoverList titleSearch="Khám phá máy chủ Giải Trí" />
+                        </main>
+                    }
+                ></Route>
+                <Route
+                    path="/studenthubs"
+                    element={
+                        <main className="main-chat">
+                            <DiscoverCategories />
+                            <UserProfile />
+                        </main>
+                    }
+                ></Route>
+            </Routes>
+        </div>
     );
 }

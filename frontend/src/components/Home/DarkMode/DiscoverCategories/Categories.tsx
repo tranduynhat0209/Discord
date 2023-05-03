@@ -1,115 +1,40 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Routes, Route } from "react-router-dom";
+import DiscoverList from "../DiscoverList/DiscoverList";
+import Category from "./Category";
+import DarkMode from "../DarkMode";
 
 export default function Categories() {
     return (
         <div className="categories">
             <div className="list-categories">
-                <NavLink end className="item-category" to={"/"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Home</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/gaming"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Gaming</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/amnhac"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Âm nhạc</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/giaoduc"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Giáo dục</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/khoahoc&congnghe"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Khoa học và công nghệ</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/giatri"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Giải trí</p>
-                </NavLink>
-                <NavLink className="item-category" to={"/studenthub"}>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M10 8.9C9.39 8.9 8.9 9.39 8.9 10C8.9 10.61 9.39 11.1 10 11.1C10.61 11.1 11.1 10.61 11.1 10C11.1 9.39 10.61 8.9 10 8.9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM12.19 12.19L4 16L7.81 7.81L16 4L12.19 12.19Z"
-                            fill="white"
-                        />
-                    </svg>
-                    <p className="text">Student Hubs</p>
-                </NavLink>
+                <Category path="/" text="Home" />
+                <Category path="/gaming" text="Gaming" />
+                <Category path="/amnhac" text="Âm nhạc" />
+                <Category path="/giaoduc" text="Giáo dục" />
+                <Category
+                    path="/khoahoc&congnghe"
+                    text="Khoa học & công nghệ"
+                />
+                <Category path="/giaitri" text="Giải trí" />
+                <Category path="/studenthubs" text="Student Hubs" />
+                {/* <Routes>
+                    <Route
+                        path="/"
+                        element={<Category path="/" text="Home" />}
+                    />
+                    <Route
+                        path="/gaming"
+                        element={<Category path="/gaming" text="Gaming" />}
+                    />
+                    <Route
+                        path="/amnhac"
+                        element={<Category text="Âm nhạc" />}
+                    />
+                    <Route
+                        path="/khoahoc-congnghe"
+                        element={<Category text="Khoa học & công nghệ" />}
+                    />
+                </Routes> */}
             </div>
         </div>
     );
