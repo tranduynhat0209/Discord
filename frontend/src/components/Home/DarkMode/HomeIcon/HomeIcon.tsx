@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../../../assets/image/logo.png";
 import ServerList from "./ServerList";
-import "../../../../style/scss/DarkMode/HomeIcon/HomeIcon.scss";
+import "./HomeIcon.scss";
 
 function HomeIcon() {
     return (

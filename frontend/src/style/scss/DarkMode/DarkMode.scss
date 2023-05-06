@@ -1,4 +1,13 @@
-.main-chat {
-    height: calc(100% - 58px);
+.dark-mode {
+    width: 100%;
+    height: 100vh;
     display: flex;
+    .home {
+        background-color: #1e1f22;
+    }
+    .main-chat {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+    }
 }

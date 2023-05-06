@@ -1,0 +1,30 @@
+.home {
+    display: flex;
+    position: relative;
+    padding-top: 10px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #202225;
+    width: 72px;
+    height: 100%;
+    .list-avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        list-style: none;
+        .avatar-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+        .folder-chat {
+            background-color: #5865f266;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 15px;
+        }
+    }
+}

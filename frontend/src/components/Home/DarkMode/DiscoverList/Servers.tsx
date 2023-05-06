@@ -1,6 +1,6 @@
 import React from "react";
 import Server from "./Server";
-import "../../../../style/scss/DarkMode/Servers.scss";
+import "./Servers.scss";
 
 export default function Servers({ ...props }) {
     return (

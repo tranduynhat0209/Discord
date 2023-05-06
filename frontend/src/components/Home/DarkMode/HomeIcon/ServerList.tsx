@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "../../../../assets/image/logo.png";
-import "../../../../style/scss/DarkMode/HomeIcon/HomeIcon.scss";
 import Plus from "../../../../assets/image/home/Plus.png";
 import Discovery from "../../../../assets/image/home/Discovery.png";
 
@@ -17,10 +16,10 @@ export default function ServerList() {
                 <img className="avatar" src={logo} alt="logo" />
             </li>
             <li className="folder-chat">
-                <img className="avatar" src={logo} alt="logo" />
-                <img className="avatar" src={logo} alt="logo" />
-                <img className="avatar" src={logo} alt="logo" />
-                <img className="avatar" src={logo} alt="logo" />
+                <img className="mini-avatar" src={logo} alt="logo" />
+                <img className="mini-avatar" src={logo} alt="logo" />
+                <img className="mini-avatar" src={logo} alt="logo" />
+                <img className="mini-avatar" src={logo} alt="logo" />
             </li>
             <li className="add-server cover">
                 <img src={Plus} alt="Add server" />

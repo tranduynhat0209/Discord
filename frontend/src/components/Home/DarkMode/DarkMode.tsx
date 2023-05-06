@@ -7,6 +7,7 @@ import Content from "./Content/Content";
 import DiscoverCategories from "./DiscoverCategories/DiscoverCategories";
 import UserProfile from "./UserProfile/UserProfile";
 import DiscoverList from "./DiscoverList/DiscoverList";
+import StudentHubs from "./DiscoverList/StudentHub";
 import { Routes, Route } from "react-router-dom";
 
 import "../../../style/scss/DarkMode/DarkMode.scss";
@@ -22,7 +23,7 @@ export default function DarkMode() {
                         <>
                             <main className="main-chat">
                                 <DiscoverCategories />
-                                <UserProfile />
+                                {/* <UserProfile /> */}
                                 <DiscoverList titleSearch="các cộng đồng" />
                             </main>
                         </>
@@ -38,7 +39,7 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
                             <DiscoverList titleSearch="Khám phá máy chủ gaming" />
                         </main>
                     }
@@ -48,7 +49,7 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
                             <DiscoverList titleSearch="Khám phá máy chủ âm nhạc" />
                         </main>
                     }
@@ -58,7 +59,7 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
                             <DiscoverList titleSearch="Khám phá máy chủ giáo dục" />
                         </main>
                     }
@@ -68,7 +69,7 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
                             <DiscoverList titleSearch="Khám phá máy chủ Khoa Học & Công Nghệ" />
                         </main>
                     }
@@ -78,7 +79,7 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
                             <DiscoverList titleSearch="Khám phá máy chủ Giải Trí" />
                         </main>
                     }
@@ -88,7 +89,8 @@ export default function DarkMode() {
                     element={
                         <main className="main-chat">
                             <DiscoverCategories />
-                            <UserProfile />
+                            {/* <UserProfile /> */}
+                            <StudentHubs />
                         </main>
                     }
                 ></Route>

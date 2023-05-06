@@ -1,0 +1,38 @@
+.hub {
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #232428;
+    .icon {
+        background-color: #23a559;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+    .title {
+        color: #f2f3f5;
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 16px;
+    }
+    .description {
+        color: #b5bac1;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 14px;
+    }
+    .enjoy-hub {
+        color: #f8fdff;
+        background-color: #248046;
+        padding: 12px 80px;
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        &:hover {
+            background-color: #1a6334;
+        }
+    }
+}
