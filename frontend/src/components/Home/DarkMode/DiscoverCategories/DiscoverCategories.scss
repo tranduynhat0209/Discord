@@ -1,9 +1,7 @@
 .discover-categories {
-    // flex: 1;
     width: 240px;
-    margin-top: 8px;
     background-color: #2f3136;
-    border-radius: 8px 0 0 0;
+    overflow-y: hidden scroll;
     color: #fff;
     .title {
         font-weight: 700;
