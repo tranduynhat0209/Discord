@@ -93,17 +93,21 @@ export namespace Entity {
 }
 
 export namespace ChannelTypes {
-  export type Type = 'TEXT' | 'VOICE' | 'DM';
+  export enum Type {
+    DM = "DM",
+    TEXT = "TEXT",
+    VOICE = "VOICE",
+  }
 
   export interface DM extends Entity.Channel {
-    type: 'DM';
+    type: Type.DM;
     userIds: string[];
   }
   export interface Text extends Entity.Channel {
-    type: 'TEXT';
+    type: Type.TEXT;
   }
   export interface Voice extends Entity.Channel {
-    type: 'VOICE';
+    type: Type.VOICE;
     userIds: string[];
   }
   export interface Override {

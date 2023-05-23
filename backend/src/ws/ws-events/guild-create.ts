@@ -20,7 +20,7 @@ export default class implements WSEvent<'GUILD_CREATE'> {
     return [{
       emit: this.on,
       to: [client.id],
-      send: { guild, ...entities },
+      send: { guild, ...entities } as WS.Args.GuildCreate,
     }];
   }
 }

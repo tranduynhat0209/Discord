@@ -13,6 +13,8 @@ import Users from '../data/users';
 import ChannelJoin from '../ws/ws-events/channel-join';
 import ChannelLeave from '../ws/ws-events/channel-leave';
 import Themes from '../data/themes';
+import { AppDataSource } from '../data/utils/data-source';
+import { DataSource } from 'typeorm';
 
 export interface Deps {
   channels: Channels;
@@ -33,6 +35,7 @@ export interface Deps {
   wsGuard: WSGuard;
   wsRooms: WSRooms;
   webSocket: WebSocket;
+  dataSource: DataSource;
 };
 
 const deps: Deps = {
@@ -51,6 +54,7 @@ const deps: Deps = {
   wsGuard: new WSGuard(),
   wsRooms: new WSRooms(),
   webSocket: new WebSocket(),
+  dataSource: AppDataSource
 };
 
 global['deps'] = deps;

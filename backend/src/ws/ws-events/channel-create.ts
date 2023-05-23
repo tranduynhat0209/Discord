@@ -12,16 +12,14 @@ export default class implements WSEvent<'CHANNEL_CREATE'>{
         }
         await deps.wsGuard.validateCan(client, guildId, 'MANAGE_CHANNELS');
         const channel = await deps.channels.create({ name, guildId, type });
-
-        const msg: WS.EmitParams['CHANNEL_CREATE'] = {
-            channel,
-            guildId,
-            creatorId: ''
-        };
         return [{
             emit: this.on,
             to: [guildId],
-            send: msg
+            send: {
+                channel,
+                creatorId: ws.sessions.get(client.id),
+                guildId
+            } as WS.Args.ChannelCreate
         }]
     };
     

@@ -8,6 +8,7 @@ import { Message } from "../entity/Message";
 import { Role } from "../entity/Role";
 import { Theme } from "../entity/Theme";
 import { Guild_Member } from "../entity/Guild-member";
+import { LastMessage } from "../entity/Last-message";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -18,7 +19,7 @@ export const AppDataSource = new DataSource({
   database: "discord",
   synchronize: true,
   logging: false,
-  entities: [Channel, Guild, Invite, Message, Role, Theme, User, Guild_Member],
+  entities: [Channel, Guild, Invite, Message, Role, Theme, User, Guild_Member, LastMessage],
   migrations: [],
   subscribers: [],
 });

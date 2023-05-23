@@ -1,6 +1,9 @@
 import { Socket } from 'socket.io';
 import { patterns } from '../../types';
 
+/**
+ * socket.id clientId => discord userId
+ */
 export class SessionManager extends Map<string, string> {
   public get(clientId: string): string {
     const userId = super.get(clientId);

@@ -12,6 +12,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.15.11",
     "@types/socket.io": "^3.0.2",
+    "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "css-parse": "^2.0.0",
     "dotenv": "^16.0.3",
@@ -19,9 +20,12 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.0",
     "mocha": "^10.2.0",
+    "mysql": "^2.14.1",
+    "reflect-metadata": "^0.1.13",
     "socket.io": "^4.6.1",
     "ts-mocha": "^10.0.0",
     "ts-node": "^10.9.1",
+    "typeorm": "0.3.16",
     "winston": "^3.8.2"
   }
 }
