@@ -1,4 +1,4 @@
-// import  "../modules/deps";
+import "../modules/deps";
 
 export * from "./auth.types";
 export * from "./entity.types";

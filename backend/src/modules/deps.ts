@@ -38,5 +38,3 @@ const deps: Deps = {
   users: new Users(),
   dataSource: AppDataSource,
 };
-
-global["deps"] = deps;
