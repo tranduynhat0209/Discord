@@ -1,0 +1,123 @@
+.home {
+    display: flex;
+    position: relative;
+    margin-top: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #202225;
+    width: 72px;
+    height: calc(100% - 10px);
+    float: left;
+    &::before {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 40px;
+        border-radius: 1px;
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        top: 4px;
+        border-radius: 0 2px 2px 0;
+    }
+    &::after {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #2d2f32;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 56px;
+    }
+    img {
+        cursor: pointer;
+    }
+
+    .logo {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 18px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0px;
+    }
+    .list-avatar {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 66px;
+        li {
+            margin-bottom: 8px;
+        }
+        .avatar-item {
+            list-style: none;
+            position: relative;
+            border-radius: 50%;
+            &:first-child::after {
+                content: "";
+                display: block;
+                width: 8px;
+                height: 8px;
+                border-radius: 1px;
+                background-color: #fff;
+                position: absolute;
+                left: -16px;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 50%;
+            }
+        }
+
+        .folder-chat {
+            list-style: none;
+            display: block;
+            width: 48px;
+            height: 48px;
+            background: #2f3136;
+            border-radius: 15px;
+            position: relative;
+            .avatar {
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                &:nth-child(1) {
+                    left: 12.5%;
+                    top: 12.5%;
+                }
+                &:nth-child(2) {
+                    left: 55.17%;
+                    top: 12.5%;
+                }
+                &:nth-child(3) {
+                    left: 12.5%;
+                    top: 54.17%;
+                }
+                &:nth-child(4) {
+                    left: 54.17%;
+                    top: 54.17%;
+                }
+            }
+        }
+        .cover {
+            display: block;
+            width: 48px;
+            height: 48px;
+            position: relative;
+            border-radius: 50%;
+            background-color: #36393f;
+            cursor: pointer;
+            img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
