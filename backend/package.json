@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "mocha",
-    "buildtest": "ts-mocha --exit test/models/**.test.ts"
+    "buildtest": "ts-mocha --exit test/models/**.test.ts",
+    "start": "ts-node src/app.ts"
   },
   "main": "index.ts",
   "license": "MIT",
@@ -24,7 +25,6 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.14.1",
-    "nodemon": "^2.0.22",
     "react": "^18.2.0",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.6.1",
@@ -41,6 +41,7 @@
     "chai": "^4.3.7",
     "class-validator": "^0.14.0",
     "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
     "sinon": "^15.1.0",
     "typescript": "^5.0.4"
   }

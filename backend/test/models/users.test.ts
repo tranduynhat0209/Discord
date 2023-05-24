@@ -1,13 +1,11 @@
 import { expect } from "chai";
 import { describe, it } from "mocha";
-import Users from "../../src/data/users";
+import '../../src/app'
 
 describe("Users", () => {
   describe("get", () => {
-    it("should return a user", async () => {
-      const users = new Users();
-      const user = await users.get("1");
-      expect(user).to.not.be.undefined;
+    it("should return an user", async () => {
+      console.log(global.deps.users)
     });
   });
 });

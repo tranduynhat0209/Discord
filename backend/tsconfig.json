@@ -4,12 +4,14 @@
     "files": true
   },
   "compilerOptions": {
+    "typeRoots": [
+      ".src/types",
+    ],
     "downlevelIteration": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
     "lib": ["ES2020", "ES2019"],
     "module": "CommonJS",
-    "moduleResolution": "node",
     "noImplicitAny": false,
     "declaration": true,
     "outDir": "lib",
@@ -24,6 +26,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["src", "env", "**/*.ts"],
-  "exclude": ["test"]
+  "include": ["src", "env", "**/*.ts", "test"],
+  "exclude": ["test
 }
