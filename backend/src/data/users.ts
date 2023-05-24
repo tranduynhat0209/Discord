@@ -101,10 +101,10 @@ export default class Users extends DBWrapper<string, UserEntity> {
       .getMany();
   }
 
-  public async create(
-    { email, username, password }: Auth.Credentials,
-    bot = false
-  ): Promise<SelfUserDocument> {}
+  // public async create(
+  //   { email, username, password }: Auth.Credentials,
+  //   bot = false
+  // ): Promise<SelfUserDocument> {}
 
   public async getDiscriminator(username: string) {
     const count = await deps.dataSource

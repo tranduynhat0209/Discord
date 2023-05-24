@@ -9,6 +9,7 @@
     "inlineSourceMap": true,
     "lib": ["ES2020", "ES2019"],
     "module": "CommonJS",
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "declaration": true,
     "outDir": "lib",
@@ -21,7 +22,7 @@
     "skipLibCheck": true,
     "watch": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "include": ["src", "env", "**/*.ts"],
   "exclude": ["test"]
