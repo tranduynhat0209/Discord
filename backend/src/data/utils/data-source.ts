@@ -17,7 +17,7 @@ export const AppDataSource = new DataSource({
   username: "newuser",
   password: "123456",
   database: "discord",
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [
     Channel,

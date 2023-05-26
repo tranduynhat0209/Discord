@@ -6,7 +6,13 @@ import generateInvite from "./utils/generate_invite";
 type InviteDocument = any;
 export default class Invites extends DBWrapper<string, InviteDocument> {
   public async get(code: string | undefined): Promise<InviteDocument> {
-    const invite = deps.dataSource.manager.findOneBy(Invite, { id: code });
+    const invite = deps.dataSource.manager.findOneBy(Invite, {
+      inviteCode: code,
+    });
+    if (!invite) {
+      throw new Error("Invite not found");
+    }
+    return invite;
   }
 
   public async create(

@@ -39,13 +39,22 @@ export interface PureUserDocument extends SelfUserDocument {
 
 @Entity()
 export class Ignored {
-  @Column("simple-array", { default: [] })
+  @Column(
+    "simple-array"
+    // { default: [] }
+  )
   channelIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column(
+    "simple-array"
+    // { default: [] }
+  )
   guildIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column(
+    "simple-array"
+    // { default: [] }
+  )
   userIds: string[];
 }
 
@@ -116,13 +125,19 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column("simple-array", { default: [] })
+  @Column(
+    "simple-array"
+    //  { default: [] }
+  )
   badge: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column(
+    "simple-array"
+    // { default: [] }
+  )
   guildIds: string[];
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   voice: string;
 
   @Column({

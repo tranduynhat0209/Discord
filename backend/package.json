@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "test": "mocha",
+    "test": "ts-mocha --exit test/models/role.test.ts",
     "buildtest": "ts-mocha --exit test/models/**.test.ts",
-    "start": "ts-node src/app.ts"
+    "start": "ts-node src/data/test-db.ts"
   },
   "main": "index.ts",
   "license": "MIT",

@@ -33,16 +33,16 @@ export default class GuildMembers extends DBWrapper<string, GuildMemberEntity> {
     await this.addGuildToUser(options.userId!, options.guildId!);
     return member;
   }
-
-  private async addGuildToUser(userId: string, guildId: string) {
+  //private
+  public async addGuildToUser(userId: string, guildId: string) {
     const user = await deps.users.get(userId);
     if (user.guildIds.indexOf(guildId) === -1) {
       user.guildIds.push(guildId);
       await deps.dataSource.manager.save(User, user);
     }
   }
-
-  private async getEveryoneRoleId(guildId: string) {
+  //private
+  public async getEveryoneRoleId(guildId: string) {
     const role = await deps.dataSource.manager.findOneBy(Role, {
       guildId,
       name: "@everyone",

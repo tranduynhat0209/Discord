@@ -59,10 +59,16 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
     return roles;
   }
   public async getUsers(guildId: string) {
+    // const users = await deps.dataSource
+    //   .getRepository(User)
+    //   .createQueryBuilder("user")
+    //   .where(":guildId = ANY (user.guildIds)", { guildId })
+    //   .getMany();
+
     const users = await deps.dataSource
       .getRepository(User)
       .createQueryBuilder("user")
-      .where(":guildId = ANY (user.guildIds)", { guildId: guildId })
+      .where(`FIND_IN_SET(:guildId, user.guildIds) > 0`, { guildId })
       .getMany();
 
     return users;

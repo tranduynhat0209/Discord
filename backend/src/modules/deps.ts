@@ -24,6 +24,7 @@ export interface Deps {
   themes: Themes;
   users: Users;
   dataSource: DataSource;
+  testprop: string;
 }
 
 const deps: Deps = {
@@ -37,6 +38,7 @@ const deps: Deps = {
   themes: new Themes(),
   users: new Users(),
   dataSource: AppDataSource,
+  testprop: "test",
 };
 
 global["deps"] = deps;

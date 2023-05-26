@@ -33,7 +33,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       deps.dataSource
         .getRepository(RoleEntity)
         .createQueryBuilder("their_roles")
-        .where("their_rols.id IN (:...roles", { roles: theirRoleIds })
+        .where("their_roles.id IN (:...roles)", { roles: theirRoleIds })
         .getMany(),
     ]);
 
