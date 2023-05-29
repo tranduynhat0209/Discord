@@ -1,7 +1,9 @@
 export default abstract class DBWrapper<K, V> {
   public abstract get(identifier: K | undefined): Promise<V | null | undefined>;
 
-  save(savedType: V) {}
+  public async save(savedType: V) {
+    await deps.dataSource.manager.save(savedType);
+  }
 
   async getSafely(identifier: K | undefined) {
     let document: V | undefined | null = null;

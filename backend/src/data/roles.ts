@@ -6,16 +6,23 @@ import { generateSnowflake } from "./snowflake-entity";
 
 export default class Roles extends DBWrapper<string, RoleEntity> {
   public async get(id: string | undefined) {
-    return await deps.dataSource.manager.findOneBy(RoleEntity, {
+    const role = await deps.dataSource.manager.findOneBy(RoleEntity, {
       id,
     });
+
+    if (!role) throw new TypeError("The role doesn't exist");
+
+    return role;
   }
 
   public async getEveryone(guildId: string) {
-    return await deps.dataSource.manager.findOneBy(RoleEntity, {
+    const everyoneRole = await deps.dataSource.manager.findOneBy(RoleEntity, {
       guildId,
       name: "@everyone",
     });
+
+    if (!everyoneRole) throw new TypeError("@everyone doesn't exist");
+    return everyoneRole;
   }
 
   public async memberIsHigher(
@@ -71,7 +78,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
     });
     const rolesNumber = rolesInGuild.length;
 
-    return await deps.dataSource.manager.save(RoleEntity, {
+    await deps.dataSource.manager.save(RoleEntity, {
       id: roleId,
       guildId,
       mentionable: false,
@@ -80,5 +87,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       permissions: PermissionTypes.defaultPermissions,
       position: rolesNumber,
     });
+
+    return await this.get(roleId);
   }
 }

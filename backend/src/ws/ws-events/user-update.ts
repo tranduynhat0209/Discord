@@ -18,6 +18,37 @@ export default class implements WSEvent<"USER_UPDATE"> {
       activeThemeId,
     }: WS.Params.UserUpdate
   ) {
-    return [];
+    const { id: userId } = await deps.wsGuard.decodeKey(token);
+    const user = await deps.users.getSelf(userId);
+
+    const partial: Partial<Entity.User> = {};
+    const hasChanged = (key: string, value: any) =>
+      value && user[key] !== value;
+
+    if (hasChanged("activeThemeId", activeThemeId))
+      partial["activeThemeId"] = activeThemeId;
+    if (hasChanged("avatarURL", avatarURL)) partial["avatarURL"] = avatarURL;
+    if (hasChanged("ignored", ignored)) partial["ignored"] = ignored;
+    if (hasChanged("username", username)) {
+      partial["username"] = username;
+      partial["discriminator"] = await deps.users.getDiscriminator(username!);
+    }
+    if (hasChanged("email", email)) {
+      partial["email"] = email;
+      user["email"] = email!;
+
+      await deps.emailFunctions.verifyEmail(email!, user);
+    }
+
+    Object.assign(user, partial);
+    await deps.users.save(user);
+
+    return [
+      {
+        emit: this.on,
+        to: [client.id],
+        send: { userId, partialUser: partial } as WS.Args.UserUpdate,
+      },
+    ];
   }
 }

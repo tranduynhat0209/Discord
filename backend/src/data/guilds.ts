@@ -7,13 +7,14 @@ import { User } from "./entity/User";
 import { Role } from "./entity/Role";
 import { Guild_Member } from "./entity/Guild-member";
 import { generateSnowflake } from "./snowflake-entity";
+import { APIError } from "../rest/modules/api-error";
 
 export default class Guilds extends DBWrapper<string, GuildEntity> {
   public async get(id: string | undefined) {
     const guild = await deps.dataSource.manager.findOneBy(GuildEntity, {
       id: id,
     });
-    if (!guild) throw new TypeError("Guild not found");
+    if (!guild) throw new APIError(404, "Guild not found");
     return guild;
   }
 
@@ -26,7 +27,7 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
       deps.channels.createText(guildId),
       deps.channels.createVoice(guildId),
     ]);
-    const [guild, ___] = await Promise.all([
+    await Promise.all([
       deps.dataSource.manager.save(GuildEntity, {
         _id: guildId,
         name: "Unnamed Guild",
@@ -37,7 +38,7 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
       deps.guildMembers.create({ guildId, userId: options.ownerId }),
     ]);
 
-    return guild;
+    return await this.get(guildId);
   }
 
   public async getChannels(guildId: string) {

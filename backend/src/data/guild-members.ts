@@ -7,7 +7,9 @@ import { generateSnowflake } from "./snowflake-entity";
 
 export default class GuildMembers extends DBWrapper<string, GuildMemberEntity> {
   public async get(id: string | undefined) {
-    const member = deps.dataSource.manager.findOneBy(GuildMemberEntity, { id });
+    const member = await deps.dataSource.manager.findOneBy(GuildMemberEntity, {
+      id,
+    });
     if (!member) throw new TypeError("Guild member not found");
     return member;
   }
@@ -25,20 +27,21 @@ export default class GuildMembers extends DBWrapper<string, GuildMemberEntity> {
   }
 
   public async create(options: Partial<Entity.GuildMember>) {
-    const member = await deps.dataSource.manager.save(GuildMemberEntity, {
-      id: options.id ?? generateSnowflake(),
+    const id = options.id ?? generateSnowflake();
+    await deps.dataSource.manager.save(GuildMemberEntity, {
+      id,
       roleIds: [await this.getEveryoneRoleId(options.guildId!)],
       ...options,
     });
     await this.addGuildToUser(options.userId!, options.guildId!);
-    return member;
+    return await this.get(id);
   }
 
   private async addGuildToUser(userId: string, guildId: string) {
     const user = await deps.users.get(userId);
     if (user.guildIds.indexOf(guildId) === -1) {
       user.guildIds.push(guildId);
-      await deps.dataSource.manager.save(User, user);
+      await deps.users.save(user);
     }
   }
 

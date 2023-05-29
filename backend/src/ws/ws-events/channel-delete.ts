@@ -29,13 +29,6 @@ export default class implements WSEvent<"CHANNEL_DELETE"> {
 
     await deps.dataSource
       .createQueryBuilder()
-      .update(User)
-      .where("voice = :voice", { voice: channelId })
-      .set({ voice: "" })
-      .execute();
-
-    await deps.dataSource
-      .createQueryBuilder()
       .delete()
       .from(Channel)
       .where("id = :id", { id: channelId })
@@ -45,6 +38,7 @@ export default class implements WSEvent<"CHANNEL_DELETE"> {
       .createQueryBuilder()
       .update(Channel)
       .where("position > :position", { position: channel.position })
+      .andWhere("guildId = :guildId", {guildId: channel.guildId})
       .set({
         position: () => "position - 1",
       })

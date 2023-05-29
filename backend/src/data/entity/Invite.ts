@@ -14,10 +14,10 @@ import { Max, Min } from "class-validator";
 
 @Entity()
 export class InviteOptions {
-  @Column({ type: "timestamp" })
+  @Column({ type: "timestamp", nullable: true })
   expiresAt: Date;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   @Min(1)
   @Max(1000)
   maxUses: number;
@@ -45,4 +45,7 @@ export class Invite {
 
   @Column()
   uses: number;
+
+  @Column(() => InviteOptions)
+  options: InviteOptions;
 }

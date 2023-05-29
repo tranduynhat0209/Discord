@@ -1,7 +1,7 @@
 import { Entity } from './entity.types';
 
 export namespace REST {
-  export namespace To {
+  export namespace Params {
     export interface Post {
       '/auth/login': {
         email: string;
@@ -21,7 +21,7 @@ export namespace REST {
     }
   }
 
-  export namespace From {
+  export namespace Return {
     export interface Get {
       '/channels/:channelId/messages': {
         channelId: string;
@@ -33,7 +33,7 @@ export namespace REST {
         guilds: Entity.Guild[];
         members: Entity.GuildMember[];
         roles: Entity.Role[];
-        themes: Entity.Theme[];
+        // themes: Entity.Theme[];
         users: Entity.User[];
       }
       '/auth/email/verify-email': {

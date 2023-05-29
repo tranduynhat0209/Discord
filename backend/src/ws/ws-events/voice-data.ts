@@ -11,6 +11,18 @@ export default class implements WSEvent<"VOICE_DATA"> {
     client: Socket,
     { channelId, blob }: WS.Params.VoiceData
   ) {
-    return [];
+    const userId = ws.sessions.get(client.id);
+    const connections = deps.voiceService.setForUser(channelId, {
+      blob,
+      userId,
+    });
+
+    return [
+      {
+        emit: this.on,
+        to: [client.id],
+        send: { channelId, connections } as WS.Args.VoiceData,
+      },
+    ];
   }
 }

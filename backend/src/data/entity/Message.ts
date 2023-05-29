@@ -53,11 +53,11 @@ export class Message {
   })
   system: boolean;
 
-  @Column()
-  type: string;
+  @Column({nullable: true})
+  type?: string;
 
   @Column(() => MessageEmbed)
-  embed: MessageEmbed;
+  embed?: MessageEmbed;
 
   @UpdateDateColumn()
   updatedAt: Date;

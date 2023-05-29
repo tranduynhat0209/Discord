@@ -26,7 +26,7 @@ export default class implements WSEvent<"GUILD_DELETE"> {
     for (let user of users) {
       const index = user.guildIds.indexOf(guildId);
       user.guildIds.splice(index, 1);
-      await deps.dataSource.manager.save(User, user);
+      await deps.users.save(user);
     }
 
     const channels = await deps.guilds.getChannels(guildId);

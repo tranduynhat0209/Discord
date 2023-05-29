@@ -34,14 +34,6 @@ export class WSGuard {
       throw new TypeError(`Missing Permissions: ${getPermString(permission)}`);
   }
 
-  public async validateCanInChannel(
-    client: Socket,
-    channelId: string,
-    permission: PermissionTypes.PermissionString
-  ) {
-    
-  }
-
   private async can(
     permission: PermissionTypes.PermissionString,
     guildId: string,
@@ -52,16 +44,6 @@ export class WSGuard {
 
     return (guild.ownerId === member.userId)
       || deps.roles.hasPermission(guild, member, PermissionTypes.All[permission]);
-  }
-
-  public async canInChannel(
-    permission: PermissionTypes.PermissionString,
-    channelId: string,
-    userId: string
-  ) {
-    const channel = await deps.channels.get(channelId);
-    const member = await deps.guildMembers.getInGuild(channel.guildId, userId);
-
   }
 
   public async decodeKey(token: string) {

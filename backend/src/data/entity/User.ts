@@ -27,14 +27,6 @@ export interface UserDocument extends EntityType.User {
 }
 export interface SelfUserDocument extends UserTypes.Self {
   id: string;
-  createdAt: never;
-
-  changePassword: (...args) => Promise<any>;
-  register: (...args) => Promise<any>;
-}
-export interface PureUserDocument extends SelfUserDocument {
-  hash: string;
-  salt: string;
 }
 
 @Entity()
@@ -55,8 +47,8 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
-  activeThemeId: string;
+  // @Column()
+  // activeThemeId: string;
 
   @Column({
     type: "varchar",
@@ -79,13 +71,6 @@ export class User {
   // password: string;
 
   @Column({
-    type: "boolean",
-    nullable: false,
-    default: false,
-  })
-  isActive: boolean;
-
-  @Column({
     type: "varchar",
     length: 150,
     nullable: false,
@@ -93,10 +78,10 @@ export class User {
   avatarURL: string;
 
   @Column(() => Ignored)
-  ignored: Ignored;
+  ignored?: Ignored;
 
   @Column({ default: false })
-  isBot: boolean;
+  bot: boolean;
 
   @Column({
     type: "int",
@@ -117,13 +102,13 @@ export class User {
   createdAt: Date;
 
   @Column("simple-array", { default: [] })
-  badge: string[];
+  badges: string[];
 
   @Column("simple-array", { default: [] })
   guildIds: string[];
 
-  @Column({nullable: true})
-  voice: string;
+  @Column({ nullable: true })
+  voice?: string;
 
   @Column({
     type: "bool",
@@ -138,7 +123,7 @@ export class User {
   locked: boolean;
 
   @Column({ type: "timestamp" })
-  premiumExpirationDate: Date;
+  premiumExpiration: Date;
 
   @Column({
     type: "varchar",
@@ -156,4 +141,10 @@ export class User {
   })
   @Matches(patterns.status, { message: "Invalid status" })
   status: string;
+
+  @Column({type: 'string', nullable: true})
+  salt?: string;
+
+  @Column({type: 'string', nullable: true})
+  hash?: string;
 }

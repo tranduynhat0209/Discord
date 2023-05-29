@@ -13,7 +13,7 @@ export default class implements WSEvent<'TYPING_START'> {
     return [{
       emit: this.on,
       to: [channelId],
-      send: { userId: ws.sessions.userId(client), channelId },
+      send: { userId: ws.sessions.userId(client), channelId } as WS.Args.TypingStart,
     }];
   }
 }

@@ -8,8 +8,7 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
     const channel = await deps.dataSource.manager.findOneBy(ChannelEntity, {
       id: id,
     });
-    if (!channel)
-      throw new TypeError('Channel not found');
+    if (!channel) throw new TypeError("Channel not found");
     return channel;
   }
 
@@ -18,8 +17,7 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
       id: id,
       type: "DM",
     });
-    if (!channel)
-    throw new TypeError('Channel not found');
+    if (!channel) throw new TypeError("Channel not found");
     return channel;
   }
   public async getText(id: string | undefined): Promise<ChannelEntity> {
@@ -27,8 +25,7 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
       id: id,
       type: "TEXT",
     });
-    if (!channel)
-    throw new TypeError('Channel not found');
+    if (!channel) throw new TypeError("Channel not found");
     return channel;
   }
   public async getVoice(id: string | undefined): Promise<ChannelEntity> {
@@ -36,8 +33,7 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
       id: id,
       type: "VOICE",
     });
-    if (!channel)
-    throw new TypeError('Channel not found');
+    if (!channel) throw new TypeError("Channel not found");
     return channel;
   }
 
@@ -46,12 +42,16 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
     if (!guildId) {
       throw new Error("missing required data field");
     }
-    return await deps.dataSource.manager.save(ChannelEntity, {
-      id: id ?? generateSnowflake(),
+
+    const newId = id ?? generateSnowflake();
+    await deps.dataSource.manager.save(ChannelEntity, {
+      id: newId,
       guild: { id: guildId },
       name: name ?? "chat",
       type: type ?? ChannelTypes.Type.TEXT,
     });
+
+    return await this.get(newId);
   }
 
   public async createText(guildId: string) {
@@ -64,12 +64,12 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
   public async joinVC(channel: ChannelEntity, userId: string) {
     if (channel.type !== "VOICE") throw new Error("Channel type must be Voice");
     channel.userIds.push(userId);
-    await deps.dataSource.manager.save(channel);
+    await this.save(channel);
   }
   public async leaveVC(channel: ChannelEntity, userId: string) {
     if (channel.type !== "VOICE") throw new Error("Channel type must be Voice");
     const index = channel.userIds.indexOf(userId);
     channel.userIds.splice(index, 1);
-    await deps.dataSource.manager.save(channel);
+    await this.save(channel);
   }
 }

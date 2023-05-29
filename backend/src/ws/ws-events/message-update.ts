@@ -11,6 +11,24 @@ export default class implements WSEvent<"MESSAGE_UPDATE"> {
     client: Socket,
     { messageId, content, embed }: WS.Params.MessageUpdate
   ) {
-    return [];
+    const message = await deps.messages.get(messageId);
+    const channel = await deps.channels.get(message.channelId);
+
+    deps.wsGuard.validateIsUser(client, message.authorId);
+
+    const partial: Partial<Entity.Message> = {};
+    if (content) partial.content = content;
+    if (embed) partial.embed = embed;
+    partial.updatedAt = new Date();
+
+    Object.assign(message, partial);
+    await deps.messages.save(message);
+
+
+    return [{
+      emit: this.on,
+      to: [message.channelId],
+      send: { messageId, partialMessage: partial } as WS.Args.MessageUpdate,
+    }];
   }
 }

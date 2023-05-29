@@ -15,18 +15,19 @@ import ChannelLeave from '../ws/ws-events/channel-leave';
 import Themes from '../data/themes';
 import { AppDataSource } from '../data/utils/data-source';
 import { DataSource } from 'typeorm';
+import { VoiceService } from '../voice/voice-service';
+import { Email } from '../email/email';
+import { Verification } from '../email/verification';
+import { EmailFunctions } from '../email/email-functions';
 
 export interface Deps {
   channels: Channels;
-  /** @deprecated */
   channelJoin: ChannelJoin;
-  /** @deprecated */
   channelLeave: ChannelLeave;
   guilds: Guilds;
   guildMembers: GuildMembers;
   invites: Invites;
   messages: Messages;
-  /** @deprecated */
   pings: Pings;
   roles: Roles;
   themes: Themes;
@@ -36,6 +37,10 @@ export interface Deps {
   wsRooms: WSRooms;
   webSocket: WebSocket;
   dataSource: DataSource;
+  voiceService: VoiceService;
+  email: Email;
+  emailFunctions: EmailFunctions;
+  verification: Verification;
 };
 
 const deps: Deps = {
@@ -54,7 +59,11 @@ const deps: Deps = {
   wsGuard: new WSGuard(),
   wsRooms: new WSRooms(),
   webSocket: new WebSocket(),
-  dataSource: AppDataSource
+  dataSource: AppDataSource,
+  voiceService: new VoiceService(),
+  email: new Email(),
+  emailFunctions: new EmailFunctions(),
+  verification: new Verification()
 };
 
 global['deps'] = deps;

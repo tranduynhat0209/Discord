@@ -88,7 +88,7 @@ export namespace Entity {
     premium: boolean;
     status: UserTypes.StatusType;
     username: string;
-    voice: UserTypes.VoiceState;
+    voice?: string // channel id;
   }
 }
 
@@ -168,7 +168,7 @@ export namespace UserTypes {
   }
   export type StatusType = 'ONLINE' | 'OFFLINE';
   export interface Self extends Entity.User {
-    activeThemeId: string;
+    // activeThemeId: string;
     email: string;
     ignored?: {
       channelIds: string[];
@@ -178,8 +178,8 @@ export namespace UserTypes {
     lastReadMessageIds: { [k: string]: string };
     locked: boolean;
     premiumExpiration: Date;
-    unlockedThemeIds: string[];
-    verified: true;
+    // unlockedThemeIds: string[];
+    verified: boolean;
   }
   export interface VoiceState {
     channelId?: string;
