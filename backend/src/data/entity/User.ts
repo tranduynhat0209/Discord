@@ -2,14 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-  ManyToOne,
-  TableInheritance,
   Unique,
   CreateDateColumn,
-  ChildEntity,
 } from "typeorm";
 import {
   IsEmail,
@@ -19,12 +13,8 @@ import {
   Max,
   Min,
 } from "class-validator";
-import { Entity as EntityType, UserTypes, patterns } from "../../types";
+import { UserTypes, patterns } from "../../types";
 
-export interface UserDocument extends EntityType.User {
-  id: string;
-  createdAt: never;
-}
 export interface SelfUserDocument extends UserTypes.Self {
   id: string;
 }
@@ -47,9 +37,6 @@ export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  // @Column()
-  // activeThemeId: string;
-
   @Column({
     type: "varchar",
     nullable: false,
@@ -60,15 +47,6 @@ export class User {
   @IsNotEmpty({ message: "The username is required" })
   @Matches(patterns.username, { message: "Invalid username format" })
   username: string;
-
-  // @Column({
-  //   type: "varchar",
-  //   nullable: false,
-  // })
-  // @Length(6, 100, { message: 'The password must be at least 6 but not longer than 30 characters' })
-  // @IsNotEmpty({ message: 'The password is required' })
-  // @Matches(patterns.password, {message: 'Invalid password format'})
-  // password: string;
 
   @Column({
     type: "varchar",
@@ -142,9 +120,9 @@ export class User {
   @Matches(patterns.status, { message: "Invalid status" })
   status: string;
 
-  @Column({type: 'string', nullable: true})
+  @Column({ type: "string", nullable: true })
   salt?: string;
 
-  @Column({type: 'string', nullable: true})
+  @Column({ type: "string", nullable: true })
   hash?: string;
 }

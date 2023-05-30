@@ -1,5 +1,6 @@
+/* eslint-disable no-var */
 declare global {
-  const deps: import('../src/modules/deps').Deps;
-  const log: import('winston').Logger;
+  var deps: import("../src/modules/deps").Deps;
+  var log: import("winston").Logger;
 }
-export {}
+export {};

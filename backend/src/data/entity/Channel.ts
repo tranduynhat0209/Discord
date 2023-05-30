@@ -28,19 +28,16 @@ export class Channel {
   @IsNotEmpty({ message: "guildId is required" })
   guildId: string;
 
-  @Column({ type: "boolean" })
-  filterProfanity: boolean;
+  @Column()
+  firstMessageId?: string;
 
   @Column()
-  firstMessageId: string;
-
-  @Column()
-  lastMessageId: string;
+  lastMessageId?: string;
 
   @Column({
     length: 128,
   })
-  summary: string;
+  summary?: string;
 
   @Column()
   @Min(0, { message: "Position must be greater than 0" })

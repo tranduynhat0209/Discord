@@ -1,24 +1,24 @@
-import { WSCooldowns } from '../ws/modules/ws-cooldowns';
-import { WSGuard } from '../ws/modules/ws-guard';
-import { WSRooms } from '../ws/modules/ws-rooms';
-import { WebSocket } from '../ws/websocket';
-import Channels from '../data/channels';
-import GuildMembers from '../data/guild-members';
-import Guilds from '../data/guilds';
-import Invites from '../data/invites';
-import Messages from '../data/messages';
-import Pings from '../data/pings';
-import Roles from '../data/roles';
-import Users from '../data/users';
-import ChannelJoin from '../ws/ws-events/channel-join';
-import ChannelLeave from '../ws/ws-events/channel-leave';
-import Themes from '../data/themes';
-import { AppDataSource } from '../data/utils/data-source';
-import { DataSource } from 'typeorm';
-import { VoiceService } from '../voice/voice-service';
-import { Email } from '../email/email';
-import { Verification } from '../email/verification';
-import { EmailFunctions } from '../email/email-functions';
+import { WSCooldowns } from "../ws/modules/ws-cooldowns";
+import { WSGuard } from "../ws/modules/ws-guard";
+import { WSRooms } from "../ws/modules/ws-rooms";
+import { WebSocket } from "../ws/websocket";
+import Channels from "../data/channels";
+import GuildMembers from "../data/guild-members";
+import Guilds from "../data/guilds";
+import Invites from "../data/invites";
+import Messages from "../data/messages";
+import Pings from "../data/pings";
+import Roles from "../data/roles";
+import Users from "../data/users";
+import ChannelJoin from "../ws/ws-events/channel-join";
+import ChannelLeave from "../ws/ws-events/channel-leave";
+import { AppDataSource } from "../data/utils/data-source";
+import { DataSource } from "typeorm";
+import { VoiceService } from "../voice/voice-service";
+import { Email } from "../email/email";
+import { Verification } from "../email/verification";
+import { EmailFunctions } from "../email/email-functions";
+import { REST } from "../rest/server";
 
 export interface Deps {
   channels: Channels;
@@ -30,7 +30,6 @@ export interface Deps {
   messages: Messages;
   pings: Pings;
   roles: Roles;
-  themes: Themes;
   users: Users;
   wsCooldowns: WSCooldowns;
   wsGuard: WSGuard;
@@ -41,7 +40,8 @@ export interface Deps {
   email: Email;
   emailFunctions: EmailFunctions;
   verification: Verification;
-};
+  rest: REST;
+}
 
 const deps: Deps = {
   channels: new Channels(),
@@ -53,7 +53,6 @@ const deps: Deps = {
   messages: new Messages(),
   pings: new Pings(),
   roles: new Roles(),
-  themes: new Themes(),
   users: new Users(),
   wsCooldowns: new WSCooldowns(),
   wsGuard: new WSGuard(),
@@ -63,7 +62,8 @@ const deps: Deps = {
   voiceService: new VoiceService(),
   email: new Email(),
   emailFunctions: new EmailFunctions(),
-  verification: new Verification()
+  verification: new Verification(),
+  rest: new REST(),
 };
 
-global['deps'] = deps;
+global["deps"] = deps;

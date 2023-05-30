@@ -4,11 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from "typeorm";
-import { User } from "./User";
-import { Channel } from "./Channel";
-import { IsNotEmpty, Max } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 
 @Entity()
 export class MessageEmbed {
@@ -29,21 +26,21 @@ export class Message {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("simple-array", { nullable: true })
-  attachmentURL: string[];
+  @Column("simple-array")
+  attachmentURL?: string[];
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   authorId: string;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   channelId: string;
 
   @Column({
     nullable: false,
-    length: 3000
+    length: 3000,
   })
   @IsNotEmpty({ message: "content can't be empty" })
-  content: string;
+  content?: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -53,7 +50,7 @@ export class Message {
   })
   system: boolean;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   type?: string;
 
   @Column(() => MessageEmbed)

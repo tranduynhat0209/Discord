@@ -47,5 +47,5 @@ export class Invite {
   uses: number;
 
   @Column(() => InviteOptions)
-  options: InviteOptions;
+  options?: InviteOptions;
 }

@@ -66,9 +66,9 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       .reduce((acc, value) => value.permissions | acc, 0);
     const permNumber =
       typeof permission === "string"
-        ? PermissionTypes.All[PermissionTypes.All[permission as string]]
-        : permission;
-    return hasPermission(totalPerms, +permNumber);
+        ? PermissionTypes.getPermNumber(permission)
+        : (permission as number);
+    return hasPermission(totalPerms, permNumber);
   }
 
   public async create(guildId: string, options?: Partial<Entity.Role>) {
@@ -81,10 +81,10 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
     await deps.dataSource.manager.save(RoleEntity, {
       id: roleId,
       guildId,
-      mentionable: false,
-      hoisted: false,
-      name: "New Role",
-      permissions: PermissionTypes.defaultPermissions,
+      mentionable: options?.mentionable ?? false,
+      hoisted: options?.hoisted ?? false,
+      name: options?.name ?? "New Role",
+      permissions: options?.permissions ?? PermissionTypes.defaultPermissions,
       position: rolesNumber,
     });
 

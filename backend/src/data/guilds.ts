@@ -80,9 +80,7 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
       channels: channels.map((c) => c as Entity.Channel),
       members: members.map((m) => m as Entity.GuildMember),
       roles: roles.map((r) => r as Entity.Role),
-      users: users
-        .map((u) => deps.users.secure(u))
-        .map((u) => u as any as Entity.User),
+      users: users.map((u) => deps.users.secure(u) as Entity.User),
     };
   }
 }

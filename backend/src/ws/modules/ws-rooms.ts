@@ -28,7 +28,6 @@ export class WSRooms {
     for (const channel of channels)
       try {
         if (channel.type === "VOICE") continue;
-
         await deps.wsGuard.validateCanInChannel(
           client,
           channel.id,
