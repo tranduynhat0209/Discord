@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function HomeNavigation() {
     return (
         <div className="home-navigation">
@@ -20,7 +18,7 @@ export default function HomeNavigation() {
                         fill="white"
                     />
                 </svg>
-                Friends
+                <p>Friends</p>
             </div>
             <div className="nitro">
                 <svg
@@ -35,7 +33,7 @@ export default function HomeNavigation() {
                         fill="#8E9297"
                     />
                 </svg>
-                Nitro
+                <p>Nitro</p>
             </div>
         </div>
     );

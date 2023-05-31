@@ -89,5 +89,13 @@
                 fill: #3ba55d;
             }
         }
+        .plus {
+            position: relative;
+        }
+        .cover.active {
+            background-color: #3ba55d;
+            border-radius: 25%;
+            transition: all 0.1s ease-in;
+        }
     }
 }

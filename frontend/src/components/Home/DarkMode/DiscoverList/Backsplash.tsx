@@ -1,8 +1,7 @@
-import React from "react";
-
 import headerLogo from "../../../../assets/image/header-img-home.svg";
 
 export default function Backsplash({ ...props }) {
+    console.log("props in blacksplash", props);
     return (
         <div className="back-splash">
             <div className="header">

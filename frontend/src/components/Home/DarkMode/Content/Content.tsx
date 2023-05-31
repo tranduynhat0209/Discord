@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 import FriendsList from "./FriendsList";
 import ActiveList from "./ActiveList";

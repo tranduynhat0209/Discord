@@ -8,92 +8,127 @@ import DiscoverCategories from "./DiscoverCategories/DiscoverCategories";
 import UserProfile from "./UserProfile/UserProfile";
 import DiscoverList from "./DiscoverList/DiscoverList";
 import StudentHubs from "./DiscoverList/StudentHub";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
+import ChatChanel from "./ChatChanel/ChatChanel";
 
 import "../../../style/scss/DarkMode/DarkMode.scss";
+import AddNewServer from "./HomeIcon/AddNewServer";
+import NewServer from "./HomeIcon/NewServer";
 
 export default function DarkMode() {
+    const { showAddServer } = AddNewServer();
+    console.log(showAddServer);
     return (
         <div className="dark-mode">
             <HomeIcon />
+            {showAddServer && <NewServer />}
+
+            <Outlet />
             <Routes>
                 <Route
                     path="/"
                     element={
                         <>
-                            <main className="main-chat">
-                                <DiscoverCategories />
-                                {/* <UserProfile /> */}
-                                <DiscoverList titleSearch="các cộng đồng" />
-                            </main>
+                            <div className="main-content">
+                                <div className="topbar-nav">
+                                    <TopbarNavigation />
+                                </div>
+                                <div className="chat">
+                                    <DirectMessagesAndNavigation />
+                                    <Content />
+                                </div>
+                            </div>
+                        </>
+                    }
+                ></Route>
+                <Route
+                    path="/kenhchat1"
+                    element={
+                        <>
+                            <ChatChanel />
+                        </>
+                    }
+                ></Route>
+                <Route
+                    path="/discover"
+                    element={
+                        <>
+                            <DiscoverCategories />
+                            <DiscoverList />
                         </>
                     }
                 >
-                    {/* <HomeIcon /> */}
-                    {/* <TopbarNavigation /> */}
-                    {/* <DirectMessagesAndNavigation /> */}
-                    {/* <Content /> */}
+                    <Route
+                        path="/discover/home"
+                        element={
+                            <>
+                                {" "}
+                                <main className="main-chat">
+                                    <DiscoverCategories />
+                                    {/* <UserProfile /> */}
+                                    <DiscoverList titleSearch="các cộng đồng" />
+                                </main>
+                            </>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/gaming"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                <DiscoverList titleSearch="Khám phá máy chủ gaming" />
+                            </main>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/amnhac"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                {/* <UserProfile /> */}
+                                <DiscoverList titleSearch="Khám phá máy chủ âm nhạc" />
+                            </main>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/giaoduc"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                {/* <UserProfile /> */}
+                                <DiscoverList titleSearch="Khám phá máy chủ giáo dục" />
+                            </main>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/khoahoc&congnghe"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                <DiscoverList titleSearch="Khám phá máy chủ Khoa Học & Công Nghệ" />
+                            </main>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/giaitri"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                {/* <UserProfile /> */}
+                                <DiscoverList titleSearch="Khám phá máy chủ Giải Trí" />
+                            </main>
+                        }
+                    ></Route>
+                    <Route
+                        path="/discover/studenthubs"
+                        element={
+                            <main className="main-chat">
+                                <DiscoverCategories />
+                                <StudentHubs />
+                            </main>
+                        }
+                    ></Route>
                 </Route>
-                <Route
-                    path="/gaming"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <DiscoverList titleSearch="Khám phá máy chủ gaming" />
-                        </main>
-                    }
-                ></Route>
-                <Route
-                    path="/amnhac"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <DiscoverList titleSearch="Khám phá máy chủ âm nhạc" />
-                        </main>
-                    }
-                ></Route>
-                <Route
-                    path="/giaoduc"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <DiscoverList titleSearch="Khám phá máy chủ giáo dục" />
-                        </main>
-                    }
-                ></Route>
-                <Route
-                    path="/khoahoc&congnghe"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <DiscoverList titleSearch="Khám phá máy chủ Khoa Học & Công Nghệ" />
-                        </main>
-                    }
-                ></Route>
-                <Route
-                    path="/giaitri"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <DiscoverList titleSearch="Khám phá máy chủ Giải Trí" />
-                        </main>
-                    }
-                ></Route>
-                <Route
-                    path="/studenthubs"
-                    element={
-                        <main className="main-chat">
-                            <DiscoverCategories />
-                            {/* <UserProfile /> */}
-                            <StudentHubs />
-                        </main>
-                    }
-                ></Route>
             </Routes>
         </div>
     );

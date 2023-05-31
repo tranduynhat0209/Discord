@@ -3,14 +3,18 @@
     background-color: #2f3136;
     overflow-y: hidden scroll;
     color: #fff;
+    display: flex;
+    flex-direction: column;
     .title {
         font-weight: 700;
         font-size: 26px;
         line-height: 115.9%;
         margin-bottom: 20px;
         margin-left: 15px;
+        margin-top: 12px;
     }
     .categories {
+        flex: 1;
         .list-categories {
             .item-category {
                 list-style: none;
