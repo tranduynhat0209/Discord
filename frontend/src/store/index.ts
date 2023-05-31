@@ -17,7 +17,7 @@ export interface AppState {
       pings: { [guildId: string]: string[] };
       roles: Entity.Role[];
       users: Entity.User[];
-      themes: Entity.Theme[];
+      // themes: Entity.Theme[];
       // sequential - loaded when needed
       invites: {
         fetched: string[];

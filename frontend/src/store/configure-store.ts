@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import guilds from './guilds';
 import messages from './messages';
@@ -15,12 +15,10 @@ import invites from './invites';
 import roles from './roles';
 import typing from './typing';
 import pings from './pings';
-import themes from './themes';
 import { AppState } from '.';
 
 export default () => configureStore<AppState>({
   middleware: [
-    ...getDefaultMiddleware({ serializableCheck: false }),
     ws,
     api,
   ] as any,
@@ -35,7 +33,6 @@ export default () => configureStore<AppState>({
       messages,
       pings,
       roles,
-      themes,
       typing,
       users,
     }),
