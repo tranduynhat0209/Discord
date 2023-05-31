@@ -12,7 +12,7 @@ const slice = createSlice({
     list: [],
   } as AppState['entities']['messages'],
   reducers: {
-    fetched: ({ list, total }, { payload }: Action<REST.From.Get['/channels/:channelId/messages']>) => {
+    fetched: ({ list, total }, { payload }: Action<REST.Return.Get['/channels/:channelId/messages']>) => {
       list.unshift(...payload.list.filter(notInArray(list)));
       total[payload.channelId] = payload.total;
     },
@@ -57,7 +57,7 @@ export const createMessage = (channelId: string, payload: Partial<Entity.Message
 
 // each file is uploaded individually as a separate API call
 export const uploadFileAsMessage = (channelId: string, payload: Partial<Entity.Message>, file: File) => (dispatch) => {
-  const uploadCallback = async ({ url }: REST.From.Post['/upload']) =>
+  const uploadCallback = async ({ url }: REST.Return.Post['/upload']) =>
     dispatch(createMessage(channelId, payload, [url]));
   dispatch(uploadFile(file, uploadCallback));
 }

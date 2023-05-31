@@ -46,7 +46,7 @@ export const updateGuild = (guildId: string, payload: Partial<Entity.Guild>) => 
 }
 
 export const uploadGuildIcon = (guildId: string, file: File) => (dispatch) => {
-  const uploadCallback = async ({ url }: REST.From.Post['/upload']) =>
+  const uploadCallback = async ({ url }: REST.Return.Post['/upload']) =>
     dispatch(updateGuild(guildId, { iconURL: url }));
   dispatch(uploadFile(file, uploadCallback));
 }
