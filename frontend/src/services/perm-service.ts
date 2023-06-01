@@ -33,7 +33,7 @@ export class PermService {
       guild.ownerId === member.userId ||
       this.hasPerm(
         this.getTotalPerms(member, guild.id),
-        PermissionTypes.All[permission] as number
+        PermissionTypes.Permission[permission] as number
       )
     );
   }
@@ -58,7 +58,7 @@ export class PermService {
       0
     );
 
-    const permNumber = PermissionTypes.Text[permission];
+    const permNumber = PermissionTypes.Permission[permission];
     const canInherently = this.can(permission, guildId);
     const isAllowedByOverride = this.hasPerm(cumulativeAllowPerms, permNumber);
     const isDeniedByOverride = this.hasPerm(cumulativeDenyPerms, permNumber);
@@ -66,7 +66,7 @@ export class PermService {
     const totalPerms = this.getTotalPerms(member, guildId);
     const isAdmin =
       member.userId == guild.ownerId ||
-      this.hasPerm(totalPerms, PermissionTypes.General.ADMINISTRATOR);
+      this.hasPerm(totalPerms, PermissionTypes.Permission.ADMINISTRATOR);
 
     return (
       isAdmin || (canInherently && !isDeniedByOverride) || isAllowedByOverride
@@ -81,7 +81,7 @@ export class PermService {
       guild.ownerId === member.userId ||
       this.hasPerm(
         this.getTotalPerms(member, guildId),
-        PermissionTypes.All[permission] as number
+        PermissionTypes.Permission[permission] as number
       )
     );
   }
@@ -93,7 +93,7 @@ export class PermService {
   private hasPerm(totalPerms: number, permission: number) {
     return (
       Boolean(totalPerms & permission) ||
-      Boolean(totalPerms & PermissionTypes.General.ADMINISTRATOR)
+      Boolean(totalPerms & PermissionTypes.Permission.ADMINISTRATOR)
     );
   }
 
