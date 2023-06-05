@@ -10,6 +10,9 @@ import {
   Unique,
   CreateDateColumn,
   ChildEntity,
+  AfterLoad,
+  AfterInsert,
+  AfterUpdate,
 } from "typeorm";
 import {
   IsEmail,
@@ -31,13 +34,22 @@ export interface SelfUserDocument extends UserTypes.Self {
 
 @Entity()
 export class Ignored {
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    // default: [],
+    nullable: true,
+  })
   channelIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    // default: []
+    nullable: true,
+  })
   guildIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    //  default: [],
+    nullable: true,
+  })
   userIds: string[];
 }
 
@@ -101,10 +113,15 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: false,
+  })
   badges: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    // default: []
+    nullable: true,
+  })
   guildIds: string[];
 
   @Column({ nullable: true })
@@ -122,7 +139,7 @@ export class User {
   })
   locked: boolean;
 
-  @Column({ type: "timestamp" })
+  @Column({ type: "timestamp", nullable: true })
   premiumExpiration: Date;
 
   @Column({
@@ -142,9 +159,19 @@ export class User {
   @Matches(patterns.status, { message: "Invalid status" })
   status: string;
 
-  @Column({type: 'string', nullable: true})
+  @Column({ nullable: true })
   salt?: string;
 
-  @Column({type: 'string', nullable: true})
+  @Column({ nullable: true })
   hash?: string;
+
+  @AfterLoad()
+  @AfterInsert()
+  @AfterUpdate()
+  async nullCheck() {
+    if (!this.badges) this.badges = [];
+    if (!this.guildIds) this.guildIds = [];
+    if (!this.ignored)
+      this.ignored = { channelIds: [], guildIds: [], userIds: [] };
+  }
 }

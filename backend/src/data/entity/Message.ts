@@ -5,6 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  AfterInsert,
+  AfterLoad,
+  AfterUpdate,
 } from "typeorm";
 import { User } from "./User";
 import { Channel } from "./Channel";
@@ -32,15 +35,15 @@ export class Message {
   @Column("simple-array", { nullable: true })
   attachmentURL: string[];
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   authorId: string;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   channelId: string;
 
   @Column({
     nullable: false,
-    length: 3000
+    length: 3000,
   })
   @IsNotEmpty({ message: "content can't be empty" })
   content: string;
@@ -53,7 +56,7 @@ export class Message {
   })
   system: boolean;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   type?: string;
 
   @Column(() => MessageEmbed)
@@ -61,4 +64,13 @@ export class Message {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @AfterInsert()
+  @AfterLoad()
+  @AfterUpdate()
+  async checkNull() {
+    if (this.attachmentURL == null) {
+      this.attachmentURL = [];
+    }
+  }
 }

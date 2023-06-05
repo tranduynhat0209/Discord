@@ -47,11 +47,11 @@ export class Channel {
   position: number;
 
   @Column("simple-array", {
-    default: [],
+    // default: [],
   })
   userIds: string[];
 
-  @Column({default: 'TEXT'})
+  @Column({ default: "TEXT" })
   @Matches(/^TEXT$|^VOICE$|^DM$/, { message: "Invalid type" })
   type: string;
 }

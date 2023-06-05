@@ -12,8 +12,10 @@ import { IsNotEmpty, Matches, Min } from "class-validator";
 import { PermissionTypes, patterns } from "../../types";
 
 export function hasPermission(current: number, required: number) {
-  return Boolean(current & required)
-    || Boolean(current & PermissionTypes.General.ADMINISTRATOR);
+  return (
+    Boolean(current & required) ||
+    Boolean(current & PermissionTypes.General.ADMINISTRATOR)
+  );
 }
 
 @Entity()
@@ -26,7 +28,7 @@ export class Role {
     length: 32,
     default: "@everyone",
   })
-  @Matches(patterns.roleName, {message: 'Invalid role name format'})
+  @Matches(patterns.roleName, { message: "Invalid role name format" })
   name: string;
 
   @Column({
@@ -42,11 +44,11 @@ export class Role {
   @Column()
   mentionable: boolean;
 
-  @Column({nullable: false})
-  @Min(0, {message: 'Position must be 0 or greater'})
+  @Column({ nullable: false })
+  @Min(0, { message: "Position must be 0 or greater" })
   position: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   permissions: number;
 
   @CreateDateColumn()
@@ -55,6 +57,4 @@ export class Role {
   @Column()
   @IsNotEmpty({ message: "guildId is required" })
   guildId: string;
-
-
 }

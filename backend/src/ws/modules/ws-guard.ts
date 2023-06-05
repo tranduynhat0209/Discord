@@ -19,8 +19,8 @@ export class WSGuard {
       id: guildId,
       ownerId,
     });
-    if(!guild){
-      throw new TypeError('Only the guild owner can do this');
+    if (!guild) {
+      throw new TypeError("Only the guild owner can do this");
     }
   }
 
@@ -29,7 +29,7 @@ export class WSGuard {
     guildId: string,
     permission: PermissionTypes.PermissionString
   ) {
-    const can = await this.can(permission, guildId, this.userId(client))
+    const can = await this.can(permission, guildId, this.userId(client));
     if (!can)
       throw new TypeError(`Missing Permissions: ${getPermString(permission)}`);
   }
@@ -42,8 +42,10 @@ export class WSGuard {
     const guild = await deps.guilds.get(guildId);
     const member = await deps.guildMembers.getInGuild(guildId, userId);
 
-    return (guild.ownerId === member.userId)
-      || deps.roles.hasPermission(guild, member, PermissionTypes.All[permission]);
+    return (
+      guild.ownerId === member.userId ||
+      deps.roles.hasPermission(guild, member, PermissionTypes.All[permission])
+    );
   }
 
   public async decodeKey(token: string) {

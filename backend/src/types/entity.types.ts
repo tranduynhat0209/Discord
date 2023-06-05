@@ -88,7 +88,7 @@ export namespace Entity {
     premium: boolean;
     status: UserTypes.StatusType;
     username: string;
-    voice?: string // channel id;
+    voice?: string; // channel id;
   }
 }
 
@@ -147,26 +147,24 @@ export namespace MessageTypes {
     title: string;
     url: string;
   }
-  export type Type = undefined
-    | 'GUILD_MEMBER_JOIN'
-    | 'GUILD_MEMBER_LEAVE';
+  export type Type = undefined | "GUILD_MEMBER_JOIN" | "GUILD_MEMBER_LEAVE";
 }
 
 export namespace UserTypes {
   export type Badge =
-    | 'BUG_1'
-    | 'BUG_2'
-    | 'BUG_3'
-    | 'PREMIUM'
-    | 'OG'
-    | 'VIEWER'
-    | 'STAFF';
+    | "BUG_1"
+    | "BUG_2"
+    | "BUG_3"
+    | "PREMIUM"
+    | "OG"
+    | "VIEWER"
+    | "STAFF";
   export interface Ignored {
     channelIds: string[];
     guildIds: string[];
     userIds: string[];
   }
-  export type StatusType = 'ONLINE' | 'OFFLINE';
+  export type StatusType = "ONLINE" | "OFFLINE";
   export interface Self extends Entity.User {
     // activeThemeId: string;
     email: string;

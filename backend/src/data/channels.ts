@@ -46,7 +46,7 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
     const newId = id ?? generateSnowflake();
     await deps.dataSource.manager.save(ChannelEntity, {
       id: newId,
-      guild: { id: guildId },
+      guildId: guildId,
       name: name ?? "chat",
       type: type ?? ChannelTypes.Type.TEXT,
     });
