@@ -1,0 +1,23 @@
+.message-item-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-image: url(https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    margin-right: 12px;
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #3ba55d;
+        bottom: 0;
+        right: 0;
+        border: 1px solid #2f3136;
+    }
+}
