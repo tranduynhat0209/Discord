@@ -1,14 +1,15 @@
 import { Entity, MessageTypes } from "../types";
 import DBWrapper from "./db-wrapper";
-import { Channel } from "./entity/Channel";
 import { Message as MessageEntity } from "./entity/Message";
 import { generateSnowflake } from "./snowflake-entity";
 
 export default class Messages extends DBWrapper<string, MessageEntity> {
   public async get(id: string | undefined) {
-    return await deps.dataSource.manager.findOneBy(MessageEntity, {
+    const message = await deps.dataSource.manager.findOneBy(MessageEntity, {
       id,
     });
+    if (!message) throw new TypeError("Message doesn't exist");
+    return message;
   }
 
   public async create(
@@ -18,14 +19,18 @@ export default class Messages extends DBWrapper<string, MessageEntity> {
   ) {
     if (!content && !attachmentURLs?.length)
       throw new TypeError("Empty messages are not valid");
+    attachmentURLs = attachmentURLs || [];
 
-    return await deps.dataSource.manager.save(MessageEntity, {
-      id: generateSnowflake(),
+    const id = generateSnowflake();
+    await deps.dataSource.manager.save(MessageEntity, {
+      id,
       attachmentURLs,
       authorId,
       channelId,
       content,
     });
+
+    return await this.get(id);
   }
 
   public async createSystem(

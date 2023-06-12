@@ -4,9 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from "typeorm";
-import { User } from "./User";
 import { Matches } from "class-validator";
 
 @Entity()
@@ -19,7 +17,7 @@ export class Theme {
     nullable: false,
     length: 32,
   })
-  @Matches(/(?<!discord|accord|default)$/, {message: 'This code is reserved'})
+  @Matches(/(?<!discord|accord|default)$/, { message: "This code is reserved" })
   code: string;
 
   @CreateDateColumn()

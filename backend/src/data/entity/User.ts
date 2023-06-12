@@ -2,14 +2,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-  ManyToOne,
-  TableInheritance,
   Unique,
   CreateDateColumn,
-  ChildEntity,
 } from "typeorm";
 import {
   IsEmail,
@@ -19,6 +13,7 @@ import {
   Max,
   Min,
 } from "class-validator";
+
 import { Entity as EntityType, UserTypes, patterns } from "../../types";
 
 export interface UserDocument extends EntityType.User {
@@ -27,25 +22,23 @@ export interface UserDocument extends EntityType.User {
 }
 export interface SelfUserDocument extends UserTypes.Self {
   id: string;
-  createdAt: never;
-
-  changePassword: (...args) => Promise<any>;
-  register: (...args) => Promise<any>;
-}
-export interface PureUserDocument extends SelfUserDocument {
-  hash: string;
-  salt: string;
 }
 
 @Entity()
 export class Ignored {
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   channelIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   guildIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   userIds: string[];
 }
 
@@ -54,10 +47,6 @@ export class Ignored {
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
-
-  @Column()
-  activeThemeId: string;
-
   @Column({
     type: "varchar",
     nullable: false,
@@ -69,22 +58,6 @@ export class User {
   @Matches(patterns.username, { message: "Invalid username format" })
   username: string;
 
-  // @Column({
-  //   type: "varchar",
-  //   nullable: false,
-  // })
-  // @Length(6, 100, { message: 'The password must be at least 6 but not longer than 30 characters' })
-  // @IsNotEmpty({ message: 'The password is required' })
-  // @Matches(patterns.password, {message: 'Invalid password format'})
-  // password: string;
-
-  @Column({
-    type: "boolean",
-    nullable: false,
-    default: false,
-  })
-  isActive: boolean;
-
   @Column({
     type: "varchar",
     length: 150,
@@ -93,10 +66,10 @@ export class User {
   avatarURL: string;
 
   @Column(() => Ignored)
-  ignored: Ignored;
+  ignored?: Ignored;
 
   @Column({ default: false })
-  isBot: boolean;
+  bot: boolean;
 
   @Column({
     type: "int",
@@ -116,14 +89,18 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column("simple-array", { default: [] })
-  badge: string[];
+  @Column("simple-array", {
+    nullable: true,
+  })
+  badges: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   guildIds: string[];
 
-  @Column({nullable: true})
-  voice: string;
+  @Column({ nullable: true })
+  voice?: string;
 
   @Column({
     type: "bool",
@@ -137,8 +114,8 @@ export class User {
   })
   locked: boolean;
 
-  @Column({ type: "timestamp" })
-  premiumExpirationDate: Date;
+  @Column({ type: "timestamp", nullable: true })
+  premiumExpiration: Date;
 
   @Column({
     type: "varchar",
@@ -156,4 +133,10 @@ export class User {
   })
   @Matches(patterns.status, { message: "Invalid status" })
   status: string;
+
+  @Column({ nullable: true })
+  salt?: string;
+
+  @Column({ nullable: true })
+  hash?: string;
 }

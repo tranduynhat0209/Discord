@@ -1,118 +1,124 @@
-import { Entity, ChannelTypes, InviteTypes, MessageTypes, UserTypes } from './entity.types';
+import {
+  Entity,
+  ChannelTypes,
+  InviteTypes,
+  MessageTypes,
+  UserTypes,
+} from "./entity.types";
 
 export declare namespace WS {
   export interface ListenParams {
     /** Create a channel in a guild. */
-    'CHANNEL_CREATE': Params.ChannelCreate;
+    CHANNEL_CREATE: Params.ChannelCreate;
     /** Delete a channel in a guild. */
-    'CHANNEL_DELETE': Params.ChannelDelete;
+    CHANNEL_DELETE: Params.ChannelDelete;
     /** Update a channel in a guild. */
-    'CHANNEL_UPDATE': Params.ChannelUpdate;
+    CHANNEL_UPDATE: Params.ChannelUpdate;
     /** Join a voice channel and receive voice events. */
-    'CHANNEL_JOIN': Params.ChannelJoin;
+    CHANNEL_JOIN: Params.ChannelJoin;
     /** Leave the voice channel that the client is in. */
-    'CHANNEL_LEAVE': Params.ChannelLeave;
+    CHANNEL_LEAVE: Params.ChannelLeave;
     /** Create a guild. */
-    'GUILD_CREATE': Params.GuildCreate;
+    GUILD_CREATE: Params.GuildCreate;
     /** Delete a guild. */
-    'GUILD_DELETE': Params.GuildDelete;
+    GUILD_DELETE: Params.GuildDelete;
     /** Accept a guild invite. */
-    'GUILD_MEMBER_ADD': Params.GuildMemberAdd;
+    GUILD_MEMBER_ADD: Params.GuildMemberAdd;
     /** Remove a member from a guild. */
-    'GUILD_MEMBER_REMOVE': Params.GuildMemberRemove;
+    GUILD_MEMBER_REMOVE: Params.GuildMemberRemove;
     /** Update a members roles or other properties on a member. */
-    'GUILD_MEMBER_UPDATE': Params.GuildMemberUpdate;
+    GUILD_MEMBER_UPDATE: Params.GuildMemberUpdate;
     /** Create a role in a guild. */
-    'GUILD_ROLE_CREATE': Params.GuildRoleCreate;
+    GUILD_ROLE_CREATE: Params.GuildRoleCreate;
     /** Delete a role in a guild. */
-    'GUILD_ROLE_DELETE': Params.GuildRoleDelete;
+    GUILD_ROLE_DELETE: Params.GuildRoleDelete;
     /** Update a guild role permissions or other properties. */
-    'GUILD_ROLE_UPDATE': Params.GuildRoleUpdate;
+    GUILD_ROLE_UPDATE: Params.GuildRoleUpdate;
     /** Update the settings of a guild. */
-    'GUILD_UPDATE': Params.GuildUpdate;
+    GUILD_UPDATE: Params.GuildUpdate;
     /** Create an invite in a guild */
-    'INVITE_CREATE': Params.InviteCreate;
+    INVITE_CREATE: Params.InviteCreate;
     /** Delete an existing invite in a guild. */
-    'INVITE_DELETE': Params.InviteDelete;
+    INVITE_DELETE: Params.InviteDelete;
     /** Create a message in a text-based channel. */
-    'MESSAGE_CREATE': Params.MessageCreate;
+    MESSAGE_CREATE: Params.MessageCreate;
     /** Delete an existing message in a text-based channel. */
-    'MESSAGE_DELETE': Params.MessageDelete;
+    MESSAGE_DELETE: Params.MessageDelete;
     /** Update an existing message in a text-based channel. */
-    'MESSAGE_UPDATE': Params.MessageUpdate;
+    MESSAGE_UPDATE: Params.MessageUpdate;
     /** Bootstrap your websocket client to be able to use other websocket events.
      * - Associate ws client ID with user ID.
      * - Join user rooms.
      * - Set online status. */
-    'READY': Params.Ready;
+    READY: Params.Ready;
     /** Indicate that you are typing in a text-based channel. */
-    'TYPING_START': Params.TypingStart;
+    TYPING_START: Params.TypingStart;
     /** Delete a user with a given token. */
-    'USER_DELETE': Params.UserDelete;
+    USER_DELETE: Params.UserDelete;
     /** Update a user with a given token. */
-    'USER_UPDATE': Params.UserUpdate;
+    USER_UPDATE: Params.UserUpdate;
     /** Send voice data to the server. */
-    'VOICE_DATA': Params.VoiceData;
+    VOICE_DATA: Params.VoiceData;
   }
 
   export interface On {
     /** Manually disconnect from the websocket; logout. */
-    'disconnect': any;
+    disconnect: any;
   }
 
   /** WS Args are what is received from the websocket. */
   export interface EmitParams {
     /** Called when a guild channel is created. */
-    'CHANNEL_CREATE': Args.ChannelCreate;
+    CHANNEL_CREATE: Args.ChannelCreate;
     /** Called when a guild channel is deleted. */
-    'CHANNEL_DELETE': Args.ChannelDelete;
+    CHANNEL_DELETE: Args.ChannelDelete;
     /** Called when a guild channel is updated. */
-    'CHANNEL_UPDATE': Args.ChannelUpdate;
+    CHANNEL_UPDATE: Args.ChannelUpdate;
     /** Called when a guild is deleted, or the client leaves a guild. */
-    'GUILD_DELETE': Args.GuildDelete;
+    GUILD_DELETE: Args.GuildDelete;
     /** Called when the client joins a guild. */
-    'GUILD_CREATE': Args.GuildCreate;
+    GUILD_CREATE: Args.GuildCreate;
     /** Called when someone joins a guild by an invite, a bot is added, or the client joins guild. */
-    'GUILD_MEMBER_ADD': Args.GuildMemberAdd;
+    GUILD_MEMBER_ADD: Args.GuildMemberAdd;
     /** Called when a guild member is removed, or leaves the guild. */
-    'GUILD_MEMBER_REMOVE': Args.GuildMemberRemove;
+    GUILD_MEMBER_REMOVE: Args.GuildMemberRemove;
     /** Called when member roles are updated, or other properties. */
-    'GUILD_MEMBER_UPDATE': Args.GuildMemberUpdate;
+    GUILD_MEMBER_UPDATE: Args.GuildMemberUpdate;
     /** Called when a guild role is created. */
-    'GUILD_ROLE_CREATE': Args.GuildRoleCreate;
+    GUILD_ROLE_CREATE: Args.GuildRoleCreate;
     /** Called when a guild role is deleted. */
-    'GUILD_ROLE_DELETE': Args.GuildRoleDelete;
+    GUILD_ROLE_DELETE: Args.GuildRoleDelete;
     /** Called when properties on a guild role are updated. */
-    'GUILD_ROLE_UPDATE': Args.GuildRoleUpdate;
+    GUILD_ROLE_UPDATE: Args.GuildRoleUpdate;
     /** Called when guild settings are updated. */
-    'GUILD_UPDATE': Args.GuildUpdate;
+    GUILD_UPDATE: Args.GuildUpdate;
     /** Called when a guild invite is created. */
-    'INVITE_CREATE': Args.InviteCreate;
+    INVITE_CREATE: Args.InviteCreate;
     /** Called when an existing guild invite is deleted. */
-    'INVITE_DELETE': Args.InviteDelete;
+    INVITE_DELETE: Args.InviteDelete;
     /** Called when a message is created in a text-based channel. */
-    'MESSAGE_CREATE': Args.MessageCreate;
+    MESSAGE_CREATE: Args.MessageCreate;
     /** Called when a message is deleted in a text-based channel. */
-    'MESSAGE_DELETE': Args.MessageDelete;
+    MESSAGE_DELETE: Args.MessageDelete;
     /** Called when an existing message is updated in a text-based channel. */
-    'MESSAGE_UPDATE': Args.MessageUpdate;
+    MESSAGE_UPDATE: Args.MessageUpdate;
     /** Called when a message is sent in a channel you are not ignoring. */
-    'PING': Args.Ping;
+    PING: Args.Ping;
     /** Called when a user goes online or offline. */
-    'PRESENCE_UPDATE': Args.PresenceUpdate;
+    PRESENCE_UPDATE: Args.PresenceUpdate;
     /** Called when the websocket accepts that you are ready. */
-    'READY': Args.Ready;
+    READY: Args.Ready;
     /** Called when someone is typing in a text-based channel. */
-    'TYPING_START': Args.TypingStart;
+    TYPING_START: Args.TypingStart;
     /** Called the client user is deleted. */
-    'USER_DELETE': {};
+    USER_DELETE: {};
     /** Called the client user settings are updated. */
-    'USER_UPDATE': Args.UserUpdate;
+    USER_UPDATE: Args.UserUpdate;
     /** Receive voice data from the server. */
-    'VOICE_DATA': Args.VoiceData;
+    VOICE_DATA: Args.VoiceData;
     /** Called when a user voice state is updated in the client's voice channel. */
-    'VOICE_STATE_UPDATE': Args.VoiceStateUpdate;
-    'error': object;
+    VOICE_STATE_UPDATE: Args.VoiceStateUpdate;
+    error: object;
   }
 
   export namespace Params {
@@ -139,14 +145,13 @@ export declare namespace WS {
       channelId: string;
       summary?: string;
       name?: string;
-      overrides?: ChannelTypes.Override[];
       position?: number;
     }
     export interface ChannelJoin {
       /** ID of the channel to join. */
       channelId: string;
     }
-    export interface ChannelLeave { }
+    export interface ChannelLeave {}
     export interface GuildCreate {
       /** Name of the guild. */
       name: string;
@@ -231,7 +236,7 @@ export declare namespace WS {
       activeThemeId?: string;
       avatarURL?: string;
       email?: string;
-      ignored?: UserTypes.Self['ignored'];
+      ignored?: UserTypes.Self["ignored"];
       token: string;
       username?: string;
     }
@@ -381,7 +386,7 @@ export declare namespace WS {
     }
     export interface VoiceStateUpdate {
       userId: string;
-      voice: UserTypes.VoiceState;
+      voice: string;
     }
   }
 }

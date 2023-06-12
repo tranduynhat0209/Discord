@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@types/passport-local": "^1.0.35"
+  },
+  "dependencies": {
+    "@types/passport": "^1.0.12",
+    "chai": "^4.3.7",
+    "dotenv": "^16.1.4",
+    "mocha": "^10.2.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

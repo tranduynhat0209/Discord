@@ -1,5 +1,3 @@
-import "../modules/deps";
-
 export * from "./auth.types";
 export * from "./entity.types";
 export * from "./patterns.types";

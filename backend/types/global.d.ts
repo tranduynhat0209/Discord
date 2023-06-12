@@ -1,5 +1,5 @@
-import { Deps } from "./deps";
-
 declare global {
-  declare var deps: Deps;
+  var deps: import("../src/modules/deps").Deps;
+  var log: import("winston").Logger;
 }
+export {};

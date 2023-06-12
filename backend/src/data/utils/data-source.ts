@@ -9,15 +9,18 @@ import { Role } from "../entity/Role";
 import { Theme } from "../entity/Theme";
 import { Guild_Member } from "../entity/Guild-member";
 import { LastMessage } from "../entity/Last-message";
+import { config } from "dotenv";
+
+config();
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "newuser",
-  password: "123456",
-  database: "discord",
-  synchronize: true,
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  synchronize: false,
   logging: false,
   entities: [
     Channel,

@@ -6,16 +6,23 @@ import { generateSnowflake } from "./snowflake-entity";
 
 export default class Roles extends DBWrapper<string, RoleEntity> {
   public async get(id: string | undefined) {
-    return await deps.dataSource.manager.findOneBy(RoleEntity, {
+    const role = await deps.dataSource.manager.findOneBy(RoleEntity, {
       id,
     });
+
+    if (!role) throw new TypeError("The role doesn't exist");
+
+    return role;
   }
 
   public async getEveryone(guildId: string) {
-    return await deps.dataSource.manager.findOneBy(RoleEntity, {
+    const everyoneRole = await deps.dataSource.manager.findOneBy(RoleEntity, {
       guildId,
       name: "@everyone",
     });
+
+    if (!everyoneRole) throw new TypeError("@everyone doesn't exist");
+    return everyoneRole;
   }
 
   public async memberIsHigher(
@@ -33,7 +40,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       deps.dataSource
         .getRepository(RoleEntity)
         .createQueryBuilder("their_roles")
-        .where("their_rols.id IN (:...roles", { roles: theirRoleIds })
+        .where("their_roles.id IN (:...roles)", { roles: theirRoleIds })
         .getMany(),
     ]);
 
@@ -64,21 +71,23 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
     return hasPermission(totalPerms, +permNumber);
   }
 
-  public async create(guildId: string, options?: Partial<Entity.Role>) {
+  public async create(guildId: string, options: Partial<Entity.Role>) {
     const roleId = generateSnowflake();
     const rolesInGuild = await deps.dataSource.manager.findBy(RoleEntity, {
       guildId,
     });
     const rolesNumber = rolesInGuild.length;
 
-    return await deps.dataSource.manager.save(RoleEntity, {
+    await deps.dataSource.manager.save(RoleEntity, {
       id: roleId,
-      guildId,
+      guildId: guildId,
       mentionable: false,
       hoisted: false,
-      name: "New Role",
-      permissions: PermissionTypes.defaultPermissions,
+      name: options.name ?? "New Role",
+      permissions: options.permissions ?? PermissionTypes.defaultPermissions,
       position: rolesNumber,
     });
+
+    return await this.get(roleId);
   }
 }

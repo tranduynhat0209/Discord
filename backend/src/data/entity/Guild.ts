@@ -13,11 +13,11 @@ export class Guild {
 
   @Column({
     nullable: false,
-    length: 32,
+    length: 128,
   })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   iconURL: string;
 
   @Column()
