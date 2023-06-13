@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import { WebSocket } from "../websocket";
 import { WSEvent } from ".";
 import { Entity, WS } from "../../types";
+import { DM } from "../../data/entity/DM";
 
 export default class implements WSEvent<"DM_CREATE"> {
   on = "DM_CREATE" as const;
@@ -13,10 +14,18 @@ export default class implements WSEvent<"DM_CREATE"> {
   ) {
     const authorId = ws.sessions.userId(client);
 
-    const [dm, author] = await Promise.all([
-      deps.dms.getByUserIds(authorId, toId),
-      deps.users.getSelf(authorId),
-    ]);
+    const author = await deps.users.getSelf(authorId);
+
+    let dm: DM;
+    try{
+      dm = await deps.dms.getByUserIds(authorId, toId);
+    }catch(err){
+      dm = await deps.dms.create({
+        user0Id: authorId,
+        user1Id: toId
+      })
+    }
+    
 
     var message = (await deps.messages.create(authorId, dm.id, {
       attachmentURLs,
