@@ -54,6 +54,7 @@ export namespace Entity {
     type?: MessageTypes.Type;
     updatedAt?: Date;
     system?: boolean;
+    dm?: boolean;
   }
   export interface Role {
     id: string;
@@ -90,19 +91,22 @@ export namespace Entity {
     username: string;
     voice?: string // channel id;
   }
+
+  export interface DM {
+    id: string;
+    createdAt: Date;
+    lastMessageId?: null | string;
+    user0Id: string;
+    user1Id: string;
+  }
 }
 
 export namespace ChannelTypes {
   export enum Type {
-    DM = "DM",
     TEXT = "TEXT",
     VOICE = "VOICE",
   }
 
-  export interface DM extends Entity.Channel {
-    type: Type.DM;
-    userIds: string[];
-  }
   export interface Text extends Entity.Channel {
     type: Type.TEXT;
   }

@@ -30,7 +30,7 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
     await Promise.all([
       deps.dataSource.manager.save(GuildEntity, {
         _id: guildId,
-        name: "Unnamed Guild",
+        name: options.name ?? "Unnamed Guild",
         ownerId: options.ownerId,
         systemChannelId: systemChannel.id,
         ...options,

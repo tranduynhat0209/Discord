@@ -19,6 +19,7 @@ import { Email } from "../email/email";
 import { Verification } from "../email/verification";
 import { EmailFunctions } from "../email/email-functions";
 import { REST } from "../rest/server";
+import DMs from "../data/dm";
 
 export interface Deps {
   channels: Channels;
@@ -41,6 +42,7 @@ export interface Deps {
   emailFunctions: EmailFunctions;
   verification: Verification;
   rest: REST;
+  dms: DMs;
 }
 
 const deps: Deps = {
@@ -64,6 +66,7 @@ const deps: Deps = {
   emailFunctions: new EmailFunctions(),
   verification: new Verification(),
   rest: new REST(),
+  dms: new DMs(),
 };
 
 global["deps"] = deps;

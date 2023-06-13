@@ -12,14 +12,6 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
     return channel;
   }
 
-  public async getDM(id: string | undefined): Promise<ChannelEntity> {
-    const channel = await deps.dataSource.manager.findOneBy(ChannelEntity, {
-      id: id,
-      type: "DM",
-    });
-    if (!channel) throw new TypeError("Channel not found");
-    return channel;
-  }
   public async getText(id: string | undefined): Promise<ChannelEntity> {
     const channel = await deps.dataSource.manager.findOneBy(ChannelEntity, {
       id: id,
@@ -68,6 +60,19 @@ export default class Channels extends DBWrapper<string, ChannelEntity> {
   }
   public async leaveVC(channel: ChannelEntity, userId: string) {
     if (channel.type !== "VOICE") throw new Error("Channel type must be Voice");
+    const index = channel.userIds.indexOf(userId);
+    channel.userIds.splice(index, 1);
+    await this.save(channel);
+  }
+
+  public async joinTC(channel: ChannelEntity, userId: string) {
+    if (channel.type !== "TEXT") throw new Error("Channel type must be Voice");
+    channel.userIds.push(userId);
+    await this.save(channel);
+  }
+
+  public async leaveTC(channel: ChannelEntity, userId: string) {
+    if (channel.type !== "TEXT") throw new Error("Channel type must be Voice");
     const index = channel.userIds.indexOf(userId);
     channel.userIds.splice(index, 1);
     await this.save(channel);

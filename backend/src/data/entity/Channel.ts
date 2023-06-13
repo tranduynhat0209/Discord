@@ -49,6 +49,6 @@ export class Channel {
   userIds: string[];
 
   @Column({default: 'TEXT'})
-  @Matches(/^TEXT$|^VOICE$|^DM$/, { message: "Invalid type" })
+  @Matches(/^TEXT$|^VOICE$/, { message: "Invalid type" })
   type: string;
 }

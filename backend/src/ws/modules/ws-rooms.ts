@@ -7,6 +7,10 @@ export class WSRooms {
     if (alreadyJoinedRooms) return;
 
     await this.joinGuildRooms(user, client);
+    await client.join(user.id);
+
+    const dmIds = await this.getDMIds(client, user.id);
+    await client.join(dmIds);
   }
 
   public async joinGuildRooms(user: any, client: Socket) {
@@ -35,6 +39,18 @@ export class WSRooms {
         );
         ids.push(channel.id);
       } catch {}
+    return ids;
+  }
+
+  private async getDMIds(client: Socket, userId: string) {
+    const ids: string[] = [];
+    const dms = await deps.dataSource
+      .getRepository(Channel)
+      .createQueryBuilder("dm")
+      .where("dm.user0Id = :userId OR dm.user1Id = :user1Id", { userId })
+      .getMany();
+
+    for (const dm of dms) ids.push(dm.id);
     return ids;
   }
 }

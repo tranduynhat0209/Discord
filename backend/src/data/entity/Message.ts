@@ -48,7 +48,12 @@ export class Message {
   @Column({
     default: false,
   })
-  system: boolean;
+  system?: boolean;
+
+  @Column({
+    default: false,
+  })
+  dm?: boolean;
 
   @Column({ nullable: true })
   type?: string;

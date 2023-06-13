@@ -68,7 +68,7 @@ export const countUsers = () => (dispatch) => {
 }
 
 export const uploadUserAvatar = (file: File) => (dispatch) => {
-  const uploadCallback = async ({ url }: REST.From.Post['/upload']) =>
+  const uploadCallback = async ({ url }: REST.Return.Post['/upload']) =>
     dispatch(updateSelf({ avatarURL: url }));
   dispatch(uploadFile(file, uploadCallback));
 }
