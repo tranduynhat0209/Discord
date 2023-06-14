@@ -2,15 +2,15 @@ import loginBackground from "../../../../assets/image/login/login.png";
 import "./Login.scss";
 import useHideLogin from "./useHideLogin";
 // import {reducer} from '../../../../store/auth'
-import { APIArgs, actions } from "../../../../store/api";
 import { useDispatch, useSelector } from "react-redux";
-import rest from "../../../../store/middleware/rest";
 import { useEffect } from "react";
+import { AppState } from "../../../../../store";
+import { actions } from "../../../../../store/api";
 
 const Login = ({ hideLogin }) => {
     // const { handleHideLogin } = useHideLogin();
     const dispatch = useDispatch();
-    const data = useSelector((state: APIArgs) => state.data);
+    const data = useSelector((state: AppState) => state);
     useEffect(() => {
         dispatch(
             actions.restCallBegan({

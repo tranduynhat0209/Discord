@@ -1,13 +1,18 @@
 import { WS } from "../types";
 import io from "socket.io-client";
 
-const ws = (io as any).connect(process.env.REACT_APP_ROOT_API_URL, {
-  secure: true,
-  path: `/ws`,
-  transports: ["websocket", "polling", "flashsocket"],
+const ws = io(process.env.REACT_APP_ROOT_API_URL, {
+  transports: ["websocket"],
+  path: '/ws'
+})
+ws.connect();
+ws.on("connect", () => {
+  console.log(ws.connected); // true
 });
 
-ws.io.on("open", () => console.log("Connected to WS Server"));
+
+ws.io.on("open", () => console.log("WS is opened"));
+
 
 export default ws as WSClient;
 

@@ -2,22 +2,12 @@ import "./Signup.scss";
 import signupBackground from "../../../../assets/image/login/login.png";
 import useHideLogin from "../login/useHideLogin";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../../../../store/auth";
+import { registerUser } from "../../../../../store/auth";
 const Signup = () => {
   const dispatch = useDispatch();
   const showLogin = () => {
     // nagvigate to login page
   };
-
-  const onSubmit = () =>
-    dispatch(
-      // @ts-ignore
-      registerUser({
-        username: "",
-        email: "",
-        password: "",
-      })
-    );
 
   // const { handleShowLogin } = useHideLogin();
   return (
@@ -68,9 +58,9 @@ const Signup = () => {
                       dispatch(
                         // @ts-ignore
                         registerUser({
-                          username: "",
-                          email: "",
-                          password: "",
+                          username: "Tran Duy Nhat",
+                          email: "abc33336@gmail.com",
+                          password: "0xnhattranduy",
                         })
                       );
                     }}
