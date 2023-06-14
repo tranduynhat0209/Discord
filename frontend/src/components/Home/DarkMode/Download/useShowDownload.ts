@@ -2,7 +2,10 @@ import { useState, useRef, useEffect } from "react";
 
 const useShowDownload = () => {
     const [showDownload, setShowDownload] = useState(false);
-
+    const handleShowDownload = () => {
+        console.log("show download");
+        setShowDownload(true);
+    };
     const closeButtonRef = useRef<HTMLButtonElement>(null);
     const downloadComponentRef = useRef<HTMLDivElement>(null);
 
@@ -65,7 +68,13 @@ const useShowDownload = () => {
         };
     }, [showDownload]);
 
-    return { showDownload, closeButtonRef, downloadComponentRef };
+    return {
+        showDownload,
+        setShowDownload,
+        closeButtonRef,
+        downloadComponentRef,
+        handleShowDownload,
+    };
 };
 
 export default useShowDownload;

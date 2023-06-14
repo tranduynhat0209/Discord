@@ -1,6 +1,25 @@
 import loginBackground from "../../../../assets/image/login/login.png";
 import "./Login.scss";
-const Login = () => {
+import useHideLogin from "./useHideLogin";
+// import {reducer} from '../../../../store/auth'
+import { APIArgs, actions } from "../../../../store/api";
+import { useDispatch, useSelector } from "react-redux";
+import rest from "../../../../store/middleware/rest";
+import { useEffect } from "react";
+
+const Login = ({ hideLogin }) => {
+    // const { handleHideLogin } = useHideLogin();
+    const dispatch = useDispatch();
+    const data = useSelector((state: APIArgs) => state.data);
+    useEffect(() => {
+        dispatch(
+            actions.restCallBegan({
+                url: "https://hustcord.up.railway.app/v1?fbclid=IwAR2w5TAN2G-dRN6gi0vLu-nUkSugOyolRz9kAQR05EV2nUb0-cHIjGfLDzI",
+                method: "get",
+            })
+        );
+    }, [dispatch]);
+    console.log(data);
     return (
         <div className="login-container">
             <div className="main-login">
@@ -23,7 +42,7 @@ const Login = () => {
                                     <label htmlFor="password">
                                         Mat khau<span>*</span>
                                     </label>
-                                    <input type="text" id="password" />
+                                    <input type="password" id="password" />
                                 </div>
                                 <button
                                     type="button"
@@ -31,12 +50,20 @@ const Login = () => {
                                 >
                                     Quen mat khau?
                                 </button>
-                                <button type="submit" className="login-button">
+                                <button
+                                    type="submit"
+                                    className="login-button"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                    }}
+                                >
                                     Dang nhap
                                 </button>
                                 <div className="need-account">
                                     <span>Can mot tai khoan? </span>
-                                    <button type="button">Dang ky</button>
+                                    <button type="button" onClick={hideLogin}>
+                                        Dang ky
+                                    </button>
                                 </div>
                             </div>
                         </form>

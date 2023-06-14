@@ -1,5 +1,3 @@
-import React from "react";
-
 import HomeIcon from "./HomeIcon/HomeIcon";
 import TopbarNavigation from "./TopbarNavigation/TopbarNavigation";
 import DirectMessagesAndNavigation from "./DiectMessagesAndNavigation/DirectMessagesAndNavigation";
@@ -10,14 +8,17 @@ import DiscoverList from "./DiscoverList/DiscoverList";
 import StudentHubs from "./DiscoverList/StudentHub";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ChatChanel from "./ChatChanel/ChatChanel";
-
-import "../../../style/scss/DarkMode/DarkMode.scss";
 import AddNewServer from "./HomeIcon/AddNewServer";
 import NewServer from "./HomeIcon/NewServer";
+import Download from "./Download/Download";
+import useShowDownload from "./Download/useShowDownload";
+
+import "../../../style/scss/DarkMode/DarkMode.scss";
 
 export default function DarkMode() {
     const { showAddServer } = AddNewServer();
-    console.log(showAddServer);
+    const { showDownload } = useShowDownload();
+    // console.log(showAddServer);
     return (
         <div className="dark-mode">
             <HomeIcon />
@@ -130,6 +131,7 @@ export default function DarkMode() {
                     ></Route>
                 </Route>
             </Routes>
+            {showDownload && <Download />}
         </div>
     );
 }

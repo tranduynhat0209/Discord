@@ -1,5 +1,3 @@
-import React from "react";
-
 import "../../../style/global/Message.scss";
 
 export default function MessageItem() {

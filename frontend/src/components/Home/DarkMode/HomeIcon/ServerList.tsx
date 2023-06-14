@@ -5,9 +5,11 @@ import Discovery from "../../../../assets/image/home/Discovery.png";
 import Logo from "./Logo";
 import { NavLink } from "react-router-dom";
 import AddNewServer from "./AddNewServer";
+import useShowDownload from "../Download/useShowDownload";
 
 export default function ServerList() {
     const { showAddServer, handleAddClick } = AddNewServer();
+    const { handleShowDownload } = useShowDownload();
     return (
         <ul className="list-avatar">
             <NavLink end to="/kenhchat1">
@@ -39,7 +41,7 @@ export default function ServerList() {
             </NavLink>
             <span className="line"></span>
             <div className="download cover">
-                <li className="download cover">
+                <li className="download cover" onClick={handleShowDownload}>
                     <svg
                         aria-hidden="true"
                         role="img"

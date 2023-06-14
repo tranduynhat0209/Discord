@@ -1,6 +1,8 @@
 import "./Signup.scss";
 import signupBackground from "../../../../assets/image/login/login.png";
-const Signup = () => {
+import useHideLogin from "../login/useHideLogin";
+const Signup = ({ showLogin }) => {
+    // const { handleShowLogin } = useHideLogin();
     return (
         <div className="signup-container">
             <div className="main-signup">
@@ -47,11 +49,20 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 <div className="signup-button">
-                                    <button type="submit" className="">
+                                    <button
+                                        type="submit"
+                                        className=""
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                        }}
+                                    >
                                         Tiep tuc
                                     </button>
                                 </div>
-                                <span className="have-account">
+                                <span
+                                    className="have-account"
+                                    onClick={showLogin}
+                                >
                                     Da co tai khoan
                                 </span>
                             </div>
