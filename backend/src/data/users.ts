@@ -128,7 +128,6 @@ export default class Users extends DBWrapper<string, UserEntity> {
     }
     try {
       const userHasExistEmail = await deps.users.getByEmail(email);
-      console.log(userHasExistEmail);
       if (userHasExistEmail) throw new TypeError("email is already in use");
     } catch (error) {
       if (error instanceof APIError && error.message === "User Not Found") {
@@ -158,8 +157,6 @@ export default class Users extends DBWrapper<string, UserEntity> {
       guildIds,
       ignored,
     };
-
-    console.log(newUser);
     await deps.dataSource.manager.save(User, newUser);
     return await this.getSelf(id);
   }

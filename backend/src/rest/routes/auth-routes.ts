@@ -69,8 +69,10 @@ router.post("/register", extraRateLimit(10), async (req, res) => {
       username: req.body.username,
     });
     await deps.emailFunctions.verifyEmail(user.email, user);
-    res.status(201).json(await deps.users.createToken(user));
+    const token = await deps.users.createToken(user);
+    res.status(201).json(token);
   } catch (error) {
+    console.log(error)
     if (error instanceof TypeError) {
       if (/is required$/.test(error.message)) {
         const missingField = error.message.split(" ")[0];

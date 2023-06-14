@@ -21,10 +21,7 @@ export class WebSocket {
   public async init(server: Server) {
     this.io = new SocketServer(server, {
       cors: {
-        origin: process.env.WEBSITE_URL,
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Authorization"],
-        credentials: true,
+        origin: "*",
       },
       path: "/ws",
       serveClient: false,
@@ -44,6 +41,7 @@ export class WebSocket {
     log.verbose(`Loaded ${this.events.size} handlers`, "ws");
 
     this.io.on("connection", (client) => {
+      console.log("connected with an usuer");
       for (const event of this.events.values())
         client.on(event.on, async (data: any) => {
           try {
@@ -69,7 +67,10 @@ export class WebSocket {
 
   public to(...rooms: string[]) {
     return this.io.to(rooms) as {
-      emit: <K extends keyof WS.EmitParams>(name: K, args: WS.EmitParams[K]) => any;
+      emit: <K extends keyof WS.EmitParams>(
+        name: K,
+        args: WS.EmitParams[K]
+      ) => any;
     };
   }
 }

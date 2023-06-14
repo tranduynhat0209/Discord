@@ -12,6 +12,7 @@ export default class implements WSEvent<"READY"> {
     client: Socket,
     { token }: WS.Params.Ready
   ) {
+    console.log("a READY event caught")
     const { id: userId } = await deps.wsGuard.decodeKey(token);
     if (!userId) throw new TypeError("Invalid User ID");
 
