@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import thunk from 'redux-thunk'
 import guilds from './guilds';
 import messages from './messages';
 import api from './middleware/rest';
@@ -19,6 +20,7 @@ import { AppState } from '.';
 
 export default () => configureStore<AppState>({
   middleware: [
+    thunk,
     ws,
     api,
   ] as any,

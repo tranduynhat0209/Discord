@@ -1,16 +1,8 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default function Categorie({ ...props }) {
+export default function Category({ ...props }) {
     return (
-        <NavLink
-            end
-            to={`${props.path}`}
-            className="item-category"
-            onClick={(event) => {
-                console.log(event.target);
-            }}
-        >
+        <NavLink end to={`${props.path}`} className="item-category">
             <svg
                 width="20"
                 height="20"

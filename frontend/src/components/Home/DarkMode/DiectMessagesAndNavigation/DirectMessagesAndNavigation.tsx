@@ -4,7 +4,7 @@ import DirectMessages from "./DirectMessages";
 import HomeNavigation from "./HomeNavigation";
 import UserProfile from "../UserProfile/UserProfile";
 
-import "../../../../style/scss/DarkMode/DirectMessagesAndNavigation/DirectMessagesAndNavigation.scss";
+import "./DirectMessagesAndNavigation.scss";
 
 export default function DirectMessagesAndNavigation() {
     return (

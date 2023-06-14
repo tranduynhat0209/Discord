@@ -1,0 +1,21 @@
+.chat-chanel-names {
+    flex: 1;
+    .chat-chanel-name {
+        padding-top: 16px;
+        .header {
+            cursor: pointer;
+            .title {
+                display: flex;
+                color: #949ba4;
+                align-items: center;
+                .right-arrow {
+                    font-size: 16px;
+                    margin: 2px 4px 0;
+                }
+                &:hover {
+                    color: #dbdee1;
+                }
+            }
+        }
+    }
+}

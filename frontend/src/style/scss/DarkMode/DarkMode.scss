@@ -1,4 +1,21 @@
-.main-chat {
-    height: calc(100% - 58px);
+.dark-mode {
+    width: 100%;
+    height: 100%;
     display: flex;
+    .home {
+        background-color: #1e1f22;
+    }
+    .main-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .chat {
+            height: calc(100% - 58px);
+            display: flex;
+        }
+        .main-chat {
+            display: flex;
+        }
+    }
 }

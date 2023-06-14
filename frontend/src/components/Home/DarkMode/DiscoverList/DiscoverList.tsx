@@ -1,12 +1,9 @@
-import React from "react";
-
 import Servers from "./Servers";
 import Backsplash from "./Backsplash";
 
-import "../../../../style/scss/DarkMode/DiscoverList.scss";
+import "./DiscoverList.scss";
 
-export default function DiscoverList({ ...props }) {
-    console.log(props);
+function DiscoverList(props: any) {
     return (
         <div className="discover-list">
             <Backsplash
@@ -16,3 +13,5 @@ export default function DiscoverList({ ...props }) {
         </div>
     );
 }
+
+export default DiscoverList;

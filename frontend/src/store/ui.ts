@@ -1,8 +1,8 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import events from '../services/event-service';
 import React from 'react';
 import { Entity } from '../types';
 import { AppState } from '.';
+import EventEmitter from 'events';
 
 const slice = createSlice({
   name: 'ui',
@@ -79,7 +79,7 @@ export interface Dialog {
   content: string | JSX.Element;
   variant: 'default' | 'info' | 'error' | 'success' | 'warning';
 }
-export const openDialog = (dialog: Dialog) => () => events.emit('dialog', dialog);
+export const openDialog = (dialog: Dialog) => () => new EventEmitter().emit('dialog', dialog);
 
 
 export const closeModal = (dispatch) => {
