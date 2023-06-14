@@ -88,7 +88,7 @@ export default class Users extends DBWrapper<string, UserEntity> {
 
   // dev-mode only (insecure)
   public async createToken(user: SelfUserDocument | UserEntity, expire = true) {
-    const key = readFileSync("./keys/jwt", { encoding: "utf-8" });
+    const key = readFileSync("./keys/jwtRS512.key", { encoding: "utf-8" });
     return jwt.sign({ id: user.id }, key, {
       algorithm: "RS512",
       expiresIn: expire ? "7d" : undefined,
@@ -100,7 +100,7 @@ export default class Users extends DBWrapper<string, UserEntity> {
   }
   public async verifyToken(token: string | undefined): Promise<string> {
     // too insecure to keep in memory
-    const key = readFileSync("./keys/jwt", { encoding: "utf-8" });
+    const key = readFileSync("./keys/jwtRS512.key", { encoding: "utf-8" });
     const decoded = jwt.verify(token as string, key, {
       algorithms: ["RS512"],
     }) as UserToken;
@@ -128,6 +128,7 @@ export default class Users extends DBWrapper<string, UserEntity> {
     }
     try {
       const userHasExistEmail = await deps.users.getByEmail(email);
+      console.log(userHasExistEmail);
       if (userHasExistEmail) throw new TypeError("email is already in use");
     } catch (error) {
       if (error instanceof APIError && error.message === "User Not Found") {
@@ -157,6 +158,8 @@ export default class Users extends DBWrapper<string, UserEntity> {
       guildIds,
       ignored,
     };
+
+    console.log(newUser);
     await deps.dataSource.manager.save(User, newUser);
     return await this.getSelf(id);
   }
