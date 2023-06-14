@@ -72,7 +72,7 @@ router.post("/register", extraRateLimit(10), async (req, res) => {
     const token = await deps.users.createToken(user);
     res.status(201).json(token);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     if (error instanceof TypeError) {
       if (/is required$/.test(error.message)) {
         const missingField = error.message.split(" ")[0];
@@ -90,24 +90,29 @@ router.post("/register", extraRateLimit(10), async (req, res) => {
 });
 
 router.get("/verify", extraRateLimit(20), async (req, res) => {
-  const email = deps.verification.getEmailFromCode(req.query.code as string);
-  const user = await deps.dataSource.manager.findOneBy(User, { email });
-  if (!email || !user) throw new APIError(400, "Invalid code");
+  try {
+    const email = deps.verification.getEmailFromCode(req.query.code as string);
+    console.log(email)
+    const user = await deps.dataSource.manager.findOneBy(User, { email });
+    if (!email || !user) throw new APIError(400, "Invalid code");
 
-  const code = deps.verification.get(email);
-  if (!code) throw new APIError(400, "Invalid code");
+    const code = deps.verification.get(email);
+    if (!code) throw new APIError(400, "Invalid code");
 
-  deps.verification.delete(email);
+    deps.verification.delete(email);
 
-  if (code.type === "FORGOT_PASSWORD") {
-    await deps.users.setPassword(user.id, code.value);
-    res.json({ message: "Password reset" });
-  } else if (code.type === "VERIFY_EMAIL") {
-    user.verified = true;
-    await deps.users.save(user);
-    res.json({ message: "Email verified" });
-  } else if (code.type === "LOGIN")
-    res.json({ token: await deps.users.createToken(user) });
+    if (code.type === "FORGOT_PASSWORD") {
+      await deps.users.setPassword(user.id, code.value);
+      res.json({ message: "Password reset" });
+    } else if (code.type === "VERIFY_EMAIL") {
+      user.verified = true;
+      await deps.users.save(user);
+      res.json({ message: "Email verified" });
+    } else if (code.type === "LOGIN")
+      res.json({ token: await deps.users.createToken(user) });
+  } catch (err) {
+    res.status(400).json({ message: (err as TypeError).message });
+  }
 });
 
 router.get("/email/forgot-password", extraRateLimit(10), async (req, res) => {
