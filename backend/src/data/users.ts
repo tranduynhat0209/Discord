@@ -21,8 +21,9 @@ export default class Users extends DBWrapper<string, UserEntity> {
     const u = user as any;
     u.email = undefined;
     u.locked = undefined;
-    u.ignored = undefined;
     u.verified = undefined;
+    u.salt = undefined;
+    u.hash = undefined;
     return u;
   }
 
@@ -40,6 +41,8 @@ export default class Users extends DBWrapper<string, UserEntity> {
     for (let message of lastMessages) {
       lastReadMessageIds[message.channelId] = message.messageId;
     }
+    user.hash = undefined;
+    user.salt = undefined;
     const self = {
       ...user,
       lastReadMessageIds,

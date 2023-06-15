@@ -10,6 +10,7 @@ import { Auth as AuthTest } from "./components/Test/Auth";
 import { VerifyPage } from "./components/Home/DarkMode/Auth/verify/Verify";
 import { ready } from "./store/auth";
 import WSListener from "./components/ws-listener";
+import { Me } from "./components/Test/Me";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,14 +19,14 @@ function App() {
     dispatch(ready());
   }, []);
   return (
-    
-      <BrowserRouter>
-        <WSListener/>
-        <Routes>
-          <Route path="/test-auth" element={<AuthTest />} />
-          <Route path="/verify" element={<VerifyPage />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <WSListener />
+      <Routes>
+        <Route path="/test-auth" element={<AuthTest />} />
+        <Route path="/verify" element={<VerifyPage />} />
+        <Route path="me" element={<Me />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

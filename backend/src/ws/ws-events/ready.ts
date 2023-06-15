@@ -33,8 +33,7 @@ export default class implements WSEvent<"READY"> {
     await deps.wsRooms.join(client, user);
 
     const selfUser = await deps.users.getSelf(userId);
-
-    console.log(selfUser)
+    
     return [
       {
         emit: "PRESENCE_UPDATE" as const,

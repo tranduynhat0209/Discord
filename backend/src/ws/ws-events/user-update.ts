@@ -2,6 +2,7 @@ import { Entity, WS } from "../../types";
 import { Socket } from "socket.io";
 import { WebSocket } from "../websocket";
 import { WSEvent } from ".";
+import { User } from "../../data/entity/User";
 
 export default class implements WSEvent<"USER_UPDATE"> {
   on = "USER_UPDATE" as const;
@@ -9,14 +10,7 @@ export default class implements WSEvent<"USER_UPDATE"> {
   public async invoke(
     ws: WebSocket,
     client: Socket,
-    {
-      token,
-      username,
-      avatarURL,
-      ignored,
-      email,
-      activeThemeId,
-    }: WS.Params.UserUpdate
+    { token, username, avatarURL, ignored }: WS.Params.UserUpdate
   ) {
     const { id: userId } = await deps.wsGuard.decodeKey(token);
     const user = await deps.users.getSelf(userId);
@@ -25,23 +19,19 @@ export default class implements WSEvent<"USER_UPDATE"> {
     const hasChanged = (key: string, value: any) =>
       value && user[key] !== value;
 
-    if (hasChanged("activeThemeId", activeThemeId))
-      partial["activeThemeId"] = activeThemeId;
     if (hasChanged("avatarURL", avatarURL)) partial["avatarURL"] = avatarURL;
     if (hasChanged("ignored", ignored)) partial["ignored"] = ignored;
     if (hasChanged("username", username)) {
       partial["username"] = username;
       partial["discriminator"] = await deps.users.getDiscriminator(username!);
     }
-    if (hasChanged("email", email)) {
-      partial["email"] = email;
-      user["email"] = email!;
 
-      await deps.emailFunctions.verifyEmail(email!, user);
-    }
-
-    Object.assign(user, partial);
-    await deps.users.save(user);
+    await deps.dataSource
+      .createQueryBuilder()
+      .update(User)
+      .set(partial)
+      .where("id = :id", { id: userId })
+      .execute();
 
     return [
       {

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changePassword,
   forgotPasswordEmail,
@@ -7,6 +7,7 @@ import {
   registerUser,
 } from "../../store/auth";
 import { useState } from "react";
+import { AppState } from "../../store";
 
 export function Auth() {
   const [userInfo, setUserInfo] = useState({
@@ -16,6 +17,7 @@ export function Auth() {
     username: "Tran Duy Nhat",
     password: "W673udWHS0Ipspuv",
   });
+  const user = useSelector((state: AppState) => state.auth.user);
 
   const dispatch = useDispatch();
   return (
@@ -70,6 +72,8 @@ export function Auth() {
           Change Password
         </button>
       </div>
+      <div>{JSON.stringify(user)}</div>
+      
     </div>
   );
 }

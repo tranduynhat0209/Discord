@@ -1,27 +1,30 @@
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import ws from '../services/ws-service';
-import { useEffect } from 'react';
-import { actions as users, getUser } from '../store/users';
-import { actions as meta } from '../store/meta';
-import { actions as uiActions, Dialog, openUserProfile } from '../store/ui';
-import { actions as invites } from '../store/invites';
-import { actions as members, getSelfMember } from '../store/members';
-import { actions as roles } from '../store/roles';
-import { actions as typing } from '../store/typing';
-import { actions as guilds } from '../store/guilds';
-import { actions as messages } from '../store/messages';
-import { actions as channels } from '../store/channels';
-import { actions as auth, logoutUser } from '../store/auth';
-import { actions as pings, addPing } from '../store/pings';
-import { startVoiceFeedback, stopVoiceFeedback } from '../services/voice-service';
-import fetchEntities from '../store/actions/fetch-entities';
-import { AppState } from '../store';
-import { useSnackbar } from 'notistack';
-import events from '../services/event-service';
+import { useDispatch, useSelector, useStore } from "react-redux";
+import ws from "../services/ws-service";
+import { useEffect } from "react";
+import { actions as users, getUser } from "../store/users";
+import { actions as meta } from "../store/meta";
+import { actions as uiActions, Dialog, openUserProfile } from "../store/ui";
+import { actions as invites } from "../store/invites";
+import { actions as members, getSelfMember } from "../store/members";
+import { actions as roles } from "../store/roles";
+import { actions as typing } from "../store/typing";
+import { actions as guilds } from "../store/guilds";
+import { actions as messages } from "../store/messages";
+import { actions as channels } from "../store/channels";
+import { actions as auth, logoutUser } from "../store/auth";
+import { actions as pings, addPing } from "../store/pings";
+import {
+  startVoiceFeedback,
+  stopVoiceFeedback,
+} from "../services/voice-service";
+import fetchEntities from "../store/actions/fetch-entities";
+import { AppState } from "../store";
+import { useSnackbar } from "notistack";
+import events from "../services/event-service";
 
 const WSListener: React.FunctionComponent = () => {
   const dispatch = useDispatch();
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const store = useStore();
   const hasListened = useSelector((s: AppState) => s.meta.hasListenedToWS);
 
@@ -32,17 +35,19 @@ const WSListener: React.FunctionComponent = () => {
 
     const handleDialog = (dialog: Dialog) =>
       enqueueSnackbar(`${dialog.content}.`, {
-        anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+        anchorOrigin: { vertical: "bottom", horizontal: "left" },
         variant: dialog.variant,
         autoHideDuration: 3000,
       });
 
-    ws.on('error', (error: any) => handleDialog({
-      variant: 'error',
-      content: error.data?.message ?? error.message,
-    }));
-    events.on('dialog', handleDialog);
-    events.on('openUserProfile', (userId: string) => {
+    ws.on("error", (error: any) =>
+      handleDialog({
+        variant: "error",
+        content: error.data?.message ?? error.message,
+      })
+    );
+    events.on("dialog", handleDialog);
+    events.on("openUserProfile", (userId: string) => {
       const user = getUser(userId)(store.getState());
       if (!user.discriminator) return;
 
@@ -50,34 +55,34 @@ const WSListener: React.FunctionComponent = () => {
     });
 
     // add channel to guilds.channels
-    ws.on('CHANNEL_CREATE', (args) => {
+    ws.on("CHANNEL_CREATE", (args) => {
       // if we created it, we want to navigate there
       // we'd expect the user to exist, as they should be logged in to receive ws events
       const { auth, ui } = state();
       const selfCreated = args.creatorId === auth.user!.id;
 
-      // we cannot go to the channel if not in store 
+      // we cannot go to the channel if not in store
       dispatch(channels.created(args));
 
       if (selfCreated && ui.activeGuild) {
         dispatch(uiActions.closedModal());
-        if (args.channel.type === 'VOICE') return;
+        if (args.channel.type === "VOICE") return;
 
         // history.push(`/channels/${ui.activeGuild.id}/${args.channel.id}`);
       }
     });
-    ws.on('CHANNEL_DELETE', (args) => {
+    ws.on("CHANNEL_DELETE", (args) => {
       // if in channel, go away from it
       const { ui } = state();
       const inChannel = args.channelId === ui.activeChannel?.id;
 
-    //   if (inChannel && ui.activeGuild)
-    //     history.push(`/channels/${ui.activeGuild.id}`);
+      //   if (inChannel && ui.activeGuild)
+      //     history.push(`/channels/${ui.activeGuild.id}`);
 
       dispatch(channels.deleted(args));
     });
-    ws.on('CHANNEL_UPDATE', (args) => dispatch(channels.updated(args)));
-    ws.on('GUILD_CREATE', (args) => {
+    ws.on("CHANNEL_UPDATE", (args) => dispatch(channels.updated(args)));
+    ws.on("GUILD_CREATE", (args) => {
       dispatch(users.fetched(args.users)); // this before members
       dispatch(channels.fetched(args.channels));
       dispatch(members.fetched(args.members));
@@ -86,7 +91,7 @@ const WSListener: React.FunctionComponent = () => {
       dispatch(uiActions.closedModal());
       // history.push(`/channels/${args.guild.id}`);
     });
-    ws.on('GUILD_DELETE', (args) => {
+    ws.on("GUILD_DELETE", (args) => {
       const { ui } = state();
       const guildIsActive = args.guildId === ui.activeGuild?.id;
       if (guildIsActive) {
@@ -99,70 +104,73 @@ const WSListener: React.FunctionComponent = () => {
       dispatch(members.removed({ memberId }));
     });
     // listen to passive events (not received by api middleware)
-    ws.on('GUILD_MEMBER_ADD', (args) => {
+    ws.on("GUILD_MEMBER_ADD", (args) => {
       // we not getting other users when joining guild
       dispatch(users.fetched([args.user]));
       dispatch(members.added(args));
     });
-    ws.on('GUILD_MEMBER_UPDATE', (args) => dispatch(members.updated(args)));
+    ws.on("GUILD_MEMBER_UPDATE", (args) => dispatch(members.updated(args)));
     // user may be in mutual guilds, and therefore not removed from global user cache
-    ws.on('GUILD_MEMBER_REMOVE', (args) => dispatch(members.removed(args)));
-    ws.on('GUILD_ROLE_CREATE', (args) => dispatch(roles.created(args)));
-    ws.on('GUILD_ROLE_DELETE', (args) => dispatch(roles.deleted(args)));
-    ws.on('GUILD_ROLE_UPDATE', (args) => dispatch(roles.updated(args)));
-    ws.on('GUILD_UPDATE', (args) => dispatch(guilds.updated(args)));
-    ws.on('INVITE_CREATE', (args) => {
+    ws.on("GUILD_MEMBER_REMOVE", (args) => dispatch(members.removed(args)));
+    ws.on("GUILD_ROLE_CREATE", (args) => dispatch(roles.created(args)));
+    ws.on("GUILD_ROLE_DELETE", (args) => dispatch(roles.deleted(args)));
+    ws.on("GUILD_ROLE_UPDATE", (args) => dispatch(roles.updated(args)));
+    ws.on("GUILD_UPDATE", (args) => dispatch(guilds.updated(args)));
+    ws.on("INVITE_CREATE", (args) => {
       dispatch(invites.created(args));
       dispatch(uiActions.focusedInvite(args.invite));
     });
-    ws.on('INVITE_DELETE', (args) => dispatch(invites.deleted(args)));
-    ws.on('MESSAGE_CREATE', (args) => {
+    ws.on("INVITE_DELETE", (args) => dispatch(invites.deleted(args)));
+    ws.on("MESSAGE_CREATE", (args) => {
       const selfUser = state().auth.user!;
-      const isBlocked = selfUser.ignored?.userIds.includes(args.message.authorId);
+      const isBlocked = selfUser.ignored?.userIds.includes(
+        args.message.authorId
+      );
       if (isBlocked) return;
 
       dispatch(messages.created(args));
 
       const { channelId } = args.message;
       const { activeChannel } = state().ui;
-      if (activeChannel && activeChannel.id !== channelId)
-        addPing(channelId);
+      if (activeChannel && activeChannel.id !== channelId) addPing(channelId);
     });
-    ws.on('MESSAGE_DELETE', (args) => dispatch(messages.deleted(args)));
-    ws.on('MESSAGE_UPDATE', (args) => dispatch(messages.updated(args)));
-    ws.on('PRESENCE_UPDATE', ({ userId, status }) =>
-      dispatch(users.updated({ userId, partialUser: { status } })));
-    ws.on('READY', (args) => {
+    ws.on("MESSAGE_DELETE", (args) => dispatch(messages.deleted(args)));
+    ws.on("MESSAGE_UPDATE", (args) => dispatch(messages.updated(args)));
+    ws.on("PRESENCE_UPDATE", ({ userId, status }) =>
+      dispatch(users.updated({ userId, partialUser: { status } }))
+    );
+    ws.on("READY", (args) => {
       // dispatch(fetchEntities());
+      console.log("ready");
       dispatch(auth.ready(args));
       dispatch(users.fetched([args.user]));
     });
-    ws.on('TYPING_START', (args) => {
+    ws.on("TYPING_START", (args) => {
       dispatch(typing.userTyped(args));
 
       const timeoutMs = 5000;
       setTimeout(() => dispatch(typing.userStoppedTyping(args)), timeoutMs);
     });
-    ws.on('USER_DELETE', () => {
+    ws.on("USER_DELETE", () => {
       ws.disconnect();
       // history.push('/');
       // @ts-ignore
       dispatch(logoutUser());
     });
-    ws.on('USER_UPDATE', (args) => {
+    ws.on("USER_UPDATE", (args) => {
+      console.log("user updated");
       dispatch(auth.updatedUser(args));
       dispatch(users.updated(args));
     });
-    ws.on('VOICE_STATE_UPDATE', async ({ userId, voice }) => {
+    ws.on("VOICE_STATE_UPDATE", async ({ userId, voice }) => {
       const data = { userId, partialUser: { voice } };
       const selfUser = state().auth.user!;
-      if (selfUser.id === userId)
-        dispatch(auth.updatedUser(data));
+      if (selfUser.id === userId) dispatch(auth.updatedUser(data));
       dispatch(users.updated(data));
 
-      (voice)
-        // if in channel
-        ? await startVoiceFeedback(voice)
+      voice
+        ? // if in channel
+          await startVoiceFeedback(voice)
         : stopVoiceFeedback();
     });
 
@@ -170,6 +178,6 @@ const WSListener: React.FunctionComponent = () => {
   }, [hasListened]);
 
   return null;
-}
+};
 
 export default WSListener;

@@ -235,7 +235,6 @@ export declare namespace WS {
       /** Token granted on login. Required to update user. */
       activeThemeId?: string;
       avatarURL?: string;
-      email?: string;
       ignored?: UserTypes.Self["ignored"];
       token: string;
       username?: string;
