@@ -17,9 +17,7 @@ export default class implements WSEvent<"MESSAGE_DELETE"> {
 
     try {
       deps.wsGuard.validateIsUser(client, message.authorId);
-    } catch {
-      await deps.wsGuard.validateCanInChannel(client, channel.id, 'MANAGE_MESSAGES');
-    }
+    } catch {}
     await deps.dataSource
       .createQueryBuilder()
       .delete()

@@ -1,5 +1,5 @@
 import { readFile, readFileSync } from "fs";
-import { Auth, UserTypes } from "../types";
+import { Auth, UserTypes, patterns } from "../types";
 import DBWrapper from "./db-wrapper";
 import jwt from "jsonwebtoken";
 import { SelfUserDocument, User, User as UserEntity } from "./entity/User";
@@ -88,7 +88,7 @@ export default class Users extends DBWrapper<string, UserEntity> {
 
   // dev-mode only (insecure)
   public async createToken(user: SelfUserDocument | UserEntity, expire = true) {
-    const key = readFileSync("./keys/jwt", { encoding: "utf-8" });
+    const key = readFileSync("./keys/jwtRS512.key", { encoding: "utf-8" });
     return jwt.sign({ id: user.id }, key, {
       algorithm: "RS512",
       expiresIn: expire ? "7d" : undefined,
@@ -100,7 +100,7 @@ export default class Users extends DBWrapper<string, UserEntity> {
   }
   public async verifyToken(token: string | undefined): Promise<string> {
     // too insecure to keep in memory
-    const key = readFileSync("./keys/jwt", { encoding: "utf-8" });
+    const key = readFileSync("./keys/jwtRS512.key", { encoding: "utf-8" });
     const decoded = jwt.verify(token as string, key, {
       algorithms: ["RS512"],
     }) as UserToken;
@@ -121,9 +121,29 @@ export default class Users extends DBWrapper<string, UserEntity> {
     bot = false
   ): Promise<SelfUserDocument> {
     if (!email) throw new TypeError("email is required");
+    if (!username) throw new TypeError("username is required");
+    if (!password) throw new TypeError("password is required");
+    if (!RegExp(patterns.email).test(email)) {
+      throw new TypeError("email is invalid");
+    }
+    try {
+      const userHasExistEmail = await deps.users.getByEmail(email);
+      if (userHasExistEmail) throw new TypeError("email is already in use");
+    } catch (error) {
+      if (error instanceof APIError && error.message === "User Not Found") {
+        // ok
+      } else throw error;
+    }
     const id = generateSnowflake();
     const salt = await generateSalt();
     const hash = await hashPassword(password, salt);
+    const badges: string[] = [];
+    const guildIds: string[] = [];
+    const ignored = {
+      userIds: [],
+      channelIds: [],
+      guildIds: [],
+    };
     const newUser = {
       id,
       username,
@@ -133,6 +153,9 @@ export default class Users extends DBWrapper<string, UserEntity> {
       discriminator: await this.getDiscriminator(username),
       salt,
       hash,
+      badges,
+      guildIds,
+      ignored,
     };
     await deps.dataSource.manager.save(User, newUser);
     return await this.getSelf(id);
@@ -180,6 +203,9 @@ export default class Users extends DBWrapper<string, UserEntity> {
 
   public authenticate: VerifyFunction = async (email, password, callback) => {
     const user = await this.getByEmail(email);
+    if (!user) {
+      return callback(new TypeError("user not found"));
+    }
     if (!user.hash) {
       return callback(new TypeError("user's password hasn't been set"));
     }
@@ -190,30 +216,48 @@ export default class Users extends DBWrapper<string, UserEntity> {
     return callback(null, user);
   };
 
+  // public serializeUser() {
+  //   return (
+  //     user: SelfUserDocument,
+  //     callback: (err: null | TypeError, id?: string) => void
+  //   ) => {
+  //     process.nextTick(function () {
+  //       callback(null, user.id);
+  //     });
+  //   };
+  // }
+
   public serializeUser() {
-    return (
-      user: SelfUserDocument,
-      callback: (err: null | TypeError, id?: string) => void
-    ) => {
-      process.nextTick(function () {
-        callback(null, user.id);
-      });
+    (user: SelfUserDocument, done) => {
+      done(null, user.id);
     };
   }
 
-  public async deserializeUser() {
-    return async (
-      id: string,
-      callback: (err: null | TypeError, user?: SelfUserDocument) => void
-    ) => {
-      try {
-        const user = await this.getSelf(id);
-        return callback(null, user);
-      } catch (err) {
-        return callback(err as TypeError);
-      }
+  public deserializeUser() {
+    (id: string, done) => {
+      this.getSelf(id)
+        .then((user) => {
+          done(null, user);
+        })
+        .catch((err) => {
+          done(err, null);
+        });
     };
   }
+
+  // public async deserializeUser() {
+  //   return async (
+  //     id: string,
+  //     callback: (err: null | TypeError, user?: SelfUserDocument) => void
+  //   ) => {
+  //     try {
+  //       const user = await this.getSelf(id);
+  //       return callback(null, user);
+  //     } catch (err) {
+  //       return callback(err as TypeError);
+  //     }
+  //   };
+  // }
 
   public async getDiscriminator(username: string) {
     const count = await deps.dataSource

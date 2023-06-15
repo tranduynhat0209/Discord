@@ -30,7 +30,7 @@ export default class GuildMembers extends DBWrapper<string, GuildMemberEntity> {
     const id = options.id ?? generateSnowflake();
     await deps.dataSource.manager.save(GuildMemberEntity, {
       id,
-      roleIds: [await this.getEveryoneRoleId(options.guildId!)],
+      roleIds: [await this.getEveryoneRoleId(options.guildId!)] || [],
       ...options,
     });
     await this.addGuildToUser(options.userId!, options.guildId!);

@@ -3,13 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  OneToMany,
-  OneToOne,
-  ManyToOne,
-  UpdateDateColumn,
 } from "typeorm";
-import { User } from "./User";
-import { Guild } from "./Guild";
 import { Max, Min } from "class-validator";
 
 @Entity()
@@ -29,7 +23,7 @@ export class Invite {
   id: string;
 
   @Column({
-    nullable: false,
+    nullable: true,
     length: 32,
   })
   inviteCode: string;
@@ -47,5 +41,5 @@ export class Invite {
   uses: number;
 
   @Column(() => InviteOptions)
-  options?: InviteOptions;
+  options: InviteOptions;
 }

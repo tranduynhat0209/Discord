@@ -50,8 +50,6 @@ export declare namespace WS {
      * - Associate ws client ID with user ID.
      * - Join user rooms.
      * - Set online status. */
-    /** Create a message in a DM channel. */
-    DM_CREATE: Params.DMCreate;
     READY: Params.Ready;
     /** Indicate that you are typing in a text-based channel. */
     TYPING_START: Params.TypingStart;
@@ -104,8 +102,6 @@ export declare namespace WS {
     MESSAGE_DELETE: Args.MessageDelete;
     /** Called when an existing message is updated in a text-based channel. */
     MESSAGE_UPDATE: Args.MessageUpdate;
-    /** Called when a message is created in a DM channel. */
-    DM_CREATE: Args.DMCreate;
     /** Called when a message is sent in a channel you are not ignoring. */
     PING: Args.Ping;
     /** Called when a user goes online or offline. */
@@ -220,14 +216,9 @@ export declare namespace WS {
       content?: string;
       embed?: MessageTypes.Embed;
     }
-
-    export interface DMCreate {
-      toId: string;
+    export interface MessageCreate {
       content?: string;
-      attachmentURLs?: string[];
-      embed?: MessageTypes.Embed;
     }
-
     export interface Ready {
       token: string;
     }
@@ -365,11 +356,6 @@ export declare namespace WS {
       messageId: string;
       /** Objects with updated properties from the updated message. */
       partialMessage: Entity.Message;
-    }
-
-    export interface DMCreate {
-      /** Full object of the message that was created. */
-      message: Entity.Message;
     }
     export interface Ping {
       channelId: string;

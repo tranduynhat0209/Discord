@@ -16,8 +16,6 @@ export default class implements WSEvent<"CHANNEL_JOIN"> {
     if (channel.type !== "VOICE")
       throw new TypeError("You cannot join a non-voice channel");
 
-    await deps.wsGuard.validateCanInChannel(client, channelId, "CONNECT");
-
     const userId = ws.sessions.get(client.id);
     const user = await deps.users.getSelf(userId);
     const movedChannel = user.voice !== channelId;

@@ -1,1 +1,1 @@
-ssh-keygen -t rsa -b 4096 -m PEM -E SHA512 -f src/keys/jwtRS512.key
+ssh-keygen -t rsa -b 4096 -m PEM -E SHA512 -f keys/jwtRS512.key

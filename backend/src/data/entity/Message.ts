@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, Max } from "class-validator";
 
 @Entity()
 export class MessageEmbed {
@@ -26,8 +26,8 @@ export class Message {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column("simple-array")
-  attachmentURL?: string[];
+  @Column("simple-array", { nullable: true })
+  attachmentURL: string[];
 
   @Column({ nullable: false })
   authorId: string;
@@ -40,7 +40,7 @@ export class Message {
     length: 3000,
   })
   @IsNotEmpty({ message: "content can't be empty" })
-  content?: string;
+  content: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -48,12 +48,7 @@ export class Message {
   @Column({
     default: false,
   })
-  system?: boolean;
-
-  @Column({
-    default: false,
-  })
-  dm?: boolean;
+  system: boolean;
 
   @Column({ nullable: true })
   type?: string;

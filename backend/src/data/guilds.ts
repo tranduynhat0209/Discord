@@ -29,8 +29,8 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
     ]);
     await Promise.all([
       deps.dataSource.manager.save(GuildEntity, {
-        _id: guildId,
-        name: options.name ?? "Unnamed Guild",
+        id: guildId,
+        name: "Unnamed Guild",
         ownerId: options.ownerId,
         systemChannelId: systemChannel.id,
         ...options,
@@ -63,7 +63,7 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
     const users = await deps.dataSource
       .getRepository(User)
       .createQueryBuilder("user")
-      .where(":guildId = ANY (user.guildIds)", { guildId: guildId })
+      .where(`FIND_IN_SET(:guildId, user.guildIds) > 0`, { guildId })
       .getMany();
 
     return users;
@@ -80,7 +80,9 @@ export default class Guilds extends DBWrapper<string, GuildEntity> {
       channels: channels.map((c) => c as Entity.Channel),
       members: members.map((m) => m as Entity.GuildMember),
       roles: roles.map((r) => r as Entity.Role),
-      users: users.map((u) => deps.users.secure(u) as Entity.User),
+      users: users
+        .map((u) => deps.users.secure(u))
+        .map((u) => u as any as Entity.User),
     };
   }
 }

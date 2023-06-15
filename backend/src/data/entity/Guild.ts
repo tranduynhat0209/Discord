@@ -13,19 +13,19 @@ export class Guild {
 
   @Column({
     nullable: false,
-    length: 32,
+    length: 128,
   })
   name: string;
 
-  @Column()
-  iconURL?: string;
+  @Column({ nullable: true })
+  iconURL: string;
 
   @Column()
   @IsNotEmpty({ message: "ownerId is required" })
   ownerId: string;
 
   @Column()
-  systemChannelId?: string;
+  systemChannelId: string;
 
   @CreateDateColumn()
   createdAt: Date;

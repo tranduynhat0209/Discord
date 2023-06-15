@@ -40,7 +40,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       deps.dataSource
         .getRepository(RoleEntity)
         .createQueryBuilder("their_roles")
-        .where("their_rols.id IN (:...roles", { roles: theirRoleIds })
+        .where("their_roles.id IN (:...roles)", { roles: theirRoleIds })
         .getMany(),
     ]);
 
@@ -66,12 +66,12 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       .reduce((acc, value) => value.permissions | acc, 0);
     const permNumber =
       typeof permission === "string"
-        ? PermissionTypes.getPermNumber(permission)
-        : (permission as number);
-    return hasPermission(totalPerms, permNumber);
+        ? PermissionTypes.All[PermissionTypes.All[permission as string]]
+        : permission;
+    return hasPermission(totalPerms, +permNumber);
   }
 
-  public async create(guildId: string, options?: Partial<Entity.Role>) {
+  public async create(guildId: string, options: Partial<Entity.Role>) {
     const roleId = generateSnowflake();
     const rolesInGuild = await deps.dataSource.manager.findBy(RoleEntity, {
       guildId,
@@ -80,11 +80,11 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
 
     await deps.dataSource.manager.save(RoleEntity, {
       id: roleId,
-      guildId,
-      mentionable: options?.mentionable ?? false,
-      hoisted: options?.hoisted ?? false,
-      name: options?.name ?? "New Role",
-      permissions: options?.permissions ?? PermissionTypes.defaultPermissions,
+      guildId: guildId,
+      mentionable: false,
+      hoisted: false,
+      name: options.name ?? "New Role",
+      permissions: options.permissions ?? PermissionTypes.defaultPermissions,
       position: rolesNumber,
     });
 

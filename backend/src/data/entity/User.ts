@@ -13,21 +13,32 @@ import {
   Max,
   Min,
 } from "class-validator";
-import { UserTypes, patterns } from "../../types";
 
+import { Entity as EntityType, UserTypes, patterns } from "../../types";
+
+export interface UserDocument extends EntityType.User {
+  id: string;
+  createdAt: never;
+}
 export interface SelfUserDocument extends UserTypes.Self {
   id: string;
 }
 
 @Entity()
 export class Ignored {
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   channelIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   guildIds: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   userIds: string[];
 }
 
@@ -36,7 +47,6 @@ export class Ignored {
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
-
   @Column({
     type: "varchar",
     nullable: false,
@@ -79,10 +89,14 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   badges: string[];
 
-  @Column("simple-array", { default: [] })
+  @Column("simple-array", {
+    nullable: true,
+  })
   guildIds: string[];
 
   @Column({ nullable: true })
@@ -100,7 +114,7 @@ export class User {
   })
   locked: boolean;
 
-  @Column({ type: "timestamp" })
+  @Column({ type: "timestamp", nullable: true })
   premiumExpiration: Date;
 
   @Column({
@@ -120,9 +134,9 @@ export class User {
   @Matches(patterns.status, { message: "Invalid status" })
   status: string;
 
-  @Column({ type: "string", nullable: true })
+  @Column({ nullable: true })
   salt?: string;
 
-  @Column({ type: "string", nullable: true })
+  @Column({ nullable: true })
   hash?: string;
 }

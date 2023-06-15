@@ -14,7 +14,7 @@ export function Auth() {
 
     email: "nhatducmo@gmail.com",
     username: "Tran Duy Nhat",
-    password: "l38QVUS8u7cx8fVH",
+    password: "W673udWHS0Ipspuv",
   });
 
   const dispatch = useDispatch();
@@ -64,13 +64,7 @@ export function Auth() {
           onClick={(e) => {
             e.preventDefault();
             //@ts-ignore
-            dispatch(changePassword(userInfo.password, "abcd"));
-            setUserInfo((prev) => {
-              return {
-                ...prev,
-                password: "abcd",
-              };
-            });
+            dispatch(changePassword(userInfo.password, "abcdefgh"));
           }}
         >
           Change Password

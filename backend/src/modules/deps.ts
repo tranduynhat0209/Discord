@@ -12,6 +12,7 @@ import Roles from "../data/roles";
 import Users from "../data/users";
 import ChannelJoin from "../ws/ws-events/channel-join";
 import ChannelLeave from "../ws/ws-events/channel-leave";
+import Themes from "../data/themes";
 import { AppDataSource } from "../data/utils/data-source";
 import { DataSource } from "typeorm";
 import { VoiceService } from "../voice/voice-service";
@@ -19,7 +20,6 @@ import { Email } from "../email/email";
 import { Verification } from "../email/verification";
 import { EmailFunctions } from "../email/email-functions";
 import { REST } from "../rest/server";
-import DMs from "../data/dm";
 
 export interface Deps {
   channels: Channels;
@@ -31,6 +31,7 @@ export interface Deps {
   messages: Messages;
   pings: Pings;
   roles: Roles;
+  themes: Themes;
   users: Users;
   wsCooldowns: WSCooldowns;
   wsGuard: WSGuard;
@@ -42,7 +43,6 @@ export interface Deps {
   emailFunctions: EmailFunctions;
   verification: Verification;
   rest: REST;
-  dms: DMs;
 }
 
 const deps: Deps = {
@@ -55,6 +55,7 @@ const deps: Deps = {
   messages: new Messages(),
   pings: new Pings(),
   roles: new Roles(),
+  themes: new Themes(),
   users: new Users(),
   wsCooldowns: new WSCooldowns(),
   wsGuard: new WSGuard(),
@@ -66,7 +67,6 @@ const deps: Deps = {
   emailFunctions: new EmailFunctions(),
   verification: new Verification(),
   rest: new REST(),
-  dms: new DMs(),
 };
 
 global["deps"] = deps;

@@ -6,18 +6,21 @@ import { Guild } from "../entity/Guild";
 import { Invite } from "../entity/Invite";
 import { Message } from "../entity/Message";
 import { Role } from "../entity/Role";
+import { Theme } from "../entity/Theme";
 import { Guild_Member } from "../entity/Guild-member";
 import { LastMessage } from "../entity/Last-message";
-import { ChannelOverride } from "../entity/Channel-override";
+import { config } from "dotenv";
+
+config();
 
 export const AppDataSource = new DataSource({
   type: "mysql",
-  host: process.env.DB_HOST || "localhost",
-  port: process.env.DB_PORT || 3306,
-  username: process.env.DB_USERNAME || "root",
-  password: process.env.DB_PASSWORD || "0xnhattranduy",
-  database: process.env.DB_NAME || "discord",
-  synchronize: true,
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  synchronize: false,
   logging: false,
   entities: [
     Channel,
@@ -25,10 +28,10 @@ export const AppDataSource = new DataSource({
     Invite,
     Message,
     Role,
+    Theme,
     User,
     Guild_Member,
     LastMessage,
-    ChannelOverride,
   ],
   migrations: [],
   subscribers: [],

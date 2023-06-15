@@ -5,6 +5,8 @@ import { patterns } from "../../types";
 import { extraRateLimit } from "../modules/rate-limiter";
 import { REST } from "../../types";
 import { User } from "../../data/entity/User";
+import axios from "axios";
+import { comparePassword } from "../../data/utils/password";
 
 export const router = Router();
 
@@ -17,54 +19,101 @@ router.post(
     next();
   },
   passport.authenticate("local", {
+    // successRedirect: "/",
+    // failureRedirect: "/auth/login",
     failWithError: true,
     failureFlash: "Invalid email or password",
   }),
   async (req, res) => {
-    const user = await deps.users.getByEmail(req.body.email);
-    if (!user) throw new APIError(400, "Invalid credentials");
-    else if (user.locked) throw new APIError(403, "This account is locked");
-    else if (user.verified) {
-      await deps.emailFunctions.verifyCode(user as any);
-      return res.status(200).json({
-        message: "Check your email for a verification code",
-      });
+    try {
+      const user = await deps.users.getByEmail(req.body.email);
+
+      if (!user) throw new APIError(400, "Invalid credentials");
+      else if (user.locked) throw new APIError(403, "This account is locked");
+      else if (user.verified) {
+        await deps.emailFunctions.verifyCode(user as any);
+        return res.status(200).json({
+          message: "Check your email for a verification code",
+        });
+      }
+      res.status(201).json({ token: await deps.users.createToken(user) });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: "Error not detected yet" });
     }
-    res.status(201).json({ token: await deps.users.createToken(user) });
   }
 );
 
 router.post("/register", extraRateLimit(10), async (req, res) => {
-  const user = (await deps.users.create({
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
-  }));
+  // if (process.env.RECAPTCHA_SECRET) {
+  //   const response = await axios.post(
+  //     "https://www.google.com/recaptcha/api/siteverify",
+  //     new URLSearchParams(
+  //       Object.entries({
+  //         secret: process.env.RECAPTCHA_SECRET,
+  //         response: req.body.recaptcha as string,
+  //       })
+  //     ).toString(),
+  //     {
+  //       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //     }
+  //   );
 
-  await deps.emailFunctions.verifyEmail(user.email, user);
+  //   const json = response.data;
+  //   if (!json.success) throw new APIError(400, "Invalid captcha");
+  // }
 
-  res.status(201).json(await deps.users.createToken(user));
+  try {
+    const user = await deps.users.create({
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username,
+    });
+    await deps.emailFunctions.verifyEmail(user.email, user);
+    const token = await deps.users.createToken(user);
+    res.status(201).json(token);
+  } catch (error) {
+    console.log(error);
+    if (error instanceof TypeError) {
+      if (/is required$/.test(error.message)) {
+        const missingField = error.message.split(" ")[0];
+        res.status(400).json({ message: `${missingField} is required` });
+      } else if (error.message === "email is already in use") {
+        res.status(400).json({ message: "Email is already in use" });
+      } else if (error.message === "email is invalid") {
+        res.status(400).json({ message: "Email is invalid" });
+      } else {
+        console.log(error);
+        res.status(400).json({ message: "Error not detected yet" });
+      }
+    }
+  }
 });
 
 router.get("/verify", extraRateLimit(20), async (req, res) => {
-  const email = deps.verification.getEmailFromCode(req.query.code as string);
-  const user = await deps.dataSource.manager.findOneBy(User, { email });
-  if (!email || !user) throw new APIError(400, "Invalid code");
+  try {
+    const email = deps.verification.getEmailFromCode(req.query.code as string);
+    console.log(email);
+    const user = await deps.dataSource.manager.findOneBy(User, { email });
+    if (!email || !user) throw new APIError(400, "Invalid code");
 
-  const code = deps.verification.get(email);
-  if (!code) throw new APIError(400, "Invalid code");
+    const code = deps.verification.get(email);
+    if (!code) throw new APIError(400, "Invalid code");
 
-  deps.verification.delete(email);
+    deps.verification.delete(email);
 
-  if (code.type === "FORGOT_PASSWORD") {
-    await deps.users.setPassword(user.id, code.value);
-    res.json({ message: "Password reset" });
-  } else if (code.type === "VERIFY_EMAIL") {
-    user.verified = true;
-    await deps.users.save(user);
-    res.json({ message: "Email verified" });
-  } else if (code.type === "LOGIN")
-    res.json({ token: await deps.users.createToken(user) });
+    if (code.type === "FORGOT_PASSWORD") {
+      await deps.users.setPassword(user.id, code.value);
+      res.json({ message: "Password reset" });
+    } else if (code.type === "VERIFY_EMAIL") {
+      user.verified = true;
+      await deps.users.save(user);
+      res.json({ message: "Email verified" });
+    } else if (code.type === "LOGIN")
+      res.json({ token: await deps.users.createToken(user) });
+  } catch (err) {
+    res.status(400).json({ message: (err as TypeError).message });
+  }
 });
 
 router.get("/email/forgot-password", extraRateLimit(10), async (req, res) => {
@@ -89,14 +138,23 @@ router.post("/change-password", extraRateLimit(10), async (req, res) => {
     newPassword,
   }: REST.Params.Post["/auth/change-password"] = req.body;
 
-  const user = await deps.users.getByEmail(email);
-  if (!user) throw new APIError(400, "User not found");
-  if (!user.verified) throw new APIError(400, "Please verify your account");
-
-  await deps.users.changePassword(user.id, oldPassword, newPassword);
-
-  return res.status(200).json({
-    message: "Password changed",
-    token: await deps.users.createToken(user),
-  } as REST.Return.Post["/auth/change-password"]);
+  try {
+    const user = await deps.users.getByEmail(email);
+    if (!user) throw new APIError(400, "User not found");
+    if (!user.verified) throw new APIError(400, "Please verify your account");
+    if (!user.hash) {
+      throw new TypeError("User's Password Hasn't Been Set");
+    }
+    const isValid = await comparePassword(oldPassword, user.hash);
+    if (!isValid) {
+      throw new TypeError("User's Password Is Incorrect");
+    }
+    await deps.users.setPassword(user.id, newPassword);
+    return res.status(200).json({
+      message: "Password changed",
+      token: await deps.users.createToken(user),
+    } as REST.Return.Post["/auth/change-password"]);
+  } catch (err) {
+    res.status(404).json({ message: (err as TypeError).message });
+  }
 });

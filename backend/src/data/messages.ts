@@ -15,10 +15,11 @@ export default class Messages extends DBWrapper<string, MessageEntity> {
   public async create(
     authorId: string,
     channelId: string,
-    { attachmentURLs, content, dm }: Partial<Entity.Message>
+    { attachmentURLs, content }: Partial<Entity.Message>
   ) {
     if (!content && !attachmentURLs?.length)
       throw new TypeError("Empty messages are not valid");
+    attachmentURLs = attachmentURLs || [];
 
     const id = generateSnowflake();
     await deps.dataSource.manager.save(MessageEntity, {
@@ -27,7 +28,6 @@ export default class Messages extends DBWrapper<string, MessageEntity> {
       authorId,
       channelId,
       content,
-      dm,
     });
 
     return await this.get(id);
@@ -58,9 +58,12 @@ export default class Messages extends DBWrapper<string, MessageEntity> {
     return await deps.dataSource.manager.findBy(MessageEntity, { channelId });
   }
 
-  public async getDMMessages(user0Id: string, user1Id: string) {
-    const dm = await deps.dms.getByUserIds(user0Id, user1Id);
+  public async getDMChannelMessages(channelId: string, memberId: string) {
+    const channel = await deps.channels.get(channelId);
+    if (!channel) return new TypeError("Channel doesn't exist");
 
-    return await this.getChannelMessages(dm.id);
+    if (channel.userIds.indexOf(memberId) !== -1)
+      throw new TypeError("You cannot access this channel");
+    return await this.getChannelMessages(channelId);
   }
 }

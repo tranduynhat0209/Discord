@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
 } from "typeorm";
 
 import { IsNotEmpty, Matches, Min } from "class-validator";
@@ -12,7 +11,7 @@ import { PermissionTypes, patterns } from "../../types";
 export function hasPermission(current: number, required: number) {
   return (
     Boolean(current & required) ||
-    Boolean(current & PermissionTypes.Permission.ADMINISTRATOR)
+    Boolean(current & PermissionTypes.General.ADMINISTRATOR)
   );
 }
 
@@ -32,8 +31,9 @@ export class Role {
   @Column({
     type: "varchar",
     length: 7,
+    default: "#FFFFFF",
   })
-  color?: string;
+  color: string;
 
   @Column()
   hoisted: boolean;

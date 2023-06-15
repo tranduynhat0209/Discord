@@ -13,14 +13,10 @@ export default class implements WSEvent<"MESSAGE_CREATE"> {
   ) {
     const authorId = ws.sessions.userId(client);
 
-    const [_, channel, author] = await Promise.all([
-      deps.wsGuard.validateCanInChannel(client, channelId, "SEND_MESSAGES"),
+    const [channel, author] = await Promise.all([
       deps.channels.getText(channelId),
       deps.users.getSelf(authorId),
     ]);
-
-    if (attachmentURLs && attachmentURLs.length > 0)
-      await deps.wsGuard.validateCanInChannel(client, channelId, "SEND_FILES");
 
     var message = (await deps.messages.create(authorId, channelId, {
       attachmentURLs,

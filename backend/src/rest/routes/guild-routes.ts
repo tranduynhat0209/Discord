@@ -10,11 +10,12 @@ import { In } from "typeorm";
 export const router = Router();
 
 router.get("/", updateUser, validateUser, async (req, res) => {
-  const guilds = await deps.dataSource.getRepository(Guild).find({
-    where: {
-      id: In(res.locals.guildIds),
-    },
-  });
+  // const guilds = await deps.dataSource.getRepository(Guild).find({
+  //   where: {
+  //     id: In(res.locals.guildIds),
+  //   },
+  // });
+  const guilds = await deps.users.getUserGuilds(res.locals.user.id);
   res.json(guilds);
 });
 

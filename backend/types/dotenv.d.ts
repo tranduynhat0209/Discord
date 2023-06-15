@@ -1,16 +1,18 @@
 declare global {
   namespace NodeJS {
     export interface ProcessEnv {
-      DB_HOST: string;
-      DB_PORT: number;
-      DB_USERNAME: string;
-      DB_PASSWORD: string;
-      DB_NAME: string;
-      EMAIL_ADDRESS: string;
-      EMAIL_PASSWORD: string;
-      WEBSITE_URL: string;
       NODE_ENV: "dev" | "prod";
       PORT: string;
+      WEBSITE_URL: string;
+      EMAIL_ADDRESS: string;
+      EMAIL_PASSWORD: string;
+      SESSION_SECRET: string;
+      RECAPTCHA_SECRET: string;
+      MYSQL_HOST: string;
+      MYSQL_PORT: number;
+      MYSQL_USERNAME: string;
+      MYSQL_PASSWORD: string;
+      MYSQL_DATABASE: string;
     }
   }
 }
