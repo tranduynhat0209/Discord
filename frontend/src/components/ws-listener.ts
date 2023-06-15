@@ -89,6 +89,7 @@ const WSListener: React.FunctionComponent = () => {
       dispatch(roles.fetched(args.roles)); // this after members
       dispatch(guilds.created(args));
       dispatch(uiActions.closedModal());
+      console.log("guild created");
       // history.push(`/channels/${args.guild.id}`);
     });
     ws.on("GUILD_DELETE", (args) => {

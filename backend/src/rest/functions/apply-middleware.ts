@@ -50,17 +50,21 @@ function setupMulter(app: Application) {
     extraRateLimit(10),
     upload.single("file"),
     async (req, res) => {
-      const file = req.file!;
+      try {
+        const file = req.file!;
 
-      const buffer = await readFileAsync(file.path);
-      const hash = crypto.createHash("md5").update(buffer).digest("hex");
+        const buffer = await readFileAsync(file.path);
+        const hash = crypto.createHash("md5").update(buffer).digest("hex");
 
-      const newFileName = hash + extname(file.originalname);
-      await renameAsync(file.path, `${uploadDir}/${newFileName}`);
-      log.silly(`Uploaded ${newFileName}`);
+        const newFileName = hash + extname(file.originalname);
+        await renameAsync(file.path, `${uploadDir}/${newFileName}`);
+        log.silly(`Uploaded ${newFileName}`);
 
-      const url = `/upload/${newFileName}`;
-      res.status(201).json({ hash, url });
+        const url = `/upload/${newFileName}`;
+        res.status(201).json({ hash, url });
+      } catch (err) {
+        res.status(404).json({ message: (err as TypeError).message });
+      }
     }
   );
 }

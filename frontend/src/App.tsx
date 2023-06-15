@@ -11,6 +11,7 @@ import { VerifyPage } from "./components/Home/DarkMode/Auth/verify/Verify";
 import { ready } from "./store/auth";
 import WSListener from "./components/ws-listener";
 import { Me } from "./components/Test/Me";
+import { Guild as GuildTest } from "./components/Test/Guild";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ function App() {
       <Routes>
         <Route path="/test-auth" element={<AuthTest />} />
         <Route path="/verify" element={<VerifyPage />} />
-        <Route path="me" element={<Me />} />
+        <Route path="/me" element={<Me />} />
+        <Route path="/test-guild" element={<GuildTest />} />
       </Routes>
     </BrowserRouter>
   );

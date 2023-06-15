@@ -14,26 +14,26 @@ export class WSRooms {
 
     await client.join(user.guildIds);
     const channelIds = await this.getChannelIds(client, user.guildIds);
-    // await client.join(channelIds);
+    await client.join(channelIds);
   }
 
   private async getChannelIds(client: Socket, guildIds: string[]) {
-    // const ids: string[] = [];
-    // const channels = await deps.dataSource
-    //   .getRepository(Channel)
-    //   .createQueryBuilder("channel")
-    //   .where("channel.guildId IN (:...guildIds)", { guildIds: guildIds })
-    //   .getMany();
+    const channels = await deps.dataSource
+      .getRepository(Channel)
+      .createQueryBuilder("channel")
+      .where("channel.guildId IN (:...guildIds)", { guildIds: guildIds })
+      .getMany();
+    const ids: string[] = channels.map((c) => c.id);
     // for (const channel of channels)
-    //   try {
-    //     if (channel.type === "VOICE") continue;
-    //     await deps.wsGuard.validateCanInChannel(
-    //       client,
-    //       channel.id,
-    //       "READ_MESSAGES"
-    //     );
-    //     ids.push(channel.id);
-    //   } catch {}
-    // return ids;
+    // try {
+    //   if (channel.type === "VOICE") continue;
+    //   await deps.wsGuard.validateCanInChannel(
+    //     client,
+    //     channel.id,
+    //     "READ_MESSAGES"
+    //   );
+    //   ids.push(channel.id);
+    // } catch {}
+    return ids;
   }
 }

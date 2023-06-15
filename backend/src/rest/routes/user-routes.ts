@@ -47,49 +47,53 @@ router.get("/self", updateUser, validateUser, async (req, res) =>
 );
 
 router.get("/entities", updateUser, validateUser, async (req, res) => {
-  const guildIds: string[] = req.params.guildIds as any;
   const user: UserTypes.Self = res.locals.user;
-  const $in = guildIds ? user.guildIds.concat(guildIds) : user.guildIds;
+  const guildIds = user.guildIds;
+  console.log(guildIds);
+  try {
+    const [channels, guilds, members, roles] = await Promise.all([
+      deps.dataSource.getRepository(Channel).find({
+        where: {
+          guildId: In(guildIds),
+        },
+      }),
+      deps.dataSource.getRepository(Guild).find({
+        where: {
+          id: In(guildIds),
+        },
+      }),
+      deps.dataSource.getRepository(Guild_Member).find({
+        where: {
+          guildId: In(guildIds),
+        },
+      }),
+      deps.dataSource.getRepository(Role).find({
+        where: {
+          guildId: In(guildIds),
+        },
+      }),
+    ]);
 
-  const [channels, guilds, members, roles] = await Promise.all([
-    deps.dataSource.getRepository(Channel).find({
-      where: {
-        guildId: In(guildIds),
-      },
-    }),
-    deps.dataSource.getRepository(Guild).find({
-      where: {
-        id: In(guildIds),
-      },
-    }),
-    deps.dataSource.getRepository(Guild_Member).find({
-      where: {
-        guildId: In(guildIds),
-      },
-    }),
-    deps.dataSource.getRepository(Role).find({
-      where: {
-        guildId: In(guildIds),
-      },
-    }),
-    // Theme.find({ _id: { $in: user.unlockedThemeIds } }),
-  ]);
+    let unsecureUsers: User[] = [];
+    for (let guildId of guildIds) {
+      const users = await deps.guilds.getUsers(guildId);
+      unsecureUsers = unsecureUsers.concat(users);
+    }
+    const secureUsers = Array.from(
+      new Set(unsecureUsers.map((u: any) => deps.users.secure(u)))
+    );
 
-  let unsecureUsers: User[] = [];
-  for (let guildId of guildIds) {
-    const users = await deps.guilds.getUsers(guildId);
-    unsecureUsers = unsecureUsers.concat(users);
+    res.json({
+      channels,
+      guilds,
+      members,
+      roles,
+      // themes,
+      users: secureUsers,
+    } as REST.Return.Get["/users/entities"]);
+  } catch (err) {
+    res.status(404).json((err as TypeError).message);
   }
-  const secureUsers = Array.from(new Set(unsecureUsers.map((u: any) => deps.users.secure(u))));
-
-  res.json({
-    channels,
-    guilds,
-    members,
-    roles,
-    // themes,
-    users: secureUsers,
-  } as REST.Return.Get["/users/entities"]);
 });
 
 router.get("/:id", async (req, res) => {

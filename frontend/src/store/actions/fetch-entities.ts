@@ -13,7 +13,7 @@ export default (guildIds?: string[]) => (dispatch) => {
   dispatch(api.restCallBegan({
     onSuccess: [],
     headers: getHeaders(),
-    url: `/users/entities?guild_ids=${guildIds}`,
+    url: `/users/entities`,
     callback: (data: REST.Return.Get['/users/entities']) => {
       dispatch(channelActions.fetched(data.channels));
       dispatch(guildActions.fetched(data.guilds));

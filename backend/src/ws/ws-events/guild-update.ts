@@ -24,8 +24,12 @@ export default class implements WSEvent<"GUILD_UPDATE"> {
     if (hasChanged("systemChannelId", systemChannelId))
       partial.systemChannelId = systemChannelId!;
 
-    Object.assign(guild, partial);
-    await deps.guilds.save(guild);
+    await deps.dataSource
+      .createQueryBuilder()
+      .update(Guild)
+      .set(partial)
+      .where("id = :id", { id: guildId })
+      .execute();
 
     return [
       {
