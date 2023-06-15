@@ -66,7 +66,7 @@ export default class Roles extends DBWrapper<string, RoleEntity> {
       .reduce((acc, value) => value.permissions | acc, 0);
     const permNumber =
       typeof permission === "string"
-        ? PermissionTypes.All[PermissionTypes.All[permission as string]]
+        ? PermissionTypes.Permission[PermissionTypes.Permission[permission as string]]
         : permission;
     return hasPermission(totalPerms, +permNumber);
   }

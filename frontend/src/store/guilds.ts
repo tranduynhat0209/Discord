@@ -56,17 +56,17 @@ export const uploadGuildIcon = (guildId: string, file: File) => (dispatch) => {
   dispatch(uploadFile(file, uploadCallback));
 };
 
-export const fetchGuildInvites =
-  (id: string) => (dispatch, getStore: () => AppState) => {
-    dispatch(
-      api.restCallBegan({
-        url: `/guilds/${id}/invites`,
-        headers: getHeaders(),
-        callback: (invites: Entity.Invite[]) =>
-          dispatch(inviteActions.fetched(invites)),
-      })
-    );
-  };
+export const fetchGuildInvites = (id: string) => (dispatch) => {
+  console.log("fetching invitation");
+  dispatch(
+    api.restCallBegan({
+      url: `/guilds/${id}/invites`,
+      headers: getHeaders(),
+      callback: (invites: Entity.Invite[]) =>
+        dispatch(inviteActions.fetched(invites)),
+    })
+  );
+};
 
 export const deleteGuild = (guildId: string) => (dispatch) => {
   dispatch(

@@ -52,10 +52,10 @@ AppDataSource.initialize().then(async () => {
 
   const roles = new Roles();
   const text_permission =
-    PermissionTypes.Text.MANAGE_MESSAGES |
-    PermissionTypes.Text.READ_MESSAGES |
-    PermissionTypes.Text.SEND_FILES |
-    PermissionTypes.Text.SEND_MESSAGES;
+    PermissionTypes.Permission.MANAGE_MESSAGES |
+    PermissionTypes.Permission.READ_MESSAGES |
+    PermissionTypes.Permission.SEND_FILES |
+    PermissionTypes.Permission.SEND_MESSAGES;
   for (let i = 1; i <= 10; i++) {
     const guild = await guilds.get(`guild_id_${i}`);
     const role = await roles.create(guild.id, {

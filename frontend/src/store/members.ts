@@ -29,6 +29,7 @@ export const actions = slice.actions;
 export default slice.reducer;
 
 export const joinGuild = (inviteCode: string) => (dispatch) => {
+  console.log("joining guild...")
   dispatch(api.wsCallBegan({
     event: 'GUILD_MEMBER_ADD',
     data: { inviteCode } as WS.Params.GuildMemberAdd,

@@ -3,6 +3,7 @@ import {
   changePassword,
   forgotPasswordEmail,
   loginUser,
+  logoutUser,
   ready,
   registerUser,
 } from "../../store/auth";
@@ -10,70 +11,115 @@ import { useState } from "react";
 import { AppState } from "../../store";
 
 export function Auth() {
-  const [userInfo, setUserInfo] = useState({
-    // const index = Math.floor(Math.random() * 1000000);
+  const [username, setUsername] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [newPassword, setNewPassword] = useState<string>();
+  const [email, setEmail] = useState<string>();
 
-    email: "nhatducmo@gmail.com",
-    username: "Tran Duy Nhat",
-    password: "W673udWHS0Ipspuv",
-  });
   const user = useSelector((state: AppState) => state.auth.user);
 
   const dispatch = useDispatch();
   return (
     <div>
-      <div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            //@ts-ignore
-            dispatch(registerUser(userInfo));
-          }}
-        >
-          Register
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
+      <p>Username</p>
+      <input
+        type="text"
+        onChange={(e) => {
+          e.preventDefault();
+          setUsername(e.target.value);
+        }}
+      />
 
-            dispatch(
+      <p>Email</p>
+      <input
+        type="text"
+        onChange={(e) => {
+          e.preventDefault();
+          setEmail(e.target.value);
+        }}
+      />
+
+      <p>Password</p>
+      <input
+        type="text"
+        onChange={(e) => {
+          e.preventDefault();
+          setPassword(e.target.value);
+        }}
+      />
+      <div>
+        <div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
               //@ts-ignore
-              loginUser({
-                email: userInfo.email,
-                password: userInfo.password,
-              })
-            );
-          }}
-        >
-          Log in
-        </button>
+              dispatch(registerUser({ email, username, password }));
+            }}
+          >
+            Register
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+
+              dispatch(
+                //@ts-ignore
+                loginUser({
+                  email,
+                  password,
+                })
+              );
+            }}
+          >
+            Log in
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              //@ts-ignore
+              dispatch(forgotPasswordEmail(email));
+            }}
+          >
+            Forgot Password
+          </button>
+        </div>
+        <div>
+          <p>New Password</p>
+          <input
+            type="text"
+            onChange={(e) => {
+              e.preventDefault();
+              setNewPassword(e.target.value);
+            }}
+          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              //@ts-ignore
+              dispatch(changePassword(password, newPassword));
+            }}
+          >
+            Change Password
+          </button>
+        </div>
+        <div>{JSON.stringify(user)}</div>
+
+        <div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              // @ts-ignore
+              dispatch(logoutUser());
+            }}
+          >
+            Log out
+          </button>
+        </div>
       </div>
-      <div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            //@ts-ignore
-            dispatch(forgotPasswordEmail(userInfo.email));
-          }}
-        >
-          Forgot Password
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            //@ts-ignore
-            dispatch(changePassword(userInfo.password, "abcdefgh"));
-          }}
-        >
-          Change Password
-        </button>
-      </div>
-      <div>{JSON.stringify(user)}</div>
-      
     </div>
   );
 }

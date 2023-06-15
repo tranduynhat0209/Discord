@@ -37,6 +37,7 @@ export namespace Entity {
   }
   export interface Invite {
     id: string;
+    inviteCode: string;
     createdAt: Date;
     options?: InviteTypes.Options;
     inviterId: string;

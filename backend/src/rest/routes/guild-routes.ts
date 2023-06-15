@@ -29,7 +29,7 @@ router.get(
   updateUser,
   validateUser,
   updateGuild,
-  validateHasPermission(PermissionTypes.General.VIEW_CHANNELS),
+  validateHasPermission(PermissionTypes.Permission.VIEW_CHANNELS),
   async (req, res) => {
     const channels = await deps.guilds.getChannels(req.params.id);
     res.json(channels);
@@ -41,9 +41,10 @@ router.get(
   updateUser,
   validateUser,
   updateGuild,
-  validateHasPermission(PermissionTypes.General.MANAGE_GUILD),
+  validateHasPermission(PermissionTypes.Permission.MANAGE_GUILD),
   async (req, res) => {
     const invites = await deps.guilds.getInvites(req.params.id);
+    console.log(invites);
     res.json(invites);
   }
 );

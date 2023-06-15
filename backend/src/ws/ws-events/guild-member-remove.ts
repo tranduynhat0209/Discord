@@ -25,8 +25,6 @@ export default class implements WSEvent<"GUILD_MEMBER_REMOVE"> {
     else if (selfUserId !== member.userId)
       await deps.wsGuard.validateCan(client, guildId, "KICK_MEMBERS");
 
-    // TODO: validate user is higher before kicking them
-
     const user = await deps.users.get(member.userId);
     const index = user.guildIds.indexOf(guildId);
     user.guildIds.splice(index, 1);

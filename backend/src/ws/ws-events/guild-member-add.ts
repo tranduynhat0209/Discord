@@ -17,6 +17,8 @@ export default class implements WSEvent<"GUILD_MEMBER_ADD"> {
     if (!inviteCode) throw new TypeError("Not enough options were provided");
 
     const invite = await deps.invites.get(inviteCode);
+
+    console.log(invite);
     const guild = await deps.guilds.get(invite.guildId);
     const userId = ws.sessions.userId(client);
 

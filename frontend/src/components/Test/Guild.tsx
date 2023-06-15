@@ -1,8 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../store";
-import { createGuild, getGuild, uploadGuildIcon } from "../../store/guilds";
+import {
+  createGuild,
+  fetchGuildInvites,
+  getGuild,
+  uploadGuildIcon,
+} from "../../store/guilds";
 import fetchEntities from "../../store/actions/fetch-entities";
+import { createInvite } from "../../store/invites";
+import { joinGuild, leaveGuild } from "../../store/members";
 
 export const CreateGuild: React.FunctionComponent = () => {
   const [name, setName] = useState<string>("");
@@ -33,10 +40,43 @@ export const CreateGuild: React.FunctionComponent = () => {
   );
 };
 
+export const JoinGuild: React.FunctionComponent = () => {
+  const [inviteCode, setInviteCode] = useState<string>("");
+  const dispatch = useDispatch();
+  const handleChangeInviteCode = (e) => {
+    setInviteCode(e.target.value);
+  };
+  return (
+    <div
+      style={{
+        margin: "5px",
+      }}
+    >
+      <div>
+        <input type="text" onChange={handleChangeInviteCode} />
+      </div>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          //@ts-ignore
+          if (inviteCode.length > 0) dispatch(joinGuild(inviteCode));
+        }}
+      >
+        Join guild by Invite Code
+      </button>
+    </div>
+  );
+};
 export const GuildInfo: React.FunctionComponent<{ guildId: string }> = ({
   guildId,
 }) => {
   const guild = useSelector(getGuild(guildId));
+  const activeInvite = useSelector((state: AppState) => state.ui.activeInvite);
+  const invites = useSelector((state: AppState) =>
+    state.entities.invites?.list.filter(
+      (invite) => invite && invite.guildId === guildId
+    )
+  );
   const [file, setFile] = useState<File>();
   const dispatch = useDispatch();
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +84,11 @@ export const GuildInfo: React.FunctionComponent<{ guildId: string }> = ({
       setFile(e.target.files[0]);
     }
   };
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchGuildInvites(guildId));
+  }, []);
   return (
     <div
       style={{
@@ -67,6 +112,43 @@ export const GuildInfo: React.FunctionComponent<{ guildId: string }> = ({
       >
         Change guild icon
       </button>
+
+      <div>Active Invitation Id: {JSON.stringify(activeInvite)}</div>
+
+      <div>
+        Invitation List:
+        {invites ? (
+          <ul>
+            {invites.map((invite) => (
+              <li key={invite.inviteCode}>{invite.inviteCode}</li>
+            ))}
+          </ul>
+        ) : (
+          ""
+        )}
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            //@ts-ignore
+            dispatch(createInvite(guildId));
+          }}
+        >
+          Generate Invitation
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            //@ts-ignore
+            dispatch(leaveGuild(guildId));
+          }}
+        >
+          Leave Guild
+        </button>
+      </div>
     </div>
   );
 };
@@ -94,6 +176,7 @@ export const Guild: React.FunctionComponent = () => {
     <div>
       <GuildList />
       <CreateGuild />
+      <JoinGuild />
     </div>
   );
 };

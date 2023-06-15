@@ -11,7 +11,7 @@ import { PermissionTypes, patterns } from "../../types";
 export function hasPermission(current: number, required: number) {
   return (
     Boolean(current & required) ||
-    Boolean(current & PermissionTypes.General.ADMINISTRATOR)
+    Boolean(current & PermissionTypes.Permission.ADMINISTRATOR)
   );
 }
 
