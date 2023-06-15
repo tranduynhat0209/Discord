@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ReactDOM } from "react";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 
 import "./App.scss";
 import DarkMode from "./components/Home/DarkMode/DarkMode";
-import configureStore from "./store/configure-store";
 import { Ready } from "./components/Test/Ready";
 import { Auth as AuthTest } from "./components/Test/Auth";
 import { VerifyPage } from "./components/Home/DarkMode/Auth/verify/Verify";
+import { ready } from "./store/auth";
+import WSListener from "./components/ws-listener";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(ready());
+  }, []);
   return (
-    <Provider store={configureStore()}>
+    
       <BrowserRouter>
+        <WSListener/>
         <Routes>
           <Route path="/test-auth" element={<AuthTest />} />
           <Route path="/verify" element={<VerifyPage />} />
         </Routes>
       </BrowserRouter>
-    </Provider>
   );
 }
 
