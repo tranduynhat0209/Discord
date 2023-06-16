@@ -28,6 +28,16 @@ export default class implements WSEvent<"GUILD_CREATE"> {
         to: [client.id],
         send: { guild, ...entities } as WS.Args.GuildCreate,
       },
+      {
+        emit: "USER_UPDATE" as const,
+        to: [client.id],
+        send: {
+          userId,
+          partialUser: {
+            guildId: [...user.guildIds, guild.id],
+          },
+        } as WS.Args.UserUpdate,
+      },
     ];
   }
 }

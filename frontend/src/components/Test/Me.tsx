@@ -14,6 +14,15 @@ export const Me: React.FunctionComponent = () => {
   const user = useSelector((state: AppState) => state.auth.user);
   return (
     <div>
+      <img
+        style={{
+          borderRadius: "50%",
+          width: "50px",
+          height: "50px",
+        }}
+        src={`${process.env.REACT_APP_CDN_URL}${user?.avatarURL}`}
+        alt="Avatar here"
+      />
       <div>{JSON.stringify(user)}</div>
       <div>
         <input type="file" onChange={handleFileChange} />

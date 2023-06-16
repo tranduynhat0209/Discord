@@ -7,9 +7,9 @@ import {
   getGuild,
   uploadGuildIcon,
 } from "../../store/guilds";
-import fetchEntities from "../../store/actions/fetch-entities";
 import { createInvite } from "../../store/invites";
 import { joinGuild, leaveGuild } from "../../store/members";
+import { useNavigate } from "react-router-dom";
 
 export const CreateGuild: React.FunctionComponent = () => {
   const [name, setName] = useState<string>("");
@@ -70,6 +70,7 @@ export const JoinGuild: React.FunctionComponent = () => {
 export const GuildInfo: React.FunctionComponent<{ guildId: string }> = ({
   guildId,
 }) => {
+  const navigate = useNavigate();
   const guild = useSelector(getGuild(guildId));
   const activeInvite = useSelector((state: AppState) => state.ui.activeInvite);
   const invites = useSelector((state: AppState) =>
@@ -149,18 +150,18 @@ export const GuildInfo: React.FunctionComponent<{ guildId: string }> = ({
           Leave Guild
         </button>
       </div>
+
+      <div>
+        <button onClick={() => navigate("/test-guild/" + guildId)}>
+          Details
+        </button>
+      </div>
     </div>
   );
 };
 
 export const GuildList: React.FunctionComponent = () => {
   const guildIds = useSelector((state: AppState) => state.auth.user?.guildIds);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(guildIds);
-    // @ts-ignore
-    dispatch(fetchEntities(guildIds));
-  }, [guildIds]);
   return (
     <div>
       {guildIds &&

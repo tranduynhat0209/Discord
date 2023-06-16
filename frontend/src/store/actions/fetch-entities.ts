@@ -9,7 +9,7 @@ import { actions as roleActions } from '../roles';
 import { actions as userActions } from '../users';
 import { getHeaders } from '../utils/rest-headers';
 
-export default (guildIds?: string[]) => (dispatch) => {
+export default () => (dispatch) => {
   dispatch(api.restCallBegan({
     onSuccess: [],
     headers: getHeaders(),

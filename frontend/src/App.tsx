@@ -11,13 +11,17 @@ import { VerifyPage } from "./components/Home/DarkMode/Auth/verify/Verify";
 import { ready } from "./store/auth";
 import WSListener from "./components/ws-listener";
 import { Me } from "./components/Test/Me";
-import { Guild as GuildTest } from "./components/Test/Guild";
+import { Guild, Guild as GuildTest } from "./components/Test/Guild";
+import { ChannelList } from "./components/Test/Channel";
+import fetchEntities from "./store/actions/fetch-entities";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     // @ts-ignore
     dispatch(ready());
+    // @ts-ignore
+    dispatch(fetchEntities());
   }, []);
   return (
     <BrowserRouter>
@@ -27,6 +31,7 @@ function App() {
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/me" element={<Me />} />
         <Route path="/test-guild" element={<GuildTest />} />
+        <Route path="/test-guild/:guildId" element={<ChannelList />} />
       </Routes>
     </BrowserRouter>
   );
