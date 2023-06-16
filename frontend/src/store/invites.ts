@@ -15,11 +15,12 @@ const slice = createSlice({
       list.push(...payload.filter(notInArray(list)));
     },
     created: ({ list }, { payload }: Action<WS.Args.InviteCreate>) => {
-      list.push(payload.invite);
+      const index = list.findIndex((i) => i.id === payload.invite.id);
+      if (index === -1) list.push(payload.invite);
     },
     deleted: ({ list }, { payload }: Action<WS.Args.InviteDelete>) => {
       const index = list.findIndex((i) => i.id === payload.inviteCode);
-      list.splice(index, 1);
+      if (index !== -1) list.splice(index, 1);
     },
   },
 });

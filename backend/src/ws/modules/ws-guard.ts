@@ -44,7 +44,11 @@ export class WSGuard {
 
     return (
       guild.ownerId === member.userId ||
-      deps.roles.hasPermission(guild, member, PermissionTypes.All[permission])
+      deps.roles.hasPermission(
+        guild,
+        member,
+        PermissionTypes.Permission[permission]
+      )
     );
   }
 

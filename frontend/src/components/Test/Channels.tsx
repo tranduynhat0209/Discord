@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { createChannel } from "../../store/channels";
+import {
+  createChannel,
+  joinVoiceChannel,
+  leaveVoiceChannel,
+} from "../../store/channels";
 import { ChannelTypes, Entity } from "../../types";
 import { getGuildChannels } from "../../store/guilds";
 import {
@@ -18,7 +22,8 @@ export const ChannelList: React.FunctionComponent = () => {
   const [newChannelType, setNewChannelType] = useState<"TEXT" | "VOICE">(
     "TEXT"
   );
-  const [activeChannelId, setActiveChannelId] = useState<string>();
+  const [activeChannelId, setActiveChannelId] = useState<string | undefined>();
+  const [activeVoiceId, setActiveVoiceId] = useState<string | undefined>();
   const dispatch = useDispatch();
 
   const channels = useSelector(getGuildChannels(guildId));
@@ -128,7 +133,27 @@ export const ChannelList: React.FunctionComponent = () => {
                       margin: "5px",
                     }}
                   >
-                    <button>Enter</button>
+                    {activeVoiceId !== c.id ? (
+                      <button
+                        onClick={() => {
+                          setActiveVoiceId(c.id);
+                          // @ts-ignore
+                          dispatch(joinVoiceChannel(c.id));
+                        }}
+                      >
+                        Enter
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setActiveVoiceId(undefined);
+                          // @ts-ignore
+                          dispatch(leaveVoiceChannel(c.id));
+                        }}
+                      >
+                        Leave
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -189,7 +214,7 @@ export const ChannelMessages: React.FunctionComponent<{
   const messages = useSelector((state: AppState) =>
     state.entities.messages.list.filter((m) => m && m.channelId === channelId)
   );
-  
+
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchMessages(channelId));
@@ -256,11 +281,8 @@ export const ChannelMessages: React.FunctionComponent<{
   );
 };
 
-
-export const Voice: React.FunctionComponent<{channelId: string}> = ({
-  channelId
+export const Voice: React.FunctionComponent<{ channelId: string }> = ({
+  channelId,
 }) => {
-  return <div>
-    
-  </div>
-}
+  return <div></div>;
+};

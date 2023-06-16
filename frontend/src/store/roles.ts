@@ -1,27 +1,28 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { notInArray } from './utils/filter';
-import { actions as api } from './api';
-import { byMax } from './utils/reduce';
-import { Entity, WS } from '../types';
-import { Action, AppState } from '.';
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { notInArray } from "./utils/filter";
+import { actions as api } from "./api";
+import { byMax } from "./utils/reduce";
+import { Entity, WS } from "../types";
+import { Action, AppState } from ".";
 
 const slice = createSlice({
-  name: 'roles',
-  initialState: [] as AppState['entities']['roles'],
+  name: "roles",
+  initialState: [] as AppState["entities"]["roles"],
   reducers: {
     fetched: (roles, { payload }: Action<Entity.Role[]>) => {
       roles.push(...payload.filter(notInArray(roles)));
     },
     created: (roles, { payload }: Action<WS.Args.GuildRoleCreate>) => {
-      roles.push(payload.role);
+      const index = roles.findIndex((r) => r.id === payload.role.id);
+      if (index === -1) roles.push(payload.role);
     },
     updated: (roles, { payload }: Action<WS.Args.GuildRoleUpdate>) => {
-      const role = roles.find(r => r.id === payload.roleId);
+      const role = roles.find((r) => r.id === payload.roleId);
       Object.assign(role, payload.partialRole);
     },
     deleted: (roles, { payload }: Action<WS.Args.GuildRoleDelete>) => {
-      const index = roles.findIndex(r => r.id === payload.roleId);
-      roles.splice(index, 1);
+      const index = roles.findIndex((r) => r.id === payload.roleId);
+      if (index !== -1) roles.splice(index, 1);
     },
   },
 });
@@ -29,55 +30,113 @@ const slice = createSlice({
 export const actions = slice.actions;
 export default slice.reducer;
 
-export const getRole = (id: string) => createSelector(
-  state => state.entities.roles,
-  roles => roles.find(r => r.id === id),
-);
+export const getRole = (id: string) =>
+  createSelector(
+    (state: AppState) => state.entities.roles,
+    (roles) => roles.find((r) => r.id === id)
+  );
 
-export const getRoleByName = (guildId: string, name: string) => createSelector(
-  state => state.entities.roles,
-  roles => roles.find(r => r.guildId === guildId && r.name === name),
-);
+export const getRoleByName = (guildId: string, name: string) =>
+  createSelector(
+    (state: AppState) => state.entities.roles,
+    (roles) => roles.find((r) => r.guildId === guildId && r.name === name)
+  );
 
-export const getRoles = (ids: string[]) => createSelector(
-  state => state.entities.roles,
-  roles => roles.filter(r => ids.includes(r.id)),
-);
+export const getRoles = (ids: string[]) =>
+  createSelector(
+    (state: AppState) => state.entities.roles,
+    (roles) => roles.filter((r) => ids.includes(r.id))
+  );
 
-export const filterHoistedRoles = (guildId: string) => createSelector(
-  state => state.entities.roles,
-  roles => roles.filter(r => r.guildId === guildId && r.hoisted),
-);
+export const getUserPermission = (userId: string, guildId: string) =>
+  createSelector(
+    (state: AppState) => ({
+      members: state.entities.members,
+      roles: state.entities.roles,
+    }),
+    ({ members, roles }) => {
+      const member = members.find(
+        (m) => m.guildId === guildId && m.userId === userId
+      );
+      const totalPerms = roles
+        .filter((r) => member?.roleIds.includes(r.id))
+        .reduce((acc, value) => value.permissions | acc, 0);
 
-export const getMemberHighestRole = (guildId: string | undefined, userId: string) => createSelector(
-  state => ({ members: state.entities.members, roles: state.entities.roles }),
-  ({ members, roles }) => {
-    const member = members.find(m => m.guildId === guildId && m.userId === userId);
-    return (member) ?
-      roles
-        .filter(r => member.roleIds.includes(r.id))
-        .reduce(byMax('position'))
-      : null;
-  },
-);
+      return totalPerms;
+    }
+  );
+
+export const getSelfPermission = (guildId: string) =>
+  createSelector(
+    (state: AppState) => ({
+      user: state.auth.user,
+      members: state.entities.members,
+      roles: state.entities.roles,
+    }),
+    ({ user, members, roles }) => {
+      if (!user) return 0;
+      const member = members.find(
+        (m) => m.guildId === guildId && m.userId === user.id
+      );
+      const totalPerms = roles
+        .filter((r) => member?.roleIds.includes(r.id))
+        .reduce((acc, value) => value.permissions | acc, 0);
+
+      return totalPerms;
+    }
+  );
+export const filterHoistedRoles = (guildId: string) =>
+  createSelector(
+    (state: AppState) => state.entities.roles,
+    (roles) => roles.filter((r) => r.guildId === guildId && r.hoisted)
+  );
+
+export const getMemberHighestRole = (
+  guildId: string | undefined,
+  userId: string
+) =>
+  createSelector(
+    (state) => ({
+      members: state.entities.members,
+      roles: state.entities.roles,
+    }),
+    ({ members, roles }) => {
+      const member = members.find(
+        (m) => m.guildId === guildId && m.userId === userId
+      );
+      return member
+        ? roles
+            .filter((r) => member.roleIds.includes(r.id))
+            .reduce(byMax("position"))
+        : null;
+    }
+  );
 
 export const createRole = (guildId: string) => (dispatch) => {
-  dispatch(api.wsCallBegan({
-    event: 'GUILD_ROLE_CREATE',
-    data: { guildId } as WS.Params.GuildRoleCreate,
-  }));
-}
+  dispatch(
+    api.wsCallBegan({
+      event: "GUILD_ROLE_CREATE",
+      data: { guildId } as WS.Params.GuildRoleCreate,
+    })
+  );
+};
 
-export const updateRole = (guildId: string, roleId: string, payload: Partial<Entity.Role>) => (dispatch) => {
-  dispatch(api.wsCallBegan({
-    event: 'GUILD_ROLE_UPDATE',
-    data: { roleId, guildId, ...payload } as WS.Params.GuildRoleUpdate,
-  }));
-}
+export const updateRole =
+  (guildId: string, roleId: string, payload: Partial<Entity.Role>) =>
+  (dispatch) => {
+    dispatch(
+      api.wsCallBegan({
+        event: "GUILD_ROLE_UPDATE",
+        data: { roleId, guildId, ...payload } as WS.Params.GuildRoleUpdate,
+      })
+    );
+  };
 
 export const deleteRole = (guildId: string, roleId: string) => (dispatch) => {
-  dispatch(api.wsCallBegan({
-    event: 'GUILD_ROLE_DELETE',
-    data: { roleId, guildId } as WS.Params.GuildRoleDelete,
-  }));
-}
+  dispatch(
+    api.wsCallBegan({
+      event: "GUILD_ROLE_DELETE",
+      data: { roleId, guildId } as WS.Params.GuildRoleDelete,
+    })
+  );
+};

@@ -20,13 +20,13 @@ export default class implements WSEvent<"GUILD_ROLE_UPDATE"> {
   ) {
     await deps.wsGuard.validateCan(client, guildId, "MANAGE_ROLES");
 
-    const userId = ws.sessions.get(client.id);
-    const guild = await deps.guilds.get(guildId);
-    const selfMember = await deps.guildMembers.getInGuild(guildId, userId);
-    const isHigher = await deps.roles.memberIsHigher(guild, selfMember, [
-      roleId,
-    ]);
-    if (!isHigher) throw new TypeError("You cannot manage this role");
+    // const userId = ws.sessions.get(client.id);
+    // const guild = await deps.guilds.get(guildId);
+    // const selfMember = await deps.guildMembers.getInGuild(guildId, userId);
+    // const isHigher = await deps.roles.memberIsHigher(guild, selfMember, [
+    //   roleId,
+    // ]);
+    // if (!isHigher) throw new TypeError("You cannot manage this role");
 
     const everyoneRole = await deps.roles.getEveryone(guildId);
     if (everyoneRole.id === roleId && name !== everyoneRole.name)
@@ -38,6 +38,7 @@ export default class implements WSEvent<"GUILD_ROLE_UPDATE"> {
 
     const partialRole = { name, color, permissions, hoisted };
     const role = await deps.roles.get(roleId);
+
     Object.assign(role, partialRole);
     await deps.roles.save(role);
 

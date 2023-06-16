@@ -14,6 +14,8 @@ export default class implements WSEvent<"GUILD_ROLE_DELETE"> {
     { guildId, roleId }: WS.Params.GuildRoleDelete
   ) {
     const role = await deps.roles.get(roleId);
+    if (guildId !== role.guildId)
+      throw new TypeError("roleId doesn't exist in the guild");
     await deps.wsGuard.validateCan(client, guildId, "MANAGE_ROLES");
     if (role.name === "@everyone")
       throw new TypeError("This role cannot be deleted");
@@ -22,7 +24,7 @@ export default class implements WSEvent<"GUILD_ROLE_DELETE"> {
       .createQueryBuilder()
       .update(Role)
       .where("guildId = :guildId", { guildId: guildId })
-      .andWhere("guildId = :guildId", { guildId: role.guildId })
+      .andWhere("position > :position", { position: role.position })
       .set({
         position: () => "position - 1",
       })
@@ -38,16 +40,18 @@ export default class implements WSEvent<"GUILD_ROLE_DELETE"> {
     let members = await deps.dataSource.manager.findBy(Guild_Member, {
       guildId,
     });
-    for(let member of members) {
+    for (let member of members) {
       const index = member.roleIds.indexOf(roleId);
-      member.roleIds.splice(index, 1);
+      if (index !== -1) member.roleIds.splice(index, 1);
       await deps.guildMembers.save(member);
-    };
+    }
 
-    return [{
-      emit: this.on,
-      to: [guildId],
-      send: { guildId, roleId } as WS.Args.GuildRoleDelete,
-    }];
+    return [
+      {
+        emit: this.on,
+        to: [guildId],
+        send: { guildId, roleId } as WS.Args.GuildRoleDelete,
+      },
+    ];
   }
 }

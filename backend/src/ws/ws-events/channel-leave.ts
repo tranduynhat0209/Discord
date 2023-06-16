@@ -9,6 +9,7 @@ export default class implements WSEvent<"CHANNEL_LEAVE"> {
   public on = "CHANNEL_LEAVE" as const;
 
   public async invoke(ws: WebSocket, client: Socket) {
+    console.log("Leaving channel");
     const userId = ws.sessions.get(client.id);
     const user = await deps.users.getSelf(userId);
 
@@ -67,11 +68,12 @@ export default class implements WSEvent<"CHANNEL_LEAVE"> {
   }
 
   private async updateVoiceState(user: SelfUserDocument) {
+    console.log("update voice state")
     await deps.dataSource
       .createQueryBuilder()
       .update(User)
       .andWhere("id = :id", { id: user.id })
-      .set({ voice: undefined })
+      .set({ voice: '' })
       .execute();
   }
 }

@@ -12,6 +12,7 @@ export default class implements WSEvent<"CHANNEL_JOIN"> {
     client: Socket,
     { channelId }: WS.Params.ChannelJoin
   ) {
+    console.log("Joining Voice channel");
     const channel = await deps.channels.get(channelId);
     if (channel.type !== "VOICE")
       throw new TypeError("You cannot join a non-voice channel");
@@ -20,6 +21,7 @@ export default class implements WSEvent<"CHANNEL_JOIN"> {
     const user = await deps.users.getSelf(userId);
     const movedChannel = user.voice !== channelId;
 
+    console.log("Leaving old voice channel");
     if (user.voice && movedChannel) await deps.channelLeave.invoke(ws, client);
 
     const doesExist = channel.userIds.includes(userId);

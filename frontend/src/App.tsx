@@ -4,16 +4,16 @@ import { ReactDOM } from "react";
 import { Provider, useDispatch } from "react-redux";
 
 import "./App.scss";
-import DarkMode from "./components/Home/DarkMode/DarkMode";
-import { Ready } from "./components/Test/Ready";
 import { Auth as AuthTest } from "./components/Test/Auth";
 import { VerifyPage } from "./components/Home/DarkMode/Auth/verify/Verify";
 import { ready } from "./store/auth";
 import WSListener from "./components/ws-listener";
 import { Me } from "./components/Test/Me";
-import { Guild, Guild as GuildTest } from "./components/Test/Guild";
-import { ChannelList } from "./components/Test/Channel";
+import { Guild as GuildTest } from "./components/Test/Guild";
+import { ChannelList } from "./components/Test/Channels";
 import fetchEntities from "./store/actions/fetch-entities";
+import { Roles } from "./components/Test/Roles";
+import { Members } from "./components/Test/Members";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +31,9 @@ function App() {
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/me" element={<Me />} />
         <Route path="/test-guild" element={<GuildTest />} />
-        <Route path="/test-guild/:guildId" element={<ChannelList />} />
+        <Route path="/test-guild/:guildId/channels" element={<ChannelList />} />
+        <Route path="/test-guild/:guildId/roles" element={<Roles />} />
+        <Route path="/test-guild/:guildId/members" element={<Members/>}/>
       </Routes>
     </BrowserRouter>
   );

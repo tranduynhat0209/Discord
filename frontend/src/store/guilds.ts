@@ -119,3 +119,15 @@ export const getGuildUsers = (guildId: string | undefined) =>
         .filter((m) => m.guildId === guildId)
         .map((m) => users.find((u) => u.id === m.userId)!)
   );
+
+export const isOwner = (guildId: string) =>
+  createSelector(
+    (state: AppState) => ({
+      user: state.auth.user!,
+      guilds: state.entities.guilds,
+    }),
+    ({ user, guilds }) => {
+      const guild = guilds.find((g) => g.id === guildId);
+      return guild && guild.ownerId === user.id;
+    }
+  );
