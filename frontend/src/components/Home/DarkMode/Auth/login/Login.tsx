@@ -1,25 +1,17 @@
-import loginBackground from "../../../../../assets/image/login/login.png";
-import "./Login.scss";
-// import useHideLogin from "./useHideLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { forgotPasswordEmail, loginUser } from "../../../../../store/auth";
+import "./Login.scss";
+import loginBackground from "../../../../../assets/image/login/login.png";
+// import { actions } from "../../../../../store/api";
 import { AppState } from "../../../../../store";
+import { loginUser, forgotPasswordEmail } from "../../../../../store/auth";
 const Login = ({ hideLogin }) => {
     const dispatch = useDispatch();
     const [loginData, setLoginData] = useState({
-        email: "abc",
-        password: "1234",
+        email: "",
+        password: "",
     });
-    const handelLogin = () => {
-        console.log(loginData);
-        //@ts-ignore
-        dispatch(loginUser(loginData));
-    };
-    const handleForgotPassword = () => {
-        //@ts-ignore
-        dispatch(forgotPasswordEmail(loginData.email));
-    };
+
     const data = useSelector((state: AppState) => state);
     return (
         <div className="login-container">
@@ -68,7 +60,13 @@ const Login = ({ hideLogin }) => {
                                 <button
                                     type="button"
                                     className="forgot-password"
-                                    onClick={handleForgotPassword}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        dispatch(
+                                            //@ts-ignore
+                                            forgotPasswordEmail(loginData.email)
+                                        );
+                                    }}
                                 >
                                     Quen mat khau?
                                 </button>
@@ -84,8 +82,11 @@ const Login = ({ hideLogin }) => {
                                             console.log("loi");
                                             return;
                                         } else {
-                                            handelLogin();
-                                            console.log(data);
+                                            dispatch(
+                                                //@ts-ignore
+                                                loginUser(loginData)
+                                            );
+                                            console.log(JSON.stringify(data));
                                         }
                                     }}
                                 >
