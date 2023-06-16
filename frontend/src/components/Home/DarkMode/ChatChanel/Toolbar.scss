@@ -23,6 +23,7 @@
         }
         &:not(.search-bar):hover::before {
             display: block;
+            z-index: 10;
         }
     }
 }
