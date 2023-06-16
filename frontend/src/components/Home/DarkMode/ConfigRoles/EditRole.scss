@@ -1,0 +1,134 @@
+.edit-role--wrap {
+    flex: 8;
+    background-color: #313338;
+    .content {
+        display: flex;
+        height: 100%;
+        .edit-role-sidebar {
+            flex: 0 0 232px;
+            border-right: 1px solid #3f4147;
+            .sidebar-container {
+                .title-container {
+                    padding: 60px 8px 16px;
+                    margin: 0px 8px 8px 16px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .title {
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                        color: #b5bac1;
+                        &:hover {
+                            color: #f2f3f5;
+                        }
+                        .back-icon {
+                            width: 24px;
+                        }
+                        .text {
+                            margin-left: 8px;
+                            text-transform: uppercase;
+                            font-size: 16px;
+                            line-height: 20px;
+                            font-weight: 600;
+                        }
+                    }
+                    .add-role {
+                        cursor: pointer;
+                        .add-icon {
+                            color: #f2f3f5;
+                        }
+                    }
+                }
+                .list-name-roles {
+                    padding: 0 16px 96px 26px;
+                    flex-grow: 0;
+                    min-height: 0;
+                    // overflow: hidden scroll;
+                    .item-name-role {
+                        display: flex;
+                        padding: 6px 10px;
+                        margin-bottom: 2px;
+                        border-radius: 4px;
+                        height: 34px;
+                        align-items: center;
+                        gap: 4px;
+                        overflow: visible;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: #43444b;
+                        }
+                        .icon {
+                            background-color: #99aab5;
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 50%;
+                            margin: 0 4px;
+                            flex-shrink: 0;
+                        }
+                        .name-role {
+                            font-size: 14px;
+                            font-weight: 500;
+                            line-height: 18px;
+                            text-overflow: ellipsis;
+                            min-width: 0px;
+                            color: #f2f3f5;
+                        }
+                    }
+                }
+            }
+        }
+        .edit-role-container {
+            padding-left: 24px;
+            padding-right: 24px;
+            flex: 1;
+            .header {
+                position: sticky;
+                top: 0;
+                margin-bottom: 16px;
+                padding: 60px 8px 16px;
+                margin-left: -8px;
+                margin-right: -8px;
+                z-index: 2;
+                .title {
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    line-height: 20px;
+                    font-weight: 600;
+                    color: #f2f3f5;
+                    cursor: default;
+                    margin-bottom: 24px;
+                }
+                .nav-permissions {
+                    font-size: 16px;
+                    line-height: 20px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    color: #f2f3f5;
+                }
+                .search-permissions {
+                    margin-top: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: #1e1f22;
+                    border-radius: 4px;
+                    input {
+                        background-color: #1e1f22;
+                        border: none;
+                        outline: none;
+                        font-size: 16px;
+                        line-height: 32px;
+                        height: 30px;
+                        padding: 0 8px;
+                        color: #b5bac1;
+                    }
+                    .search-permissions-icon {
+                        color: #b5bac1;
+                        margin-right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

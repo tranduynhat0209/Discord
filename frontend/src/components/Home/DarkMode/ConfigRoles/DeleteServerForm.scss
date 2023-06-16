@@ -1,0 +1,98 @@
+.overlay-delete-server {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    .delete-server-form {
+        width: 440px;
+        max-height: 720px;
+        min-height: 200px;
+        border-radius: 4px;
+        background-color: #313338;
+        .title {
+            color: #fff;
+            padding: 16px;
+            font-size: 20px;
+            line-height: 24px;
+            font-weight: 600;
+        }
+        .main {
+            padding: 0 16px;
+            .title {
+                color: #fff;
+                padding: 10px;
+                line-height: 20px;
+                font-size: 16px;
+                background-color: #f0b132;
+                border-radius: 4px;
+                margin-bottom: 20px;
+            }
+            .input-server {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+                label {
+                    margin-bottom: 8px;
+                    font-size: 12px;
+                    line-height: 16px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.02em;
+                    font-weight: 700;
+                    color: #fff;
+                }
+                input {
+                    font-size: 16px;
+                    padding: 10px;
+                    height: 40px;
+                    width: 100%;
+                    border-radius: 4px;
+                    color: #d0d3d6;
+                    background-color: #1e1f22;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+        .footer {
+            padding: 16px;
+            display: flex;
+            background-color: #2b2d31;
+            border-radius: 0 0 4px 4px;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 14px;
+            line-height: 16px;
+            color: #fff;
+            .cancel-form {
+                padding: 2px 16px;
+                min-height: 38px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+            .delete {
+                padding: 2px 16px;
+                min-height: 38px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                background-color: #da373c;
+                border-radius: 4px;
+                &:hover {
+                    background-color: #a12828;
+                }
+                &:active {
+                    background-color: #8f2022;
+                }
+            }
+        }
+    }
+}

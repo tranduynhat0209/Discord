@@ -18,7 +18,6 @@ import "../../../style/scss/DarkMode/DarkMode.scss";
 export default function DarkMode() {
     const { showAddServer } = AddNewServer();
     const { showDownload } = useShowDownload();
-    // console.log(showAddServer);
     return (
         <div className="dark-mode">
             <HomeIcon />
@@ -27,7 +26,7 @@ export default function DarkMode() {
             <Outlet />
             <Routes>
                 <Route
-                    path="/"
+                    path=""
                     element={
                         <>
                             <div className="main-content">
@@ -43,7 +42,15 @@ export default function DarkMode() {
                     }
                 ></Route>
                 <Route
-                    path="/kenhchat1"
+                    path="kenhchat1"
+                    element={
+                        <>
+                            <ChatChanel />
+                        </>
+                    }
+                ></Route>
+                <Route
+                    path="kenhchat2"
                     element={
                         <>
                             <ChatChanel />

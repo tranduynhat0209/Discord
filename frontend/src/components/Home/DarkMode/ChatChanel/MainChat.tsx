@@ -14,7 +14,12 @@ export default function MainChat() {
                 </div>
                 <Toolbar />
             </header>
-            <main className="main-chat-container"></main>
+            <main className="main-chat-container">
+                <div className="chat"></div>
+                <div className="input-chat">
+                    <input type="text" placeholder="message" />
+                </div>
+            </main>
         </div>
     );
 }

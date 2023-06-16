@@ -12,13 +12,13 @@ export default function ServerList() {
     const { handleShowDownload } = useShowDownload();
     return (
         <ul className="list-avatar">
-            <NavLink end to="/kenhchat1">
+            <NavLink end to="kenhchat1">
                 <Logo />
             </NavLink>
-            <NavLink end to="/kenhchat2">
+            <NavLink end to="kenhchat2">
                 <Logo />
             </NavLink>
-            <NavLink end to="/kenhchat3">
+            <NavLink end to="kenhchat3">
                 <Logo />
             </NavLink>
             <li className="folder-chat">

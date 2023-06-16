@@ -1,25 +1,26 @@
-import loginBackground from "../../../../assets/image/login/login.png";
+import loginBackground from "../../../../../assets/image/login/login.png";
 import "./Login.scss";
-import useHideLogin from "./useHideLogin";
-// import {reducer} from '../../../../store/auth'
-import { APIArgs, actions } from "../../../../store/api";
+// import useHideLogin from "./useHideLogin";
 import { useDispatch, useSelector } from "react-redux";
-import rest from "../../../../store/middleware/rest";
-import { useEffect } from "react";
-
+import { useState } from "react";
+import { forgotPasswordEmail, loginUser } from "../../../../../store/auth";
+import { AppState } from "../../../../../store";
 const Login = ({ hideLogin }) => {
-    // const { handleHideLogin } = useHideLogin();
     const dispatch = useDispatch();
-    const data = useSelector((state: APIArgs) => state.data);
-    useEffect(() => {
-        dispatch(
-            actions.restCallBegan({
-                url: "https://hustcord.up.railway.app/v1?fbclid=IwAR2w5TAN2G-dRN6gi0vLu-nUkSugOyolRz9kAQR05EV2nUb0-cHIjGfLDzI",
-                method: "get",
-            })
-        );
-    }, [dispatch]);
-    console.log(data);
+    const [loginData, setLoginData] = useState({
+        email: "abc",
+        password: "1234",
+    });
+    const handelLogin = () => {
+        console.log(loginData);
+        //@ts-ignore
+        dispatch(loginUser(loginData));
+    };
+    const handleForgotPassword = () => {
+        //@ts-ignore
+        dispatch(forgotPasswordEmail(loginData.email));
+    };
+    const data = useSelector((state: AppState) => state);
     return (
         <div className="login-container">
             <div className="main-login">
@@ -36,17 +37,38 @@ const Login = ({ hideLogin }) => {
                                     <label htmlFor="login-email">
                                         Email hoac so dien thoai<span>*</span>
                                     </label>
-                                    <input type="text" id="login-email" />
+                                    <input
+                                        type="text"
+                                        id="login-email"
+                                        onChange={(event) =>
+                                            setLoginData({
+                                                ...loginData,
+                                                email: event.target.value,
+                                            })
+                                        }
+                                        value={loginData.email}
+                                    />
                                 </div>
                                 <div className="group">
                                     <label htmlFor="password">
                                         Mat khau<span>*</span>
                                     </label>
-                                    <input type="password" id="password" />
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        onChange={(event) =>
+                                            setLoginData({
+                                                ...loginData,
+                                                password: event.target.value,
+                                            })
+                                        }
+                                        value={loginData.password}
+                                    />
                                 </div>
                                 <button
                                     type="button"
                                     className="forgot-password"
+                                    onClick={handleForgotPassword}
                                 >
                                     Quen mat khau?
                                 </button>
@@ -55,6 +77,16 @@ const Login = ({ hideLogin }) => {
                                     className="login-button"
                                     onClick={(event) => {
                                         event.preventDefault();
+                                        if (
+                                            !loginData.email ||
+                                            !loginData.password
+                                        ) {
+                                            console.log("loi");
+                                            return;
+                                        } else {
+                                            handelLogin();
+                                            console.log(data);
+                                        }
                                     }}
                                 >
                                     Dang nhap

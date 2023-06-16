@@ -1,0 +1,15 @@
+.permistion {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3f4147;
+    .permisstion-name {
+        display: flex;
+        justify-content: space-between;
+        color: #f2f3f5;
+    }
+    .permisstion-note {
+        padding-bottom: 20px;
+        color: #f2f3f5;
+    }
+}

@@ -23,6 +23,27 @@
     }
     .main-chat-container {
         background-color: #313338;
+        position: relative;
         flex: 1;
+        .input-chat {
+            margin-left: 10px;
+            margin-right: 10px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+
+            input {
+                width: 100%;
+                padding: 11px 8px;
+                border-radius: 4px;
+                background-color: #383a40;
+                border: none;
+                outline: none;
+                font-size: 16px;
+                line-height: 20px;
+                color: #686a73;
+            }
+        }
     }
 }

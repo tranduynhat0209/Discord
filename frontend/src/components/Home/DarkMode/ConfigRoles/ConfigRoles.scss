@@ -2,6 +2,7 @@
     display: flex;
     height: 100%;
     overflow: hidden;
+    position: relative;
 
     .side-bar {
         flex: 3;
@@ -9,9 +10,186 @@
         // align-items: flex-end;
         justify-content: flex-end;
         overflow-y: hidden scroll;
+        background-color: #2b2d31;
+        .main-sidebar {
+            padding: 60px 6px 60px 20px;
+            .header {
+                margin-left: 12px;
+                width: 218px;
+                h1 {
+                    font-size: 12px;
+                    line-height: 16px;
+                    color: #949ba4;
+                    cursor: default;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+            .group-sidebar-roles {
+                color: #b5bac1;
+            }
+        }
     }
-    .main-roles {
+    .main-role-container {
         flex: 8;
         overflow-y: hidden scroll;
+        background-color: #313338;
+        padding-top: 60px;
+        padding-left: 40px;
+        .header {
+            display: flex;
+            align-items: center;
+            .title {
+                padding-right: 40px;
+                h1 {
+                    margin-bottom: 20px;
+                    font-size: 20px;
+                    line-height: 24px;
+                    font-weight: 600;
+                    cursor: default;
+                    color: #f2f3f5;
+                }
+                p {
+                    font-size: 14px;
+                    line-height: 18px;
+                    color: hsl(215 calc(1 * 8.8%) 73.3% /1);
+                    margin-bottom: 16px;
+                }
+            }
+            .close-btn-container {
+                // padding-top: 60px;
+                position: relative;
+                .close-roles-btn {
+                    display: flex;
+                    flex-direction: column;
+                    color: #b4b9c0;
+                    justify-content: center;
+                    align-items: center;
+                    position: fixed;
+                    top: 68px;
+                    &:hover {
+                        color: #dbdee1;
+                    }
+                    .button {
+                        width: 36px;
+                        height: 36px;
+                        cursor: pointer;
+                    }
+                    span {
+                        cursor: default;
+                    }
+                }
+            }
+        }
+        .main {
+            max-width: 660px;
+            min-width: 404px;
+            .default-role {
+                display: flex;
+                align-items: center;
+                background-color: #2b2d31;
+                padding: 16px 24px 16px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                &:hover {
+                    background-color: hsl(228 calc(1 * 6%) 32.5% / 0.3);
+                    .description {
+                        color: #dbdee1;
+                    }
+                }
+                .icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #313338;
+                    color: #b5bac1;
+                }
+                .description {
+                    margin-left: 16px;
+                    h1 {
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #b5bac1;
+                        font-weight: 700;
+                    }
+                    p {
+                        font-size: 12px;
+                        line-height: 16px;
+                        font-weight: 400;
+                        color: #b5bac1;
+                    }
+                }
+                .right-arrow {
+                    color: #aaafb6;
+                    margin-left: auto;
+                }
+            }
+            .search-role-container {
+                display: flex;
+                margin-top: 30px;
+                gap: 16px;
+                align-items: center;
+                justify-content: center;
+                .search-role {
+                    background-color: #1e1f22;
+                    display: flex;
+                    flex: 1;
+                    align-items: center;
+                    input {
+                        flex: 1;
+                        background-color: #1e1f22;
+                        border: none;
+                        outline: none;
+                        color: #949ba4;
+                        font-size: 16px;
+                        line-height: 32px;
+                        padding: 2px 8px;
+                    }
+                    .search-icon {
+                        margin-right: 8px;
+                        color: #949ba4;
+                    }
+                }
+                .add-role {
+                    display: flex;
+                    align-items: center;
+                    .add-role-button {
+                        height: 34px;
+                        margin-left: 16px;
+                        cursor: pointer;
+                        padding: 2px 16px;
+                        border-radius: 4px;
+                        border: none;
+                        outline: none;
+                        background-color: #5865f2;
+                        color: #fff5fc;
+                        &:hover {
+                            background-color: #4752c4;
+                            color: #fff7f6;
+                        }
+                        &:active {
+                            background-color: #3c45a5;
+                        }
+                    }
+                }
+            }
+            .text-role {
+                margin-top: 8px;
+                font-size: 14px;
+                line-height: 18px;
+                font-weight: 400;
+                color: hsl(215 calc(1 * 8.8%) 73.3% /1);
+                a {
+                    color: hsl(200 calc(1 * 100%) 49.4%/1);
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
     }
 }

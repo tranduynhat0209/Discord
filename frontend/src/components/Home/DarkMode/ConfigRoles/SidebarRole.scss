@@ -1,0 +1,14 @@
+.sidebar-roles {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    &:hover {
+        background-color: #35373c;
+        color: #fff;
+    }
+    &:active {
+        background-color: #3b3d44;
+    }
+}
