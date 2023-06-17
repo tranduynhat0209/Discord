@@ -35,6 +35,8 @@ export namespace REST {
         roles: Entity.Role[];
         // themes: Entity.Theme[];
         users: Entity.User[];
+        dmChannels: Entity.DMChannel[];
+        dmPals: string[]
       }
       '/auth/email/verify-email': {
         message?: 'Email sent';

@@ -12,6 +12,7 @@ export interface AppState {
     entities: {
       typing: { userId: string; channelId: string }[];
       channels: Entity.Channel[];
+      dmChannels: Entity.DMChannel[];
       guilds: Entity.Guild[];
       members: Entity.GuildMember[];
       pings: { [guildId: string]: string[] };

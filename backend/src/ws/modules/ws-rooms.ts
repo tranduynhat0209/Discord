@@ -1,8 +1,9 @@
 import { Socket } from "socket.io";
 import { Channel } from "../../data/entity/Channel";
+import { SelfUserDocument } from "../../data/entity/User";
 
 export class WSRooms {
-  public async join(client: Socket, user: any) {
+  public async join(client: Socket, user: SelfUserDocument) {
     const alreadyJoinedRooms = client.rooms.size > 1;
     if (alreadyJoinedRooms) return;
 

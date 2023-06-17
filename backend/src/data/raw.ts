@@ -10,6 +10,7 @@ import "../app";
 import { faker } from "@faker-js/faker";
 import Messages from "./messages";
 import { config } from "dotenv";
+import DMChannels from "./direct-message";
 config();
 
 AppDataSource.initialize().then(async () => {
@@ -41,10 +42,10 @@ AppDataSource.initialize().then(async () => {
   for (let i = 1; i <= 10; i++) {
     const guild = await guilds.get(`guild_id_${i}`);
     const channel = await channels.create({
-      id: `channel_DM_id_${i}`,
+      id: `channel_TEXT_id_${i}`,
       guildId: guild.id,
       name: faker.company.name(),
-      type: ChannelTypes.Type.DM,
+      type: ChannelTypes.Type.TEXT,
     });
     console.log(channel);
   }
@@ -108,4 +109,11 @@ AppDataSource.initialize().then(async () => {
   }
 
   console.log("Add messages done");
+
+  const dm = new DMChannels();
+  const dm0 = await dm.create({
+    userId0: "456840954117173248",
+    userId1: "457095546696437760",
+  });
+  console.log(dm0);
 });

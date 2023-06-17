@@ -12,16 +12,14 @@ export default class implements WSEvent<"READY"> {
     client: Socket,
     { token }: WS.Params.Ready
   ) {
-    console.log("a READY event caught");
     const { id: userId } = await deps.wsGuard.decodeKey(token);
 
-    console.log(userId);
     if (!userId) throw new TypeError("Invalid User ID");
 
     ws.sessions.set(client.id, userId);
 
     const user = await deps.users.get(userId);
-
+    console.log(user);
     try {
       if (user.voice)
         await deps.channelJoin.invoke(ws, client, { channelId: user.voice });
@@ -33,7 +31,7 @@ export default class implements WSEvent<"READY"> {
     await deps.wsRooms.join(client, user);
 
     const selfUser = await deps.users.getSelf(userId);
-    
+
     return [
       {
         emit: "PRESENCE_UPDATE" as const,

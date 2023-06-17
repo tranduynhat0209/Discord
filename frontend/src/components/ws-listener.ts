@@ -21,6 +21,7 @@ import fetchEntities from "../store/actions/fetch-entities";
 import { AppState } from "../store";
 import { useSnackbar } from "notistack";
 import events from "../services/event-service";
+import { actions as dmChannels } from "../store/dm-channels";
 
 const WSListener: React.FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -132,6 +133,17 @@ const WSListener: React.FunctionComponent = () => {
       dispatch(messages.created(args));
 
       const { channelId } = args.message;
+      const { activeChannel } = state().ui;
+      if (activeChannel && activeChannel.id !== channelId) addPing(channelId);
+    });
+    ws.on("DM_CHANNEL_CREATE", (args) => {
+      // const { dmChannel } = args;
+      dispatch(dmChannels.created(args));
+    });
+    ws.on("DM_MESSAGE_CREATE", (args) => {
+      const { message } = args;
+      dispatch(messages.created({ message }));
+      const { channelId } = message;
       const { activeChannel } = state().ui;
       if (activeChannel && activeChannel.id !== channelId) addPing(channelId);
     });

@@ -58,12 +58,10 @@ export default class Messages extends DBWrapper<string, MessageEntity> {
     return await deps.dataSource.manager.findBy(MessageEntity, { channelId });
   }
 
-  public async getDMChannelMessages(channelId: string, memberId: string) {
-    const channel = await deps.channels.get(channelId);
+  public async getDMChannelMessages(userId0: string, userId1: string) {
+    const channel = await deps.dmChannels.getByUserIds(userId0, userId1);
     if (!channel) return new TypeError("Channel doesn't exist");
 
-    if (channel.userIds.indexOf(memberId) !== -1)
-      throw new TypeError("You cannot access this channel");
-    return await this.getChannelMessages(channelId);
+    return await this.getChannelMessages(channel.id);
   }
 }

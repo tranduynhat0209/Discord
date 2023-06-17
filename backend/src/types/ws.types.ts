@@ -50,6 +50,8 @@ export declare namespace WS {
      * - Associate ws client ID with user ID.
      * - Join user rooms.
      * - Set online status. */
+    /** Create a message in a DM channel. */
+    DM_MESSAGE_CREATE: Params.DMMessageCreate;
     READY: Params.Ready;
     /** Indicate that you are typing in a text-based channel. */
     TYPING_START: Params.TypingStart;
@@ -68,6 +70,8 @@ export declare namespace WS {
 
   /** WS Args are what is received from the websocket. */
   export interface EmitParams {
+    /** Called when a dm channel is created. */
+    DM_CHANNEL_CREATE: Args.DMChannelCreate;
     /** Called when a guild channel is created. */
     CHANNEL_CREATE: Args.ChannelCreate;
     /** Called when a guild channel is deleted. */
@@ -102,6 +106,8 @@ export declare namespace WS {
     MESSAGE_DELETE: Args.MessageDelete;
     /** Called when an existing message is updated in a text-based channel. */
     MESSAGE_UPDATE: Args.MessageUpdate;
+    /** Called when a message is created in a DM channel. */
+    DM_MESSAGE_CREATE: Args.DMMessageCreate;
     /** Called when a message is sent in a channel you are not ignoring. */
     PING: Args.Ping;
     /** Called when a user goes online or offline. */
@@ -216,8 +222,11 @@ export declare namespace WS {
       content?: string;
       embed?: MessageTypes.Embed;
     }
-    export interface MessageCreate {
+    export interface DMMessageCreate {
+      to: string;
       content?: string;
+      attachmentURLs?: string[];
+      embed?: MessageTypes.Embed;
     }
     export interface Ready {
       token: string;
@@ -254,6 +263,12 @@ export declare namespace WS {
       /** ID of the user that created the channel. */
       creatorId: string;
     }
+
+    export interface DMChannelCreate {
+      /** The full object fo the channel that was created. */
+      dmChannel: Entity.DMChannel;
+    }
+
     export interface ChannelDelete {
       /** ID of guild that the channel is in. */
       guildId: string;
@@ -355,6 +370,10 @@ export declare namespace WS {
       messageId: string;
       /** Objects with updated properties from the updated message. */
       partialMessage: Entity.Message;
+    }
+    export interface DMMessageCreate {
+      /** Full object of the message that was created. */
+      message: Entity.Message;
     }
     export interface Ping {
       channelId: string;

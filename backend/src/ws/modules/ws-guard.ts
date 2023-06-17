@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { PermissionTypes, getPermString } from "../../types";
+import { PermissionTypes } from "../../types";
 import { Guild } from "../../data/entity/Guild";
 
 export class WSGuard {
@@ -30,8 +30,7 @@ export class WSGuard {
     permission: PermissionTypes.PermissionString
   ) {
     const can = await this.can(permission, guildId, this.userId(client));
-    if (!can)
-      throw new TypeError(`Missing Permissions: ${getPermString(permission)}`);
+    if (!can) throw new TypeError(`Missing Permissions: ${permission}`);
   }
 
   private async can(

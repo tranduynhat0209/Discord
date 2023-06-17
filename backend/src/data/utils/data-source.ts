@@ -10,6 +10,7 @@ import { Theme } from "../entity/Theme";
 import { Guild_Member } from "../entity/Guild-member";
 import { LastMessage } from "../entity/Last-message";
 import { config } from "dotenv";
+import { DMChannel } from "../entity/Direct-message";
 
 config();
 
@@ -32,6 +33,7 @@ export const AppDataSource = new DataSource({
     User,
     Guild_Member,
     LastMessage,
+    DMChannel,
   ],
   migrations: [],
   subscribers: [],

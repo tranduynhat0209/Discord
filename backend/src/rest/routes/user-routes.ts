@@ -74,6 +74,8 @@ router.get("/entities", updateUser, validateUser, async (req, res) => {
       }),
     ]);
 
+    const { channels: dmChannels, pals: dmPals } =
+      await deps.dmChannels.getDMChannelListAndPals(user.id);
     let unsecureUsers: User[] = [];
     for (let guildId of guildIds) {
       const users = await deps.guilds.getUsers(guildId);
@@ -90,6 +92,8 @@ router.get("/entities", updateUser, validateUser, async (req, res) => {
       roles,
       // themes,
       users: secureUsers,
+      dmChannels,
+      dmPals
     } as REST.Return.Get["/users/entities"]);
   } catch (err) {
     res.status(404).json((err as TypeError).message);

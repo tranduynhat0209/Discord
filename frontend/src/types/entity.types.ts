@@ -19,6 +19,13 @@ export namespace Entity {
     overrides?: ChannelTypes.Override[];
     position: number;
   }
+
+  export interface DMChannel{
+    id: string;
+    createdAt: Date;
+    userId0: string;
+    userId1: string;
+  }
   export interface Guild {
     id: string;
     name: string;
@@ -94,15 +101,10 @@ export namespace Entity {
 
 export namespace ChannelTypes {
   export enum Type {
-    DM = "DM",
     TEXT = "TEXT",
     VOICE = "VOICE",
   }
 
-  export interface DM extends Entity.Channel {
-    type: Type.DM;
-    userIds: string[];
-  }
   export interface Text extends Entity.Channel {
     type: Type.TEXT;
   }

@@ -20,6 +20,7 @@ import { Email } from "../email/email";
 import { Verification } from "../email/verification";
 import { EmailFunctions } from "../email/email-functions";
 import { REST } from "../rest/server";
+import DMChannels from "../data/direct-message";
 
 export interface Deps {
   channels: Channels;
@@ -33,6 +34,7 @@ export interface Deps {
   roles: Roles;
   themes: Themes;
   users: Users;
+  dmChannels: DMChannels;
   wsCooldowns: WSCooldowns;
   wsGuard: WSGuard;
   wsRooms: WSRooms;
@@ -57,6 +59,7 @@ const deps: Deps = {
   roles: new Roles(),
   themes: new Themes(),
   users: new Users(),
+  dmChannels: new DMChannels(),
   wsCooldowns: new WSCooldowns(),
   wsGuard: new WSGuard(),
   wsRooms: new WSRooms(),
