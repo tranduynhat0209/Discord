@@ -1,5 +1,3 @@
-import React from "react";
-
 import UserInfo from "./UserInfo";
 import Interactions from "./Interactions";
 

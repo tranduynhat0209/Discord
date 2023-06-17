@@ -1,0 +1,148 @@
+.account {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #313338;
+    .header {
+        // align-self: flex-start;
+        margin-bottom: 20px;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 600;
+        color: #fff;
+    }
+    .main {
+        width: 50%;
+        height: 450px;
+        max-width: 660px;
+        background-color: #000;
+        border-radius: 4px;
+        padding: 20px;
+        .info {
+            .user-info {
+                height: 72px;
+                width: 100%;
+                color: #fff;
+                .header-info {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .avatar {
+                        display: flex;
+                        img {
+                            width: 80px;
+                            height: 80px;
+                            border-radius: 50%;
+                            border: 3px solid #000;
+                        }
+                    }
+                    #upload-avatar {
+                        display: none;
+                    }
+
+                    label {
+                        &:hover {
+                            background-color: #4752c4;
+                        }
+                        &:active {
+                            background-color: #3c45a5;
+                        }
+                        height: 32px;
+                        padding: 2px 16px;
+                        line-height: 16px;
+                        font-size: 14px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 500;
+                        border-radius: 3px;
+                        background-color: #5865f2;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .profile {
+                color: #fff;
+                h1 {
+                    margin-bottom: 4px;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    line-height: 16px;
+                    font-weight: 700;
+                }
+                h2 {
+                    font-size: 16px;
+                    line-height: 20px;
+                    font-weight: 400;
+                }
+                .username {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    color: #fff;
+                    margin-top: 40px;
+                    margin-bottom: 20px;
+                    .edit-username {
+                        #edit-username {
+                            background-color: #1e1f22;
+                            color: #87898c;
+                            font-size: 16px;
+                            line-height: 20px;
+                            font-weight: 500;
+                            padding: 2px 16px;
+                            height: 32px;
+                            min-height: 32px;
+                            outline: none;
+                            border: none;
+                        }
+                    }
+                    button {
+                        cursor: pointer;
+                        padding: 5px 16px;
+                        border-radius: 3px;
+                        border: none;
+                        outline: none;
+                        line-height: 15px;
+                        font-size: 15px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+        .change-password {
+            color: #fff;
+            margin-top: 20px;
+            .title {
+                margin-bottom: 20px;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 24px;
+            }
+            .change-password-btn {
+                cursor: pointer;
+                height: 32px;
+                min-height: 32px;
+                min-width: 60px;
+                padding: 2px 16px;
+                border: none;
+                outline: none;
+                background-color: #5865f2;
+                color: #f2f3f5;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 16px;
+                &:hover {
+                    background-color: #4752c4;
+                }
+                &:active {
+                    background-color: #3c45a5;
+                }
+            }
+        }
+    }
+}
