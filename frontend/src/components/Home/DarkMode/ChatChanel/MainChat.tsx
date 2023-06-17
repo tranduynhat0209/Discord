@@ -3,6 +3,7 @@ import NumbersIcon from "@mui/icons-material/Numbers";
 import Toolbar from "./Toolbar";
 import FileUploadButton from "./UploadFile";
 import { useState } from "react";
+import { Grid } from "@mui/material";
 
 export default function MainChat() {
     const [chatMessages, setChatMessages] = useState<string[]>([]);
@@ -25,42 +26,44 @@ export default function MainChat() {
         setMessage("");
     };
     return (
-        <div className="main-chat">
-            <header className="main-chat-header">
-                <div className="name-chanel">
-                    <div className="icon">
-                        <NumbersIcon />
-                    </div>
-                    <span className="name">Chung</span>
-                </div>
-                <Toolbar />
-            </header>
-            <main className="main-chat-container">
-                <div className="chat">
-                    {chatMessages.map((chatMessage, index) => (
-                        <div className="chat-item" key={index}>
-                            {chatMessage}
+        <Grid height={"100%"}>
+            <div className="main-chat">
+                <header className="main-chat-header">
+                    <div className="name-chanel">
+                        <div className="icon">
+                            <NumbersIcon />
                         </div>
-                    ))}
-                </div>
-                <div className="input-chat">
-                    <div className="upload-file">
-                        <FileUploadButton onUpload={handleFileUpload} />
+                        <span className="name">Chung</span>
                     </div>
-                    <input
-                        type="text"
-                        placeholder="message"
-                        className="input-message"
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                                handleSendMessage();
-                            }
-                        }}
-                        onChange={handleInputChange}
-                        value={message}
-                    />
-                </div>
-            </main>
-        </div>
+                    <Toolbar />
+                </header>
+                <main className="main-chat-container">
+                    <div className="chat">
+                        {chatMessages.map((chatMessage, index) => (
+                            <div className="chat-item" key={index}>
+                                {chatMessage}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="input-chat">
+                        <div className="upload-file">
+                            <FileUploadButton onUpload={handleFileUpload} />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="message"
+                            className="input-message"
+                            onKeyDown={(event) => {
+                                if (event.key === "Enter") {
+                                    handleSendMessage();
+                                }
+                            }}
+                            onChange={handleInputChange}
+                            value={message}
+                        />
+                    </div>
+                </main>
+            </div>
+        </Grid>
     );
 }
