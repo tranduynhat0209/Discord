@@ -13,7 +13,6 @@ import validateUser from "../middleware/validate-user";
 import updateUser from "../middleware/update-user";
 import { execSync } from "child_process";
 import expressSession from "express-session";
-import { Deps } from "../../modules/deps";
 
 const renameAsync = promisify(rename);
 const readFileAsync = promisify(readFile);
@@ -31,16 +30,17 @@ function setupMulter(app: Application) {
       cb(null, Date.now() + extname(file.originalname)),
   });
   const upload = multer({
-    storage,
-    fileFilter: (req, file, callback) => {
-      const ext = extname(file.originalname);
-      const allowedTypes = [".png", ".jpg", ".gif", ".jpeg", ".webp", ".svg"];
-      if (!allowedTypes.includes(ext))
-        return callback(new Error("This image file type is not allowed"));
+    // storage,
+    // fileFilter: (req, file, callback) => {
+    //   const ext = extname(file.originalname);
+    //   const allowedTypes = [".png", ".jpg", ".gif", ".jpeg", ".webp", ".svg"];
+    //   if (!allowedTypes.includes(ext))
+    //     return callback(new Error("This image file type is not allowed"));
 
-      callback(null, true);
-    },
-    limits: { fileSize: 1024 * 1024 },
+    //   callback(null, true);
+    // },
+    // limits: { fileSize: 1024 * 1024 },
+    dest: 'assets/upload'
   });
 
   app.post(
