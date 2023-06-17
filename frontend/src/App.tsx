@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { ready } from "./store/auth";
 import fetchEntities from "./store/actions/fetch-entities";
 import WSListener from "./components/ws-listener";
+import AddNewServer from "./components/Home/DarkMode/AddNewServer/AddNewServer";
 
 function App() {
     const { hideLogin, handleHideLogin, handleShowLogin } = useHideLogin();
@@ -37,20 +38,28 @@ function App() {
                         path="*"
                         element={
                             <>
-                                {/* <DarkMode /> */}
-                                {/* {hideLogin ? (
+                                <DarkMode />
+                            </>
+                        }
+                    />
+                    <Route path="/add-new-server" element={<AddNewServer />} />
+                    <Route path="/change-userinfo" element={<Account />} />
+                    <Route
+                        path="login"
+                        element={
+                            <>
+                                {hideLogin ? (
                                     <Signup showLogin={handleShowLogin} />
                                 ) : (
                                     <Login hideLogin={handleHideLogin} />
-                                )} */}
-                                {/* <ConfigRoles /> */}
-                                <Account />
+                                )}
                             </>
                         }
                     />
                     <Route path="/test-auth" element={<AuthTest />} />
                     <Route path="/verify" element={<VerifyPage />} />
                     <Route path="/me" element={<Me />} />
+                    <Route path="config-role" element={<ConfigRoles />} />
                 </Routes>
             </div>
         </BrowserRouter>
