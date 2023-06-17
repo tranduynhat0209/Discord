@@ -100,14 +100,6 @@ const Login = ({ hideLogin }) => {
                                 </div>
                             </div>
                         </form>
-                        <div className="qr-code">
-                            <div className="qr"></div>
-                            <h1 className="title">Dang nhap bang Ma QR</h1>
-                            <p>
-                                Quet bang <b>ung dung di dong Discord</b> de
-                                dang nhap tuc thi.
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
