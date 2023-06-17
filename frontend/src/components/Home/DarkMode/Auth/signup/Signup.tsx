@@ -8,10 +8,6 @@ const initState = {
     email: "",
     password: "",
     username: "",
-    isChecked: false,
-    day: "",
-    month: "",
-    year: "",
 };
 const Signup = ({ showLogin }) => {
     const dispatch = useDispatch();
@@ -84,65 +80,7 @@ const Signup = ({ showLogin }) => {
                                         }
                                     />
                                 </div>
-                                <div className="birthday">
-                                    <p>Ngay sinh</p>
-                                    <div className="input-birthday">
-                                        <input
-                                            type="text"
-                                            placeholder="Ngay"
-                                            value={dataRegister.day}
-                                            onChange={(event) =>
-                                                setDataRegister({
-                                                    ...dataRegister,
-                                                    day: event.target.value,
-                                                })
-                                            }
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder="Thang"
-                                            value={dataRegister.month}
-                                            onChange={(event) =>
-                                                setDataRegister({
-                                                    ...dataRegister,
-                                                    month: event.target.value,
-                                                })
-                                            }
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder="Nam"
-                                            value={dataRegister.year}
-                                            onChange={(event) =>
-                                                setDataRegister({
-                                                    ...dataRegister,
-                                                    year: event.target.value,
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-                                <div className="checkbox">
-                                    <input
-                                        type="checkbox"
-                                        id="checkbox"
-                                        checked={dataRegister.isChecked}
-                                        onChange={(
-                                            event: ChangeEvent<HTMLInputElement>
-                                        ) =>
-                                            setDataRegister({
-                                                ...dataRegister,
-                                                isChecked: event.target.checked,
-                                            })
-                                        }
-                                    />
-                                    <label htmlFor="checkbox">
-                                        (Không bắt buộc) Chấp nhận email thông
-                                        báo về cập nhật của Discord, các mẹo
-                                        cũng như ưu đãi đặc biệt. Bạn có thể bỏ
-                                        tùy chọn này bất cứ lúc nào.
-                                    </label>
-                                </div>
+
                                 <div className="signup-button">
                                     <button
                                         type="submit"
