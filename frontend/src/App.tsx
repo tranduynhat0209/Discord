@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ReactDOM } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import "./App.scss";
 import { Auth as AuthTest } from "./components/Test/Auth";
@@ -16,7 +15,9 @@ import { Roles } from "./components/Test/Roles";
 import { Members } from "./components/Test/Members";
 import { Users } from "./components/Test/Users";
 import { DMChannels } from "./components/Test/DM";
-import DmChannels from "./store/dm-channels";
+import Account from "./components/Home/DarkMode/UserProfile/Account";
+import DarkMode from "./components/Home/DarkMode/DarkMode";
+import AddNewServer from "./components/Home/DarkMode/AddNewServer/AddNewServer";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
     dispatch(fetchEntities());
   }, []);
   return (
+    <div className="App">
     <BrowserRouter>
       <WSListener />
       <Routes>
@@ -40,8 +42,15 @@ function App() {
         <Route path="/test-guild/:guildId/members" element={<Members />} />
         <Route path="/dm/:userId" element={<DMChannels />} />
         <Route path="/dm" element={<DMChannels />} />
+
+        <Route path="/main">
+          <Route path="" element={<DarkMode />} />
+          <Route path="add-new-server" element={<AddNewServer/>} />
+          <Route path="change-userinfo" element={<Account />} />
+        </Route>
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 

@@ -31,11 +31,11 @@ const slice = createSlice({
 export const actions = slice.actions;
 export default slice.reducer;
 
-export const createGuild = (name: string) => (dispatch) => {
+export const createGuild = (name: string, iconURL?: string) => (dispatch) => {
   dispatch(
     api.wsCallBegan({
       event: "GUILD_CREATE",
-      data: { name } as WS.Params.GuildCreate,
+      data: { name, iconURL } as WS.Params.GuildCreate,
     })
   );
 };
@@ -56,6 +56,11 @@ export const uploadGuildIcon = (guildId: string, file: File) => (dispatch) => {
   dispatch(uploadFile(file, uploadCallback));
 };
 
+export const createGuildWithIcon = (name: string, file: File) => (dispatch) => {
+  const uploadCallback = async ({ url }: REST.Return.Post["/upload"]) =>
+    dispatch(createGuild(name, url));
+  dispatch(uploadFile(file, uploadCallback));
+};
 export const fetchGuildInvites = (id: string) => (dispatch) => {
   console.log("fetching invitation");
   dispatch(

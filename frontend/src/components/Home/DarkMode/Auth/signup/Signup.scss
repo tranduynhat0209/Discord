@@ -54,50 +54,7 @@
                             color: #d0d3d6;
                         }
                     }
-                    .birthday {
-                        margin-bottom: 20px;
-                        p {
-                            margin-bottom: 8px;
-                            font-size: 12px;
-                            line-height: 16px;
-                            color: #acb0b7;
-                            font-weight: 700;
-                            cursor: default;
-                            // margin-bottom: 8px;
-                        }
-                        .input-birthday {
-                            display: flex;
-                            justify-content: space-between;
-                            input {
-                                width: 30%;
-                                color: #d0d3d6;
-                                background-color: #1e1f22;
-                                font-size: 16px;
-                                font-weight: 500;
-                                border: none;
-                                outline: none;
-                                padding: 10px;
-                            }
-                        }
-                    }
-                    .checkbox {
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        margin-bottom: 20px;
-                        input {
-                            width: 60px;
-                            height: 24px;
-                            border: none;
-                            outline: none;
-                        }
-                        label {
-                            color: #9299a2;
-                            font-size: 12px;
-                            line-height: 16px;
-                            cursor: pointer;
-                        }
-                    }
+
                     .signup-button {
                         button {
                             width: 100%;

@@ -161,6 +161,7 @@ export declare namespace WS {
     export interface GuildCreate {
       /** Name of the guild. */
       name: string;
+      iconURL?: string;
     }
     export interface GuildDelete {
       guildId: string;
