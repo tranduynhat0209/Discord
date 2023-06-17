@@ -1,14 +1,38 @@
 import "./AddNewServer.scss";
 // import { AppState } from "../../../../store";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadUserAvatar, updateSelf } from "../../../../store/users";
+import { joinGuild, leaveGuild } from "../../../../store/members";
 import { AppState } from "../../../../store";
+import fetchEntities from "../../../../store/actions/fetch-entities";
+import {
+    createGuild,
+    fetchGuildInvites,
+    getGuild,
+    uploadGuildIcon,
+} from "../../../../store/guilds";
+
 import CloseIcon from "@mui/icons-material/Close";
-export default function AddNewServer() {
+
+export const useShowAddServer = () => {
+    const [hideCreateServer, setHideCreateServer] = useState<boolean>(false);
+    const handleShowCreateServer = () => {
+        console.log(hideCreateServer);
+        setHideCreateServer(true);
+    };
+    const handleHideCreateServer = () => {
+        console.log(hideCreateServer);
+        setHideCreateServer(false);
+    };
+    return { hideCreateServer, handleHideCreateServer, handleShowCreateServer };
+};
+
+export default function AddNewServer({ hideCreateServer }) {
     const [file, setFile] = useState<File>();
     const [upLoadFile, setUpLoadFile] = useState<boolean>(false);
+    const [nameServer, setNameServer] = useState<string>("");
     const dispatch = useDispatch();
+
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         console.log("hello");
         if (e.target.files) {
@@ -17,9 +41,12 @@ export default function AddNewServer() {
             setUpLoadFile(true);
             dispatch(
                 //@ts-ignore
-                uploadUserAvatar(e.target.files[0])
+                uploadGuildIcon(e.target.files[0])
             );
         }
+    };
+    const handleNameChange = (e) => {
+        setNameServer(e.target.value);
     };
     const user = useSelector((state: AppState) => state.auth.user);
     return (
@@ -31,7 +58,10 @@ export default function AddNewServer() {
                         Give your new server a personality with a name and an
                         icon. You can always change it later.
                     </h2>
-                    <CloseIcon className="close-btn" />
+                    <CloseIcon
+                        className="close-btn"
+                        onClick={hideCreateServer}
+                    />
                 </div>
                 <div className="main">
                     <div className="upload-icon">
@@ -91,7 +121,15 @@ export default function AddNewServer() {
                     <form>
                         <div className="name-server">
                             <label htmlFor="input-name">Server name</label>
-                            <input type="text" id="input-name" />
+                            <input
+                                type="text"
+                                id="input-name"
+                                onInput={(event) => {
+                                    event.preventDefault();
+                                    handleNameChange(event);
+                                }}
+                                value={nameServer}
+                            />
                         </div>
                         <div className="text">
                             By creating a server, you agree to Discord's{" "}
@@ -99,7 +137,19 @@ export default function AddNewServer() {
                     </form>
                 </div>
                 <div className="footer">
-                    <button className="create-server">Create</button>
+                    <button
+                        className="create-server"
+                        onClick={() => {
+                            if (nameServer.length > 0) {
+                                // handleHideCreateServer();
+                                hideCreateServer();
+                                //@ts-ignore
+                                dispatch(createGuild(nameServer));
+                            }
+                        }}
+                    >
+                        Create
+                    </button>
                 </div>
             </div>
         </div>

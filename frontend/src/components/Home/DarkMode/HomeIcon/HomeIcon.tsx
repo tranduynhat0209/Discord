@@ -4,7 +4,7 @@ import ServerList from "./ServerList";
 import "./HomeIcon.scss";
 import { NavLink } from "react-router-dom";
 
-function HomeIcon() {
+function HomeIcon({ hideCreateServer }) {
     return (
         <>
             <nav className="home">
@@ -15,7 +15,7 @@ function HomeIcon() {
                 </NavLink>
                 <span className="line"></span>
 
-                <ServerList />
+                <ServerList hideCreateServer={hideCreateServer} />
             </nav>
         </>
     );

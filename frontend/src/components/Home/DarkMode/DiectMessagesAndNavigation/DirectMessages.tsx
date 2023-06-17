@@ -1,5 +1,3 @@
-import React from "react";
-
 import UserComponent from "../ReusableComponents/UserConpmonent";
 
 export default function DirectMessages() {

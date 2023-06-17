@@ -8,16 +8,22 @@ import DiscoverList from "./DiscoverList/DiscoverList";
 import StudentHubs from "./DiscoverList/StudentHub";
 import { Routes, Route, Outlet } from "react-router-dom";
 import ChatChanel from "./ChatChanel/ChatChanel";
-import AddNewServer from "./HomeIcon/AddNewServer";
-import NewServer from "./HomeIcon/NewServer";
-
+import { AppState } from "../../../store";
+import { useSelector } from "react-redux";
 import "../../../style/scss/DarkMode/DarkMode.scss";
+import { useShowAddServer } from "./AddNewServer/AddNewServer";
+import AddNewServer from "./AddNewServer/AddNewServer";
+import { useEffect } from "react";
 
 export default function DarkMode() {
-    const { showAddServer } = AddNewServer();
+    const { hideCreateServer, handleShowCreateServer, handleHideCreateServer } =
+        useShowAddServer();
+    const guildIds = useSelector(
+        (state: AppState) => state.auth.user?.guildIds
+    );
     return (
         <div className="dark-mode">
-            <HomeIcon />
+            <HomeIcon hideCreateServer={handleShowCreateServer} />
 
             <Outlet />
             <Routes>
@@ -37,23 +43,23 @@ export default function DarkMode() {
                         </>
                     }
                 ></Route>
-                <Route
-                    path="kenhchat1"
-                    element={
-                        <>
-                            <ChatChanel />
-                        </>
-                    }
-                ></Route>
-                <Route
-                    path="kenhchat2"
-                    element={
-                        <>
-                            <ChatChanel />
-                        </>
-                    }
-                ></Route>
+
+                {guildIds &&
+                    guildIds.map((guildIds) => (
+                        <Route
+                            path={`server/${guildIds}`}
+                            key={guildIds}
+                            element={
+                                <>
+                                    <ChatChanel />
+                                </>
+                            }
+                        ></Route>
+                    ))}
             </Routes>
+            {hideCreateServer && (
+                <AddNewServer hideCreateServer={handleHideCreateServer} />
+            )}
         </div>
     );
 }
