@@ -11,7 +11,8 @@ import { createRole, getSelfPermission } from "../../../../store/roles";
 import { hasPerm } from "../../../../services/perm-service";
 
 export default function RoleManager() {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!)
+  const guildId = ui.activeGuild!.id;
   const roles = useSelector(getGuildRoles(guildId));
   const dispatch = useDispatch();
   const owner = useSelector(isOwner(guildId));

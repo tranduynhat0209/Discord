@@ -26,13 +26,14 @@ const MemberDialog: React.FunctionComponent<{
   handleClose;
   memberId: string;
 }> = ({ handleClose, memberId }) => {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const member = useSelector(getMemberById(memberId));
   const user = useSelector((state: AppState) =>
     state.entities.users.find((u) => u.id === member?.userId)
   );
   const owner = useSelector(isOwner(guildId));
-  const roles = useSelector(getGuildRoles(member ? member.guildId : ""));
+  const roles = useSelector(getGuildRoles(guildId));
   const userPermission = useSelector(getSelfPermission(guildId));
   const canManageRoles = owner || hasPerm(userPermission, "MANAGE_ROLES");
   const canKickMembers = owner || hasPerm(userPermission, "KICK_MEMBERS");
@@ -102,7 +103,7 @@ const MemberDialog: React.FunctionComponent<{
                       py: "5px",
                     }}
                   >
-                    <p>{role.name}</p>
+                    {role.name}
                     <Checkbox
                       disabled={!canManageRoles || role.name === "@everyone"}
                       defaultChecked={defaultRoleIds[`${role.id}`] === true}
@@ -155,7 +156,7 @@ const MemberDialog: React.FunctionComponent<{
               },
               []
             );
-            
+
             dispatch(
               //@ts-ignore
               updateMember(memberId, {

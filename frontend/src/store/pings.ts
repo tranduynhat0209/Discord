@@ -84,8 +84,8 @@ export const pingUnreadChannelsAndGuilds =
       const channel = channels.find((c) => c.id === channelId);
       if (channel) {
         if (
-          channel?.lastMessageId &&
-          channel?.lastMessageId !== userLastMessagesIds[i]
+          channel.lastMessageId &&
+          channel.lastMessageId !== userLastMessagesIds[i]
         ) {
           dispatch(addPing(channelId));
         }

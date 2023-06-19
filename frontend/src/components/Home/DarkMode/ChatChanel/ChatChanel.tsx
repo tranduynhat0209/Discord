@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import SideBar from "./SideBar";
+import MainChat from "./MainChat";
 import { Outlet } from "react-router-dom";
 function ChatChanel() {
   return (
@@ -18,7 +19,7 @@ function ChatChanel() {
           width: "100%",
         }}
       >
-        <Outlet/>
+        <Outlet />
       </Box>
     </Box>
   );

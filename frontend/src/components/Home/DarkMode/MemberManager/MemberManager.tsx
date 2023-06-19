@@ -15,7 +15,8 @@ import { createRole, getSelfPermission } from "../../../../store/roles";
 import { hasPerm } from "../../../../services/perm-service";
 
 export default function MemberManager() {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const users = useSelector(getGuildUsers(guildId));
   const members = useSelector(getGuildMembers(guildId));
   const dispatch = useDispatch();

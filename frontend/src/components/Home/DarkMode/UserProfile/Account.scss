@@ -110,15 +110,7 @@
                 }
             }
         }
-        .change-password {
-            color: #fff;
-            margin-top: 20px;
-            .title {
-                margin-bottom: 20px;
-                font-weight: 600;
-                font-size: 20px;
-                line-height: 24px;
-            }
+
             .change-password-btn {
                 cursor: pointer;
                 height: 32px;
@@ -140,7 +132,6 @@
                 }
             }
         }
-    }
 
     h3{
         color: white;
@@ -156,4 +147,20 @@
         color: white;
         padding: 10px;
         font-size: 15px;
+    }
+
+    .change-password{
+        
+        color: rgb(201, 206, 250);
+        &:hover{
+            color: rgb(122, 187, 241)
+        }
+    }
+
+    .logout{
+        
+        color: red;
+        &:hover{
+            color: rgb(241, 122, 122)
+        }
     }

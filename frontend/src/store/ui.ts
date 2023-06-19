@@ -1,8 +1,5 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import React from "react";
-import { Entity } from "../types";
+import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from ".";
-import EventEmitter from "events";
 
 const slice = createSlice({
   name: "ui",
@@ -59,7 +56,31 @@ const slice = createSlice({
     },
     closeUserProfile: (state) => {
       delete state.openUserProfile;
-    }
+    },
+    focusGuild: (state, { payload }) => {
+      state.activeGuild = payload;
+    },
+    unfocusGuild: (state) => {
+      delete state.activeGuild;
+    },
+    openDirectMessagePage: (state) => {
+      state.openDirectMessage = true;
+    },
+    closeDirectMessagePage: (state) => {
+      delete state.openDirectMessage;
+    },
+    switchFromDMToGuild: (state, { payload }) => {
+      delete state.openDirectMessage;
+      delete state.activeUser;
+      delete state.activeChannel;
+      state.activeGuild = payload;
+    },
+    switchFromGuildToDM: (state) => {
+      delete state.activeGuild;
+      delete state.activeChannel;
+      delete state.activeUser;
+      state.openDirectMessage = true;
+    },
   },
 });
 

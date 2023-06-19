@@ -1,6 +1,6 @@
 import SidebarMenuGroup from "./SidebarMenuGroup";
 import "./SideBarMenu.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSelfPermission } from "../../../../store/roles";
 import { isOwner } from "../../../../store/guilds";
@@ -13,7 +13,8 @@ import { AppState } from "../../../../store";
 import { actions } from "../../../../store/ui";
 import AddNewChannel from "../AddNewServer/AddNewChannel";
 export default function SideBarMenu() {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const totalPermission = useSelector(getSelfPermission(guildId));
   const owner = useSelector(isOwner(guildId));
   const self = useSelector((state: AppState) => state.auth.user);
@@ -45,25 +46,33 @@ export default function SideBarMenu() {
             <div className="line"></div>
           </>
         )}
-        {(owner || hasPerm(totalPermission, "MANAGE_ROLES")) && (
-          <Link to={`/main/guild-details/${guildId}/roles`}>
+        <div
+          onClick={() => {
+            dispatch(actions.unfocusedChannel());
+          }}
+        >
+          <Link to={`/roles`}>
             <SidebarMenuGroup
               titles={["Manage Roles"]}
               activeDefault={[false]}
             />
             <div className="line"></div>
           </Link>
-        )}
-
-        <Link to={`/main/guild-details/${guildId}/members`}>
-          <SidebarMenuGroup
-            titles={["Manage Members"]}
-            activeDefault={[false]}
-          />
-          <div className="line"></div>
-        </Link>
-
-        {(owner || hasPerm(totalPermission, "MANAGE_INVITES")) && (
+        </div>
+        <div
+          onClick={() => {
+            dispatch(actions.unfocusedChannel());
+          }}
+        >
+          <Link to={`/members`}>
+            <SidebarMenuGroup
+              titles={["Manage Members"]}
+              activeDefault={[false]}
+            />
+            <div className="line"></div>
+          </Link>
+        </div>
+        {/* {(owner || hasPerm(totalPermission, "MANAGE_INVITES")) && (
           <>
             <SidebarMenuGroup
               titles={["Manage Invatations"]}
@@ -71,7 +80,7 @@ export default function SideBarMenu() {
             />
             <div className="line"></div>
           </>
-        )}
+        )} */}
         {(owner || hasPerm(totalPermission, "CREATE_INVITE")) && (
           <>
             <div
@@ -88,7 +97,7 @@ export default function SideBarMenu() {
             <div className="line"></div>
           </>
         )}
-        {!owner && (
+        {/* {!owner && (
           <>
             <SidebarMenuGroup
               titles={["Leave Server"]}
@@ -96,7 +105,7 @@ export default function SideBarMenu() {
             />
             <div className="line"></div>
           </>
-        )}
+        )} */}
       </div>
 
       <Dialog open={opening === 1} onClose={() => setOpening(0)}>

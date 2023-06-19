@@ -47,6 +47,7 @@ export interface AppState {
     saveChangesOpen?: boolean;
     openVerification?: boolean;
     openUserProfile?: boolean;
+    openDirectMessage?: boolean;
   };
 }
 

@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import "./ChatChanelNames.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getGuildChannels } from "../../../../store/guilds";
@@ -14,13 +13,12 @@ import {
 } from "../../../../store/channels";
 
 export default function ChatChanelNames() {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const channels = useSelector(getGuildChannels(guildId));
-  const focusedChannel = useSelector(
-    (state: AppState) => state.ui.activeChannel
-  );
   const ping = useSelector((state: AppState) => state.entities.pings);
   const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -56,7 +54,9 @@ export default function ChatChanelNames() {
               >
                 <p
                   className={
-                    focusedChannel?.id === channel.id ? "active-title" : "title"
+                    ui.activeChannel?.id === channel.id
+                      ? "active-title"
+                      : "title"
                   }
                 >
                   {channel.name}
@@ -99,7 +99,7 @@ export default function ChatChanelNames() {
               <Box
                 className="chat-chanel-name"
                 onClick={
-                  focusedChannel?.id !== channel.id
+                  ui.activeChannel?.id !== channel.id
                     ? () => {
                         // @ts-ignore
                         dispatch(joinVoiceChannel(channel.id));
@@ -114,7 +114,7 @@ export default function ChatChanelNames() {
               >
                 <p
                   className={
-                    focusedChannel?.id === channel.id ? "active-title" : "title"
+                    ui.activeChannel?.id === channel.id ? "active-title" : "title"
                   }
                 >
                   {channel.name}

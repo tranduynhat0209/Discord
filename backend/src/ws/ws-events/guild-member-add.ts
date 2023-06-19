@@ -29,7 +29,7 @@ export default class implements WSEvent<"GUILD_MEMBER_ADD"> {
     const selfUser = await deps.users.getSelf(userId);
     if (inviteCode && selfUser.bot)
       throw new TypeError("Bot users cannot accept invites");
-
+    selfUser.guildIds.push(guild.id);
     const [_, __, member] = await Promise.all([
       this.handleInvite(invite),
       deps.wsRooms.joinGuildRooms(selfUser, client),

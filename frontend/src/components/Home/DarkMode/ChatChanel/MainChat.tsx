@@ -5,7 +5,6 @@ import FileUploadButton from "./UploadFile";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../../store";
-import { useParams } from "react-router-dom";
 import {
   createMessage,
   deleteMessage,
@@ -121,7 +120,6 @@ export default function MainChat() {
   const activeChannel = useSelector(
     (state: AppState) => state.ui.activeChannel
   );
-  console.log(activeChannel);
   const channel = useSelector((state: AppState) =>
     state.entities.channels.find((c) => c.id === activeChannel?.id)
   );

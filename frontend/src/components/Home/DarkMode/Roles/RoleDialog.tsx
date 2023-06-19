@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Checkbox, List, ListItem } from "@mui/material";
 import "./RoleDialog.scss";
 import {
-  createRole,
   deleteRole,
   getRole,
   getSelfPermission,
@@ -12,14 +11,14 @@ import {
 } from "../../../../store/roles";
 import { isOwner } from "../../../../store/guilds";
 import { hasPerm } from "../../../../services/perm-service";
-import { useParams } from "react-router-dom";
 import { PermissionTypes } from "../../../../types";
-import { CheckBox } from "@mui/icons-material";
+import { AppState } from "../../../../store";
 const RoleDialog: React.FunctionComponent<{ handleClose; roleId: string }> = ({
   handleClose,
   roleId,
 }) => {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const role = useSelector(getRole(roleId));
   const owner = useSelector(isOwner(guildId));
   const userPermission = useSelector(getSelfPermission(guildId));
@@ -29,6 +28,9 @@ const RoleDialog: React.FunctionComponent<{ handleClose; roleId: string }> = ({
     role ? role.permissions : 0
   );
   console.log(role?.permissions?.toString(2));
+  const keys = Object.keys(PermissionTypes.Permission).slice(
+    Object.keys(PermissionTypes.Permission).length / 2
+  );
   const dispatch = useDispatch();
   return (
     <Box
@@ -70,22 +72,20 @@ const RoleDialog: React.FunctionComponent<{ handleClose; roleId: string }> = ({
       </Box>
 
       <List sx={{ width: "100%", maxHeight: "600px", overflow: "auto" }}>
-        {Object.keys(PermissionTypes.Permission)
-          .slice(Object.keys(PermissionTypes.Permission).length / 2)
-          .map((k) => {
-            return (
-              <ListItem>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    px: "10px",
-                    py: "5px",
-                  }}
-                >
-                  <p>{k}</p>
-                  <Checkbox
+        {keys.map((k) => {
+          return (
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  px: "10px",
+                  py: "5px",
+                }}
+              >
+                {k}
+                <Checkbox
                     disabled={
                       !canManageRoles || !role || role.name === "@everyone"
                     }
@@ -101,10 +101,10 @@ const RoleDialog: React.FunctionComponent<{ handleClose; roleId: string }> = ({
                       });
                     }}
                   />
-                </Box>
-              </ListItem>
-            );
-          })}
+              </Box>
+            </ListItem>
+          );
+        })}
       </List>
       {
         <form

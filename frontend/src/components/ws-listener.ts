@@ -46,25 +46,9 @@ const WSListener: React.FunctionComponent = () => {
 
     // add channel to guilds.channels
     ws.on("CHANNEL_CREATE", (args) => {
-      // if we created it, we want to navigate there
-      // we'd expect the user to exist, as they should be logged in to receive ws events
-      const { auth, ui } = state;
-      const selfCreated = args.creatorId === auth.user!.id;
-
-      // we cannot go to the channel if not in store
       dispatch(channels.created(args));
-
-      if (selfCreated && ui.activeGuild) {
-        dispatch(uiActions.closeModal());
-        if (args.channel.type === "VOICE") return;
-
-        // history.push(`/channels/${ui.activeGuild.id}/${args.channel.id}`);
-      }
     });
     ws.on("CHANNEL_DELETE", (args) => {
-      //   if (inChannel && ui.activeGuild)
-      //     history.push(`/channels/${ui.activeGuild.id}`);
-
       dispatch(channels.deleted(args));
     });
     ws.on("CHANNEL_UPDATE", (args) => dispatch(channels.updated(args)));
@@ -166,8 +150,6 @@ const WSListener: React.FunctionComponent = () => {
     });
     ws.on("VOICE_STATE_UPDATE", async ({ userId, voice }) => {
       const data = { userId, partialUser: { voice } };
-      const selfUser = state.auth.user!;
-      if (selfUser.id === userId) dispatch(auth.updatedUser(data));
       dispatch(users.updated(data));
 
       voice

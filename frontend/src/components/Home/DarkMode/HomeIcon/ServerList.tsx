@@ -6,22 +6,30 @@ import AddNewServer from "../AddNewServer/AddNewServer";
 import { Dialog, Tooltip } from "@mui/material";
 import JoinNewServer from "../AddNewServer/JoinNewServer";
 import defaultIcon from "../../../../assets/image/home/pngfind.com-discord-icon-png-1187431.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../../store";
 import "./HomeIcon.scss";
+import { actions } from "../../../../store/ui";
 
 export default function ServerList() {
   const [newDialogIsOpen, setNewDialogIsOpen] = useState<boolean>(false);
   const [openJoinChannel, setOpenJoinChannel] = useState<boolean>(false);
   const guilds = useSelector((state: AppState) => state.entities.guilds);
-  const [chosenGuild, setChosenGuild] = useState<string>();
   const pings = useSelector((state: AppState) => state.entities.pings);
+  const dispatch = useDispatch();
+  const ui = useSelector((state: AppState) => state.ui);
   return (
     <nav className="home">
-      <div onClick={() => setChosenGuild("dm")}>
-        <Link to="/main/direct-message">
+      <div
+        onClick={() => {
+          dispatch(actions.switchFromGuildToDM());
+        }}
+      >
+        <Link to="/">
           <div
-            className={chosenGuild === "dm" ? "main-active-logo" : "main-logo"}
+            className={
+              ui?.openDirectMessage === true ? "main-active-logo" : "main-logo"
+            }
           >
             <img src={defaultIcon} alt="logo" />
             {pings["DM"]?.length > 0 && <div className="ping"></div>}
@@ -35,7 +43,11 @@ export default function ServerList() {
           guilds.map(
             (guild) =>
               guild && (
-                <div onClick={() => setChosenGuild(guild.id)}>
+                <div
+                  onClick={() => {
+                    dispatch(actions.switchFromDMToGuild(guild));
+                  }}
+                >
                   <Tooltip
                     title={
                       <p
@@ -50,38 +62,35 @@ export default function ServerList() {
                     placement="right"
                     arrow
                   >
-                    <Link to={"/main/guild-details/" + guild.id + "/channels"}>
-                      {" "}
-                      {guild.iconURL ? (
-                        <div className="guild-container">
-                          <img
-                            className={
-                              chosenGuild === guild.id
-                                ? "guild-active-image"
-                                : "guild-image"
-                            }
-                            src={`${process.env.REACT_APP_CDN_URL}${guild.iconURL}`}
-                            alt="logo"
-                          />
-                          {pings[guild.id]?.length > 0 && (
-                            <div className="ping"></div>
-                          )}
-                        </div>
-                      ) : (
-                        <div
+                    {guild.iconURL ? (
+                      <div className="guild-container">
+                        <img
                           className={
-                            chosenGuild === guild.id
-                              ? "main-active-logo"
-                              : "main-logo"
+                            ui?.activeGuild?.id === guild.id
+                              ? "guild-active-image"
+                              : "guild-image"
                           }
-                        >
-                          <img src={defaultIcon} alt="logo" />
-                          {pings[guild.id]?.length > 0 && (
-                            <div className="ping"></div>
-                          )}
-                        </div>
-                      )}
-                    </Link>
+                          src={`${process.env.REACT_APP_CDN_URL}${guild.iconURL}`}
+                          alt="logo"
+                        />
+                        {pings[guild.id]?.length > 0 && (
+                          <div className="ping"></div>
+                        )}
+                      </div>
+                    ) : (
+                      <div
+                        className={
+                          ui?.activeGuild?.id === guild.id
+                            ? "main-active-logo"
+                            : "main-logo"
+                        }
+                      >
+                        <img src={defaultIcon} alt="logo" />
+                        {pings[guild.id]?.length > 0 && (
+                          <div className="ping"></div>
+                        )}
+                      </div>
+                    )}
                   </Tooltip>
                 </div>
               )

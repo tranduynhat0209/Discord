@@ -1,6 +1,5 @@
 import SidebarMenuGroup from "./SidebarMenuGroup";
 import "./SideBarMenu.scss";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSelfPermission } from "../../../../store/roles";
 import { isOwner } from "../../../../store/guilds";
@@ -13,7 +12,8 @@ import { AppState } from "../../../../store";
 import { actions } from "../../../../store/ui";
 import AddNewChannel from "../AddNewServer/AddNewChannel";
 export default function SideBarMenu() {
-  const { guildId } = useParams();
+  const ui = useSelector((state: AppState) => state.ui!);
+  const guildId = ui.activeGuild!.id;
   const totalPermission = useSelector(getSelfPermission(guildId));
   const owner = useSelector(isOwner(guildId));
   const self = useSelector((state: AppState) => state.auth.user);

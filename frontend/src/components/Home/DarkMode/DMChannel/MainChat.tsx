@@ -24,7 +24,6 @@ import { Message } from "../ChatChanel/MainChat";
 export default function MainChat() {
   const [isUpdating, setIsUpdating] = useState<string | undefined>();
   const [message, setMessage] = useState("");
-  const { guildId } = useParams();
   const activeUser = useSelector((state: AppState) => state.ui.activeUser);
   const dmChannel = useSelector(
     getDMChannelWithUserId(activeUser ? activeUser.id : "")

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./App.scss";
@@ -22,16 +22,18 @@ import { VerifyByCode } from "./components/Home/DarkMode/Auth/verify/Verify";
 import { SnackbarProvider } from "notistack";
 import { Notification } from "./components/Home/DarkMode/Notification/Notification";
 import { Welcome } from "./components/Home/DarkMode/Welcome";
+import { token } from "./store/utils/rest-headers";
 
 function App() {
   const dispatch = useDispatch();
   const ui = useSelector((state: AppState) => state.ui);
   const user = useSelector((state: AppState) => state.auth.user);
+  const t = token();
   useEffect(() => {
     // @ts-ignore
     dispatch(ready());
-    // @ts-ignore
-    dispatch(fetchEntities());
+      // @ts-ignore
+      dispatch(fetchEntities());
   }, []);
   return (
     <div className="App">
@@ -60,23 +62,43 @@ function App() {
               open={ui.openUserProfile !== undefined}
               onClose={() => dispatch(actions.closeUserProfile())}
             >
-              <Account />
+              <Account/>
             </Dialog>
           )}
           <Routes>
-            <Route path="/">
-              <Route path="signup" element={<Signup />} />
-              <Route path="login" element={<Login />} />
-            </Route>
-            <Route path="main" element={<DarkMode />}>
-              <Route path="" element={<Welcome />} />
-              <Route path="guild-details/:guildId" element={<ChatChanel />}>
-                <Route path="channels" element={<MainChat />} />
-                <Route path="roles" element={<RoleManager />} />
-                <Route path="members" element={<MemberManager />} />
+            {!user || !token() ? (
+              <Route path="/">
+                <Route path="signup" element={<Signup />} />
+                <Route path="login" element={<Login />} />
+                <Route path="*" element={<Navigate to="login" replace />} />
               </Route>
-              <Route path="direct-message" element={<DMChannel />} />
-            </Route>
+            ) : (
+              <Route path="/" element={<DarkMode />}>
+                {ui.activeGuild && (
+                  <Route path="" element={<ChatChanel />}>
+                    {!ui.activeChannel && (
+                      <Route path="members" element={<MemberManager />} />
+                    )}
+                    {!ui.activeChannel && (
+                      <Route path="roles" element={<RoleManager />} />
+                    )}
+                    <Route path="" element={<MainChat />} />
+                    <Route path="*" element={<Navigate to="" replace />} />
+                  </Route>
+                )}
+                {!ui.activeGuild && (
+                  <Route>
+                    <Route
+                      path=""
+                      element={
+                        ui.openDirectMessage ? <DMChannel /> : <Welcome />
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="" replace />} />
+                  </Route>
+                )}
+              </Route>
+            )}
           </Routes>
         </SnackbarProvider>
       </BrowserRouter>
