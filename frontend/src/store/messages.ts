@@ -38,7 +38,7 @@ const slice = createSlice({
 
 export const getChannelMessages = (channelId: string) =>
   createSelector(
-    (state) => state.entities.messages.list,
+    (state: AppState) => state.entities.messages.list,
     (messages) => messages.filter((m) => m.channelId === channelId)
   );
 

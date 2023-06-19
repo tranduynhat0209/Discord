@@ -1,0 +1,105 @@
+.main-chat {
+    height: '100vh';
+    display: flex;
+    flex-direction: column;
+    .main-chat-header {
+        display: flex;
+        width: 100%;
+        height: '5%';
+        background-color: #313338;
+        border-bottom: 1px solid;
+        padding: 10px;
+        .name-chanel {
+            display: flex;
+            flex: 1;
+            .icon {
+                color: #80848e;
+                flex: 0 0 auto;
+                margin: 0 8px;
+            }
+            .name {
+                color: #f2f3ea;
+            }
+        }
+    }
+    .main-chat-container {
+        height: '95%';
+        background-color: #313338;
+        position: relative;
+        flex: 1;
+        .chat {
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            .chat-item {
+                margin-top: 10px;
+                width: calc(100% - 20px);
+                height: auto;
+                padding: 10px;
+                border-radius: 4px;
+                background-color: #2b2d31;
+                color: #fff;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+        .input-chat {
+            height: 10%;
+            margin-left: 10px;
+            margin-right: 20px;
+            width: 90%;
+            bottom: 16px;
+            display: flex;
+            align-items: center;
+
+            .input-message {
+                flex: 1;
+                padding: 11px 8px;
+                border-radius: 4px;
+                background-color: #383a40;
+                border: none;
+                outline: none;
+                font-size: 16px;
+                line-height: 20px;
+                color: #fff;
+            }
+            .upload-file {
+                position: relative;
+                margin-right: 10px;
+                cursor: pointer;
+                transition: ease-in 0.1s;
+                label {
+                    color: #ccc;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    &::before {
+                        content: "Upload file";
+                        width: 100px;
+                        height: 20px;
+                        color: #fff;
+                        background-color: #000;
+                        position: absolute;
+                        z-index: 1;
+                        top: -30px;
+                        padding: 3px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 4px;
+                        left: -4px;
+                        display: none;
+                    }
+                }
+                &:hover {
+                    cursor: pointer;
+                    label {
+                        &::before {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

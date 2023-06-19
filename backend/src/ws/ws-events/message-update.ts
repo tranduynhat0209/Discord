@@ -12,7 +12,6 @@ export default class implements WSEvent<"MESSAGE_UPDATE"> {
     { messageId, content, embed }: WS.Params.MessageUpdate
   ) {
     const message = await deps.messages.get(messageId);
-    const channel = await deps.channels.get(message.channelId);
 
     deps.wsGuard.validateIsUser(client, message.authorId);
 
@@ -24,11 +23,20 @@ export default class implements WSEvent<"MESSAGE_UPDATE"> {
     Object.assign(message, partial);
     await deps.messages.save(message);
 
-
-    return [{
-      emit: this.on,
-      to: [message.channelId],
-      send: { messageId, partialMessage: partial } as WS.Args.MessageUpdate,
-    }];
+    let receiver: string[] = [];
+    try {
+      const channel = await deps.channels.get(message.channelId);
+      receiver.push(channel.id);
+    } catch (err) {
+      const dmChannel = await deps.dmChannels.get(message.channelId);
+      receiver.push(dmChannel.userId0, dmChannel.userId1);
+    }
+    return [
+      {
+        emit: this.on,
+        to: receiver,
+        send: { messageId, partialMessage: partial } as WS.Args.MessageUpdate,
+      },
+    ];
   }
 }

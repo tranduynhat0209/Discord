@@ -6,7 +6,7 @@
         display: flex;
         width: 100%;
         background-color: #313338;
-        border-bottom: 3px solid;
+        border-bottom: 1px solid;
         padding: 10px;
         .name-chanel {
             display: flex;
@@ -42,14 +42,12 @@
         }
         .input-chat {
             margin-left: 10px;
-            margin-right: 10px;
-            position: fixed;
-            width: calc(100% - 340px);
+            margin-right: 20px;
+            width: 90%;
             bottom: 16px;
             display: flex;
-            gap: 16px;
             align-items: center;
-
+            position: absolute;
             .input-message {
                 flex: 1;
                 padding: 11px 8px;
@@ -59,10 +57,11 @@
                 outline: none;
                 font-size: 16px;
                 line-height: 20px;
-                color: #686a73;
+                color: #fff;
             }
             .upload-file {
                 position: relative;
+                margin-right: 10px;
                 cursor: pointer;
                 transition: ease-in 0.1s;
                 label {

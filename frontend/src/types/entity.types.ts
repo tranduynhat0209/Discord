@@ -18,6 +18,7 @@ export namespace Entity {
     type: ChannelTypes.Type;
     overrides?: ChannelTypes.Override[];
     position: number;
+    userIds?: string[];
   }
 
   export interface DMChannel{
@@ -25,6 +26,7 @@ export namespace Entity {
     createdAt: Date;
     userId0: string;
     userId1: string;
+    lastMessageId: string;
   }
   export interface Guild {
     id: string;

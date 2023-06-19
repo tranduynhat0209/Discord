@@ -10,12 +10,13 @@ export class WSRooms {
     await this.joinGuildRooms(user, client);
   }
 
-  public async joinGuildRooms(user: any, client: Socket) {
+  public async joinGuildRooms(user: SelfUserDocument, client: Socket) {
     if (!user.guildIds.length) return;
 
     await client.join(user.guildIds);
     const channelIds = await this.getChannelIds(client, user.guildIds);
     await client.join(channelIds);
+    await client.join(user.id);
   }
 
   private async getChannelIds(client: Socket, guildIds: string[]) {

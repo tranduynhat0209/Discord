@@ -9,6 +9,7 @@ import { actions as roleActions } from "../roles";
 import { actions as userActions } from "../users";
 import { actions as dmChannelActions } from "../dm-channels";
 import { getHeaders } from "../utils/rest-headers";
+import { pingUnreadChannelsAndGuilds } from "../pings";
 
 export default () => (dispatch) => {
   dispatch(
@@ -23,6 +24,7 @@ export default () => (dispatch) => {
         dispatch(roleActions.fetched(data.roles));
         dispatch(userActions.fetched(data.users));
         dispatch(dmChannelActions.fetched(data.dmChannels));
+        dispatch(pingUnreadChannelsAndGuilds());
         dispatch(meta.fetchedEntities());
       },
       errorCallback: () => dispatch(auth.loggedInAttempted()),

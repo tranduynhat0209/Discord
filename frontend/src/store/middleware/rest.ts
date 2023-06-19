@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { actions, APIArgs } from '../api';
-import { openDialog } from '../ui';
+import { actions as ui } from '../ui';
 
 export default (store) => (next) => async (action) => {
   if (action.type !== actions.restCallBegan.type)
@@ -28,7 +28,7 @@ export default (store) => (next) => async (action) => {
   } catch (error) {
     const response = (error as any).response;
     store.dispatch(actions.restCallFailed({ url, response }));
-    store.dispatch(openDialog({
+    store.dispatch(ui.openModal({
       content: response?.data?.message ?? 'Unknown Error',
       variant: 'error',
     }));

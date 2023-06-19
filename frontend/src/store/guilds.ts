@@ -15,7 +15,8 @@ const slice = createSlice({
       guilds.push(...payload.filter(notInArray(guilds)));
     },
     created: (guilds, { payload }: Action<WS.Args.GuildCreate>) => {
-      guilds.push(payload.guild);
+      const guild = guilds.find((g) => g.id === payload.guild.id);
+      if (!guild) guilds.push(payload.guild);
     },
     updated: (guilds, { payload }: Action<WS.Args.GuildUpdate>) => {
       const guild = guilds.find((g) => g.id === payload.guildId);
@@ -50,6 +51,12 @@ export const updateGuild =
     );
   };
 
+export const updateGuildWithIcon =
+  (guildId: string, name: string, file: File) => (dispatch) => {
+    const uploadCallback = async ({ url }: REST.Return.Post["/upload"]) =>
+      dispatch(updateGuild(guildId, { name, iconURL: url }));
+    dispatch(uploadFile(file, uploadCallback));
+  };
 export const uploadGuildIcon = (guildId: string, file: File) => (dispatch) => {
   const uploadCallback = async ({ url }: REST.Return.Post["/upload"]) =>
     dispatch(updateGuild(guildId, { iconURL: url }));
@@ -128,11 +135,11 @@ export const getGuildUsers = (guildId: string | undefined) =>
 export const isOwner = (guildId: string) =>
   createSelector(
     (state: AppState) => ({
-      user: state.auth.user!,
+      user: state.auth.user,
       guilds: state.entities.guilds,
     }),
     ({ user, guilds }) => {
       const guild = guilds.find((g) => g.id === guildId);
-      return guild && guild.ownerId === user.id;
+      return guild && guild.ownerId === user?.id;
     }
   );

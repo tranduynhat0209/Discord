@@ -1,28 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../../../store";
 import { redirect, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { sendVerifyCode } from "../../../../../store/auth";
+import "./Verify.scss";
+import { actions } from "../../../../../store/ui";
 
-export const VerifyPage = () => {
-    const user = useSelector((s: AppState) => s.auth.user);
-    const dispatch = useDispatch();
-    const query = new URLSearchParams(useLocation().search);
-    const code = query.get("code")?.toString();
+export const VerifyByCode = () => {
+  const dispatch = useDispatch();
+  const [code, setCode] = useState<string>("");
 
-    return (
+  return (
+    <div className="verification-form">
+      <div className="title">
+        <h1>Verify by code:</h1>{" "}
+      </div>
+      <div className="content">
+        <div>
+          <input
+            type="text"
+            className="code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
         <button
-            onClick={(e) => {
-                e.preventDefault();
+          className="verify-button"
+          onClick={(e) => {
+            e.preventDefault();
 
-                if (code) {
-                    // @ts-ignore
-                    dispatch(sendVerifyCode(code));
-                    redirect("/");
-                }
-            }}
+            if (code) {
+              // @ts-ignores
+              dispatch(sendVerifyCode(code));
+              dispatch(actions.closeVerificationForm());
+              redirect("/main");
+            }
+          }}
         >
-            Verify with code: {code}
+          Verify
         </button>
-    );
+      </div>
+    </div>
+  );
 };

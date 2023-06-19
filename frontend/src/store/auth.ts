@@ -1,7 +1,7 @@
 import { REST, WS } from "../types";
 import { createSlice } from "@reduxjs/toolkit";
 import { actions as api } from "./api";
-import { openDialog } from "./ui";
+import { actions as ui } from "./ui";
 import { token } from "./utils/rest-headers";
 import { Action, AppState } from ".";
 
@@ -64,10 +64,15 @@ export const loginUser =
           }
           if (payload.message) {
             dispatch(actions.shouldVerify());
-            dispatch(openDialog({ content: payload.message, variant: "info" }));
+            dispatch(ui.openVerificationForm());
           }
         },
-        errorCallback: () => dispatch(actions.loggedInAttempted()),
+        errorCallback: (payload) => {
+          dispatch(actions.loggedInAttempted());
+          dispatch(
+            ui.openModal({ content: payload.message, variant: "error" })
+          );
+        },
       })
     );
   };
@@ -77,14 +82,7 @@ export const forgotPasswordEmail = (email: string) => (dispatch) => {
 
   dispatch(
     api.restCallBegan({
-      callback: () =>
-        dispatch(
-          openDialog({
-            variant: "info",
-            content:
-              "Sent reset password instructions to email, if email is registered",
-          })
-        ),
+      callback: () => dispatch(ui.openVerificationForm()),
       url: `/auth/email/forgot-password?email=${email}`,
     })
   );
@@ -104,8 +102,7 @@ export const registerUser =
         data,
         url: `/auth/register`,
         callback: (payload) => {
-          localStorage.setItem("token", payload);
-          dispatch(ready());
+          dispatch(ui.openVerificationForm());
         },
       })
     );
@@ -117,8 +114,11 @@ export const sendVerifyCode = (code: string) => (dispatch) => {
       url: `/auth/verify?code=${code}`,
       callback: ({ message, token }: REST.Return.Get["/auth/verify"]) => {
         if (message)
-          dispatch(openDialog({ content: message, variant: "info" }));
+          dispatch(ui.openModal({ content: message, variant: "info" }));
         if (token) {
+          dispatch(
+            ui.openModal({ content: "Verify successfully", variant: "info" })
+          );
           localStorage.setItem("token", token);
           dispatch(ready());
         }
@@ -143,7 +143,7 @@ export const changePassword =
           token,
         }: REST.Return.Post["/auth/change-password"]) => {
           if (message)
-            dispatch(openDialog({ content: message, variant: "info" }));
+            dispatch(ui.openModal({ content: message, variant: "info" }));
           if (token) localStorage.setItem("token", token);
         },
       })

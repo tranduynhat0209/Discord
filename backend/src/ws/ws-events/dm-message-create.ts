@@ -39,18 +39,17 @@ export default class implements WSEvent<"DM_MESSAGE_CREATE"> {
 
     await deps.pings.markAsRead(author, message);
 
-    const toClientId = ws.sessions.getClientIdFromUserId(to);
     const result: any[] = [
       {
         emit: this.on,
-        to: [client.id, toClientId],
+        to: [client.id, to],
         send: { message } as WS.Args.DMMessageCreate,
       },
     ];
     if (isNew)
       result.push({
         emit: "DM_CHANNEL_CREATE" as const,
-        to: [client.id, toClientId],
+        to: [client.id, to],
         send: { dmChannel } as WS.Args.DMChannelCreate,
       });
     return result;

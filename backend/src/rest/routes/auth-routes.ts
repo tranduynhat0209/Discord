@@ -62,18 +62,22 @@ router.post("/register", extraRateLimit(10), async (req, res) => {
   //   const json = response.data;
   //   if (!json.success) throw new APIError(400, "Invalid captcha");
   // }
-
+  const email = req.body.email
   try {
     const user = await deps.users.create({
-      email: req.body.email,
+      email,
       password: req.body.password,
       username: req.body.username,
     });
+
+    const code = deps.verification.get(email);
+    if(code) deps.verification.delete(email);
     await deps.emailFunctions.verifyEmail(user.email, user);
-    const token = await deps.users.createToken(user);
-    res.status(201).json(token);
+
+    res
+      .status(201)
+      .json({ message: "An email containing verification code has been sent" });
   } catch (error) {
-    console.log(error);
     if (error instanceof TypeError) {
       if (/is required$/.test(error.message)) {
         const missingField = error.message.split(" ")[0];
@@ -108,7 +112,7 @@ router.get("/verify", extraRateLimit(20), async (req, res) => {
     } else if (code.type === "VERIFY_EMAIL") {
       user.verified = true;
       await deps.users.save(user);
-      res.json({ message: "Email verified" });
+      res.json({ token: await deps.users.createToken(user) });
     } else if (code.type === "LOGIN")
       res.json({ token: await deps.users.createToken(user) });
   } catch (err) {

@@ -18,6 +18,7 @@ export namespace Entity {
     type: ChannelTypes.Type;
     overrides?: ChannelTypes.Override[];
     position: number;
+    userIds?: string[];
   }
 
   export interface DMChannel{

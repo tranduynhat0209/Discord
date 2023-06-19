@@ -93,7 +93,7 @@ router.get("/entities", updateUser, validateUser, async (req, res) => {
       // themes,
       users: secureUsers,
       dmChannels,
-      dmPals
+      dmPals,
     } as REST.Return.Get["/users/entities"]);
   } catch (err) {
     res.status(404).json((err as TypeError).message);

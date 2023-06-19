@@ -1,0 +1,56 @@
+.update-role {
+    height: 38px;
+    min-height: 38px;
+    width: 96px;
+    min-width: 96px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    background-color: #5865f2;
+    cursor: pointer;
+    color: #fff;
+    &:hover {
+        background-color: #4752c4;
+    }
+    &:active {
+        background-color: #3c45a5;
+    }
+}
+
+.delete-role {
+    height: 38px;
+    min-height: 38px;
+    width: 96px;
+    min-width: 96px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    margin-right: 10px;
+    background-color: #d84444;
+    cursor: pointer;
+    color: #fff;
+    &:hover {
+        background-color: #d42626;
+    }
+    &:active {
+        background-color: #8b0202;
+    }
+}
+.create-channel {
+    height: 50px;
+    min-height: 38px;
+    width: 200px;
+    min-width: 96px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    background-color: #5865f2;
+    cursor: pointer;
+    color: #fff;
+    &:hover {
+        background-color: #4752c4;
+    }
+    &:active {
+        background-color: #3c45a5;
+    }
+}

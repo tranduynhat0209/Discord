@@ -34,7 +34,7 @@ export default class implements WSEvent<"MESSAGE_CREATE"> {
         emit: this.on,
         to: [channelId],
         send: { message } as WS.Args.MessageCreate,
-      },
+      }
     ];
   }
 }

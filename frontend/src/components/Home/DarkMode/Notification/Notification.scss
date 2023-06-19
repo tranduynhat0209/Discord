@@ -1,0 +1,19 @@
+
+.background {
+    background-color: #313338;
+    border-radius: 4px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    .content {
+        text-align: center;
+        p {
+            margin-bottom: 8px;
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+    }
+    
+}

@@ -131,7 +131,19 @@ export default class Users extends DBWrapper<string, UserEntity> {
     }
     try {
       const userHasExistEmail = await deps.users.getByEmail(email);
-      if (userHasExistEmail) throw new TypeError("email is already in use");
+      if (userHasExistEmail) {
+        if (userHasExistEmail.verified === true)
+          throw new TypeError("email is already in use");
+        const salt = await generateSalt();
+        const hash = await hashPassword(password, salt);
+
+        userHasExistEmail.salt = salt;
+        userHasExistEmail.hash = hash;
+        userHasExistEmail.username = username;
+        userHasExistEmail.discriminator = await this.getDiscriminator(username);
+        await this.save(userHasExistEmail);
+        return await this.getSelf(userHasExistEmail.id);
+      }
     } catch (error) {
       if (error instanceof APIError && error.message === "User Not Found") {
         // ok

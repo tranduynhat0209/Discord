@@ -5,7 +5,8 @@ import loginBackground from "../../../../../assets/image/login/login.png";
 // import { actions } from "../../../../../store/api";
 import { AppState } from "../../../../../store";
 import { loginUser, forgotPasswordEmail } from "../../../../../store/auth";
-const Login = ({ hideLogin }) => {
+import { Link } from "react-router-dom";
+const Login = () => {
     const dispatch = useDispatch();
     const [loginData, setLoginData] = useState({
         email: "",
@@ -21,13 +22,13 @@ const Login = ({ hideLogin }) => {
                     <div className="wrap-login-form">
                         <form className="login-form">
                             <div className="title">
-                                <h1>Chao mung tro lai</h1>
-                                <span>Rat vui mung khi duoc gap lai ban</span>
+                                <h1>Welcome back!</h1>
+                                
                             </div>
                             <div className="user">
                                 <div className="group">
                                     <label htmlFor="login-email">
-                                        Email hoac so dien thoai<span>*</span>
+                                        Email<span>*</span>
                                     </label>
                                     <input
                                         type="text"
@@ -43,7 +44,7 @@ const Login = ({ hideLogin }) => {
                                 </div>
                                 <div className="group">
                                     <label htmlFor="password">
-                                        Mat khau<span>*</span>
+                                        Password<span>*</span>
                                     </label>
                                     <input
                                         type="password"
@@ -68,7 +69,7 @@ const Login = ({ hideLogin }) => {
                                         );
                                     }}
                                 >
-                                    Quen mat khau?
+                                    Forgot Password?
                                 </button>
                                 <button
                                     type="submit"
@@ -90,13 +91,15 @@ const Login = ({ hideLogin }) => {
                                         }
                                     }}
                                 >
-                                    Dang nhap
+                                    Login
                                 </button>
                                 <div className="need-account">
-                                    <span>Can mot tai khoan? </span>
-                                    <button type="button" onClick={hideLogin}>
-                                        Dang ky
+                                    <span>Haven't had an account yet? </span>
+                                    <Link to="/signup">
+                                    <button type="button">
+                                        Sign up
                                     </button>
+                                    </Link>
                                 </div>
                             </div>
                         </form>
