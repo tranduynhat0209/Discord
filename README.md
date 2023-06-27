@@ -19,9 +19,27 @@ Run
 ```
 ./keygen.sh 
 ```
-A folder namely **keys** containing keys for JWT will be generated inside folder src, please don't modify it
 
-### TO-DO TASKS
+### Start the server
+```
+npm start
+```
 
-1. Write unit tests for each function
-2. Write e2e tests for each REST api & WS event
+## Frontend
+
+### Installation & Environment Setup
+
+```
+cd ../frontend
+
+npm i
+
+cp .env.example .env
+
+// you might see file .env generated, fill the required information about your database and the website in each field.
+```
+
+### Start the frontend
+```
+npm start
+```
