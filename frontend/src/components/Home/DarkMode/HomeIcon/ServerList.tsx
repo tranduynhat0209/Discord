@@ -12,122 +12,141 @@ import "./HomeIcon.scss";
 import { actions } from "../../../../store/ui";
 
 export default function ServerList() {
-  const [newDialogIsOpen, setNewDialogIsOpen] = useState<boolean>(false);
-  const [openJoinChannel, setOpenJoinChannel] = useState<boolean>(false);
-  const guilds = useSelector((state: AppState) => state.entities.guilds);
-  const pings = useSelector((state: AppState) => state.entities.pings);
-  const dispatch = useDispatch();
-  const ui = useSelector((state: AppState) => state.ui);
-  return (
-    <nav className="home">
-      <div
-        onClick={() => {
-          dispatch(actions.switchFromGuildToDM());
-        }}
-      >
-        <Link to="/">
-          <div
-            className={
-              ui?.openDirectMessage === true ? "main-active-logo" : "main-logo"
-            }
-          >
-            <img src={defaultIcon} alt="logo" />
-            {pings["DM"]?.length > 0 && <div className="ping"></div>}
-          </div>
-        </Link>
-      </div>
-      <span className="line"></span>
-
-      <ul className="list-avatar">
-        {guilds?.length > 0 &&
-          guilds.map(
-            (guild) =>
-              guild && (
-                <div
-                  onClick={() => {
-                    dispatch(actions.switchFromDMToGuild(guild));
-                  }}
-                >
-                  <Tooltip
-                    title={
-                      <p
-                        style={{
-                          fontSize: "20px",
-                        }}
-                      >
-                        {" "}
-                        {guild.name}{" "}
-                      </p>
-                    }
-                    placement="right"
-                    arrow
-                  >
-                    {guild.iconURL ? (
-                      <div className="guild-container">
-                        <img
-                          className={
-                            ui?.activeGuild?.id === guild.id
-                              ? "guild-active-image"
-                              : "guild-image"
-                          }
-                          src={`${process.env.REACT_APP_CDN_URL}${guild.iconURL}`}
-                          alt="logo"
-                        />
-                        {pings[guild.id]?.length > 0 && (
-                          <div className="ping"></div>
-                        )}
-                      </div>
-                    ) : (
-                      <div
+    const [newDialogIsOpen, setNewDialogIsOpen] = useState<boolean>(false);
+    const [openJoinChannel, setOpenJoinChannel] = useState<boolean>(false);
+    const guilds = useSelector((state: AppState) => state.entities.guilds);
+    const pings = useSelector((state: AppState) => state.entities.pings);
+    console.log("guilds", guilds);
+    const dispatch = useDispatch();
+    const ui = useSelector((state: AppState) => state.ui);
+    return (
+        <nav className="home">
+            <div
+                onClick={() => {
+                    dispatch(actions.switchFromGuildToDM());
+                }}
+            >
+                <Link to="/">
+                    <div
                         className={
-                          ui?.activeGuild?.id === guild.id
-                            ? "main-active-logo"
-                            : "main-logo"
+                            ui?.openDirectMessage === true
+                                ? "main-active-logo"
+                                : "main-logo"
                         }
-                      >
+                    >
                         <img src={defaultIcon} alt="logo" />
-                        {pings[guild.id]?.length > 0 && (
-                          <div className="ping"></div>
+                        {pings["DM"]?.length > 0 && (
+                            <div className="ping"></div>
                         )}
-                      </div>
+                    </div>
+                </Link>
+            </div>
+            <span className="line"></span>
+
+            <ul className="list-avatar">
+                {guilds?.length > 0 &&
+                    guilds.map(
+                        (guild, index) =>
+                            guild && (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        dispatch(
+                                            actions.switchFromDMToGuild(guild)
+                                        );
+                                    }}
+                                >
+                                    <Tooltip
+                                        title={
+                                            <p
+                                                style={{
+                                                    fontSize: "20px",
+                                                }}
+                                            >
+                                                {" "}
+                                                {guild.name}{" "}
+                                            </p>
+                                        }
+                                        placement="right"
+                                        arrow
+                                    >
+                                        {guild.iconURL ? (
+                                            <div className="guild-container">
+                                                <img
+                                                    className={
+                                                        ui?.activeGuild?.id ===
+                                                        guild.id
+                                                            ? "guild-active-image"
+                                                            : "guild-image"
+                                                    }
+                                                    src={`${process.env.REACT_APP_CDN_URL}${guild.iconURL}`}
+                                                    alt="logo"
+                                                />
+                                                {pings[guild.id]?.length >
+                                                    0 && (
+                                                    <div className="ping"></div>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className={
+                                                    ui?.activeGuild?.id ===
+                                                    guild.id
+                                                        ? "main-active-logo"
+                                                        : "main-logo"
+                                                }
+                                            >
+                                                <img
+                                                    src={defaultIcon}
+                                                    alt="logo"
+                                                />
+                                                {pings[guild.id]?.length >
+                                                    0 && (
+                                                    <div className="ping"></div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </Tooltip>
+                                </div>
+                            )
                     )}
-                  </Tooltip>
-                </div>
-              )
-          )}
 
-        <span className="line"></span>
-        <li
-          className="add-server plus cover"
-          onClick={() => {
-            setNewDialogIsOpen(true);
-          }}
-        >
-          <img src={Plus} alt="Add server" />
-        </li>
-        <li
-          className="add-server plus cover"
-          onClick={() => {
-            setOpenJoinChannel(true);
-          }}
-        >
-          <img src={Discovery} alt="Add server" />
-        </li>
+                <span className="line"></span>
+                <li
+                    className="add-server plus cover"
+                    onClick={() => {
+                        setNewDialogIsOpen(true);
+                    }}
+                >
+                    <img src={Plus} alt="Add server" />
+                </li>
+                <li
+                    className="add-server plus cover"
+                    onClick={() => {
+                        setOpenJoinChannel(true);
+                    }}
+                >
+                    <img src={Discovery} alt="Add server" />
+                </li>
 
-        <Dialog
-          open={newDialogIsOpen}
-          onClose={() => setNewDialogIsOpen(false)}
-        >
-          <AddNewServer handleClose={() => setNewDialogIsOpen(false)} />
-        </Dialog>
+                <Dialog
+                    open={newDialogIsOpen}
+                    onClose={() => setNewDialogIsOpen(false)}
+                >
+                    <AddNewServer
+                        handleClose={() => setNewDialogIsOpen(false)}
+                    />
+                </Dialog>
 
-        <Dialog
-          open={openJoinChannel}
-          onClose={() => setOpenJoinChannel(false)}
-        >
-          <JoinNewServer handleClose={() => setOpenJoinChannel(false)} />
-        </Dialog>
-      </ul>
-    </nav>
-  );
+                <Dialog
+                    open={openJoinChannel}
+                    onClose={() => setOpenJoinChannel(false)}
+                >
+                    <JoinNewServer
+                        handleClose={() => setOpenJoinChannel(false)}
+                    />
+                </Dialog>
+            </ul>
+        </nav>
+    );
 }
